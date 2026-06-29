@@ -151,7 +151,7 @@ Partial Class Form14
         Me.btnCheckout.Name = "btnCheckout"
         Me.btnCheckout.Size = New System.Drawing.Size(153, 50)
         Me.btnCheckout.TabIndex = 62
-        Me.btnCheckout.Text = "Checkout"
+        Me.btnCheckout.Text = "Checkout "
         Me.btnCheckout.UseVisualStyleBackColor = False
         '
         'Form14
