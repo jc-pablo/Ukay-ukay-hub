@@ -48,4 +48,10 @@ Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtPassword.PasswordChar = "*"c
     End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim Frm13 As New Form13()
+        Frm13.Show()
+        Me.Hide()
+    End Sub
 End Class
