@@ -1,0 +1,53 @@
+CREATE DATABASE ukayukay_db;
+USE ukayukay_db;
+
+CREATE TABLE categories (
+    category_id VARCHAR(50) PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL UNIQUE,
+    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE donors (
+    donor_id VARCHAR(50) PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    contact_number VARCHAR(20),
+    email_address VARCHAR(100),
+    address TEXT,
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE consignors (
+    consignor_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    email VARCHAR(100)
+); 
+CREATE TABLE inventory (
+    item_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    description VARCHAR(255) NOT NULL,
+    cost_price DECIMAL(10, 2) NOT NULL,
+    sell_price DECIMAL(10, 2) NOT NULL,
+    consignor_id VARCHAR(50) NOT NULL,
+    INDEX(consignor_id),
+    CONSTRAINT inventory_consignor_fk FOREIGN KEY (consignor_id) REFERENCES consignors(consignor_id)
+);
+
+CREATE TABLE transactions (
+    transaction_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    item_id VARCHAR(50) NOT NULL,
+    selling_price DECIMAL(10, 2) NOT NULL,
+    sale_date DATE NOT NULL,
+    payout_status VARCHAR(20) NOT NULL DEFAULT 'Unpaid', 
+    INDEX(item_id),
+    CONSTRAINT fk_transactions_inventory FOREIGN KEY (item_id) REFERENCES inventory (item_id)
+);
+
+CREATE TABLE payouts (
+    payout_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    consignor_id VARCHAR(50) NOT NULL,
+    payout_period VARCHAR(100) NOT NULL,       
+    date_saved DATE NOT NULL,
+    INDEX(consignor_id),
+    CONSTRAINT fk_payouts_consignors FOREIGN KEY (consignor_id) REFERENCES consignors(consignor_id)
+);
