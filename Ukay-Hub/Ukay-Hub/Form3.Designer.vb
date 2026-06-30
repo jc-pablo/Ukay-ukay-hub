@@ -51,7 +51,6 @@ Partial Class Form3
         Me.txtCategoryName = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.btnSave = New System.Windows.Forms.Button()
-        Me.btnClear = New System.Windows.Forms.Button()
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtSearchCategory = New System.Windows.Forms.TextBox()
@@ -62,6 +61,10 @@ Partial Class Form3
         Me.colCatCategoryName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCatItemCount = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCatDateAdded = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnUpdate = New System.Windows.Forms.Button()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.txtCategoryId = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvCategories, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -347,7 +350,7 @@ Partial Class Form3
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(407, 428)
+        Me.Label22.Location = New System.Drawing.Point(460, 428)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(137, 16)
         Me.Label22.TabIndex = 20
@@ -359,10 +362,10 @@ Partial Class Form3
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCategoryName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCategoryName.Location = New System.Drawing.Point(410, 447)
+        Me.txtCategoryName.Location = New System.Drawing.Point(463, 447)
         Me.txtCategoryName.Multiline = True
         Me.txtCategoryName.Name = "txtCategoryName"
-        Me.txtCategoryName.Size = New System.Drawing.Size(386, 38)
+        Me.txtCategoryName.Size = New System.Drawing.Size(333, 38)
         Me.txtCategoryName.TabIndex = 21
         '
         'Label23
@@ -382,24 +385,12 @@ Partial Class Form3
         Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
         Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(410, 574)
+        Me.btnSave.Location = New System.Drawing.Point(411, 574)
         Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(119, 50)
+        Me.btnSave.Size = New System.Drawing.Size(112, 50)
         Me.btnSave.TabIndex = 23
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = False
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.Color.Linen
-        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClear.ForeColor = System.Drawing.Color.Black
-        Me.btnClear.Location = New System.Drawing.Point(547, 574)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(119, 50)
-        Me.btnClear.TabIndex = 25
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
         '
         'btnDelete
         '
@@ -483,26 +474,78 @@ Partial Class Form3
         '
         'colCatNumber
         '
+        Me.colCatNumber.DataPropertyName = "#"
         Me.colCatNumber.HeaderText = "#"
         Me.colCatNumber.Name = "colCatNumber"
         '
         'colCatCategoryName
         '
+        Me.colCatCategoryName.DataPropertyName = "Category Name"
         Me.colCatCategoryName.HeaderText = "Category Name"
         Me.colCatCategoryName.Name = "colCatCategoryName"
         Me.colCatCategoryName.Width = 350
         '
         'colCatItemCount
         '
+        Me.colCatItemCount.DataPropertyName = "Item Count"
         Me.colCatItemCount.HeaderText = "Item Count"
         Me.colCatItemCount.Name = "colCatItemCount"
         Me.colCatItemCount.Width = 250
         '
         'colCatDateAdded
         '
+        Me.colCatDateAdded.DataPropertyName = "Date Added"
         Me.colCatDateAdded.HeaderText = "Date Added"
         Me.colCatDateAdded.Name = "colCatDateAdded"
         Me.colCatDateAdded.Width = 300
+        '
+        'btnUpdate
+        '
+        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
+        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
+        Me.btnUpdate.Location = New System.Drawing.Point(541, 574)
+        Me.btnUpdate.Name = "btnUpdate"
+        Me.btnUpdate.Size = New System.Drawing.Size(118, 50)
+        Me.btnUpdate.TabIndex = 32
+        Me.btnUpdate.Text = "Update"
+        Me.btnUpdate.UseVisualStyleBackColor = False
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.BackColor = System.Drawing.Color.Transparent
+        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.ForeColor = System.Drawing.Color.DimGray
+        Me.Label27.Location = New System.Drawing.Point(407, 428)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(15, 16)
+        Me.Label27.TabIndex = 33
+        Me.Label27.Text = "#"
+        '
+        'txtCategoryId
+        '
+        Me.txtCategoryId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtCategoryId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCategoryId.Location = New System.Drawing.Point(399, 447)
+        Me.txtCategoryId.Multiline = True
+        Me.txtCategoryId.Name = "txtCategoryId"
+        Me.txtCategoryId.Size = New System.Drawing.Size(58, 38)
+        Me.txtCategoryId.TabIndex = 34
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.BurlyWood
+        Me.Button1.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.Black
+        Me.Button1.Location = New System.Drawing.Point(541, 21)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(118, 50)
+        Me.Button1.TabIndex = 35
+        Me.Button1.Text = "SHOP"
+        Me.Button1.UseVisualStyleBackColor = False
         '
         'Form3
         '
@@ -511,13 +554,16 @@ Partial Class Form3
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.txtCategoryId)
+        Me.Controls.Add(Me.Label27)
+        Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.dgvCategories)
         Me.Controls.Add(Me.Label26)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.txtSearchCategory)
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.btnDelete)
-        Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.btnSave)
         Me.Controls.Add(Me.Label23)
         Me.Controls.Add(Me.txtCategoryName)
@@ -570,15 +616,18 @@ Partial Class Form3
     Friend WithEvents txtCategoryName As TextBox
     Friend WithEvents Label23 As Label
     Friend WithEvents btnSave As Button
-    Friend WithEvents btnClear As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents Label24 As Label
     Friend WithEvents txtSearchCategory As TextBox
     Friend WithEvents Label25 As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents dgvCategories As DataGridView
+    Friend WithEvents btnUpdate As Button
+    Friend WithEvents Label27 As Label
+    Friend WithEvents txtCategoryId As TextBox
     Friend WithEvents colCatNumber As DataGridViewTextBoxColumn
     Friend WithEvents colCatCategoryName As DataGridViewTextBoxColumn
     Friend WithEvents colCatItemCount As DataGridViewTextBoxColumn
     Friend WithEvents colCatDateAdded As DataGridViewTextBoxColumn
+    Friend WithEvents Button1 As Button
 End Class

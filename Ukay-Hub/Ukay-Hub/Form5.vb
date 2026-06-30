@@ -1,81 +1,224 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form5
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
+    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Dim sql As String
+    Dim dbcomm As MySqlCommand
+    Dim DataAdapter1 As MySqlDataAdapter
+    Dim ds As DataSet
 
     Private Sub Form5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadConsignors()
-    End Sub
-    Private Sub LoadConsignors()
-        Dim query As String = "SELECT c.consignor_id As '#', c.full_name As 'Name', c.contact_number As 'Contact', " &
-                              "CONCAT(c.commission_rate, '%') As 'Commission', " &
-                              "COUNT(i.item_id) As 'Items Listed', " &
-                              "COALESCE(SUM(CASE WHEN i.status = 'Sold' THEN i.price ELSE 0 END), 0) As 'Total Earned' " &
-                              "FROM consignors c " &
-                              "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
-                              "GROUP BY c.consignor_id, c.full_name, c.contact_number, c.commission_rate"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim table As New DataTable()
-                    adapter.Fill(table)
-
-                    dgvConsignors.Columns.Clear()
-                    dgvConsignors.AutoGenerateColumns = True
-                    dgvConsignors.DataSource = table
-                    dgvConsignors.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-                Catch ex As MySqlException
-                    MessageBox.Show("Error loading consignors: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
+        LoadConsignorData()
     End Sub
 
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnsave.Click
-        If String.IsNullOrWhiteSpace(txtFullName.Text) OrElse String.IsNullOrWhiteSpace(txtCommissionRate.Text) Then
-            MessageBox.Show("Please fill out both Name and Commission Rate fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
+    Private Sub LoadConsignorData()
+        Try
+            conn.Open()
+            sql = "SELECT c.consignor_id As '#', " &
+              "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
+              "c.phone As 'Contact', " &
+              "'10%' As 'Commission', " &
+              "COUNT(i.item_id) As 'Items Listed', " &
+              "IFNULL(SUM(CASE WHEN i.status = 'Sold' THEN i.price ELSE 0 END), 0.00) As 'TotalPriceSold' " &
+              "FROM consignors c " &
+              "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
+              "GROUP BY c.consignor_id, c.first_name, c.last_name, c.phone " &
+              "ORDER BY c.consignor_id DESC"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            Dim dt As New DataTable()
+            DataAdapter1.Fill(dt)
+
+            dt.Columns.Add("Earned", GetType(Decimal))
+
+            For Each row As DataRow In dt.Rows
+                Dim Sales As Decimal = Convert.ToDecimal(row("TotalPriceSold"))
+                row("Earned") = Sales * 0.1D
+            Next
+
+            dt.Columns.Remove("TotalPriceSold")
+            DataGridView1.DataSource = dt
+        Catch ex As Exception
+            MsgBox("Error loading consignor data: " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim fullName As String = txtFullName.Text.Trim()
+        Dim firstName As String = fullName
+        Dim lastName As String = " "
+
+        If fullName.Contains(" ") Then
+            Dim parts As String() = fullName.Split(New Char() {" "c}, 2)
+            firstName = parts(0)
+            lastName = parts(1)
         End If
 
-        Dim commission As Decimal
-        If Not Decimal.TryParse(txtCommissionRate.Text, commission) Then
-            MessageBox.Show("Please enter a valid number for the commission percentage rate.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
+        Try
+            conn.Open()
+            sql = "INSERT INTO consignors (consignor_id, first_name, last_name, phone, email) VALUES (@id, @fname, @lname, @phone, @email)"
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@fname", firstName)
+            dbcomm.Parameters.AddWithValue("@lname", lastName)
+            dbcomm.Parameters.AddWithValue("@phone", txtContactNumber.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
 
-        Dim query As String = "INSERT INTO consignors (full_name, contact_number, email_address, commission_rate) " &
-                              "VALUES (@name, @contact, @email, @rate)"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
-                cmd.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
-                cmd.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
-                cmd.Parameters.AddWithValue("@rate", commission)
-
-                Try
-                    conn.Open()
-                    cmd.ExecuteNonQuery()
-                    MessageBox.Show("Consignor registered successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    ClearForm()
-                    LoadConsignors()
-                Catch ex As MySqlException
-                    MessageBox.Show("Error saving consignor: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+            If i > 0 Then
+                MsgBox("Consignor record saved successfully!")
+                ClearFields()
+            Else
+                MsgBox("Record not saved.")
+            End If
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        LoadConsignorData()
     End Sub
 
-    Private Sub ClearForm()
-        txtFullName.Clear()
-        txtContactNumber.Clear()
-        txtEmailAddress.Clear()
-        txtCommissionRate.Clear()
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        Dim fullName As String = txtFullName.Text.Trim()
+        Dim firstName As String = fullName
+        Dim lastName As String = " "
+
+        If fullName.Contains(" ") Then
+            Dim parts As String() = fullName.Split(New Char() {" "c}, 2)
+            firstName = parts(0)
+            lastName = parts(1)
+        End If
+
+        Try
+            conn.Open()
+            sql = "UPDATE consignors SET first_name=@fname, last_name=@lname, phone=@phone, email=@email WHERE consignor_id=@id"
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@fname", firstName)
+            dbcomm.Parameters.AddWithValue("@lname", lastName)
+            dbcomm.Parameters.AddWithValue("@phone", txtContactNumber.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
+
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+            If i > 0 Then
+                MsgBox("Consignor record updated successfully!")
+            Else
+                MsgBox("Record not updated.")
+            End If
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        LoadConsignorData()
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If String.IsNullOrEmpty(txtConsignorId.Text) Then
+            MsgBox("Please select a consignor to delete.")
+            Return
+        End If
+
+        Dim ans = MessageBox.Show("Are you sure you want to delete this consignor record?", "Confirm Delete", MessageBoxButtons.YesNo)
+        If ans = DialogResult.Yes Then
+            Try
+                conn.Open()
+                sql = "DELETE FROM consignors WHERE consignor_id=@id"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
+
+                Dim i As Integer = dbcomm.ExecuteNonQuery()
+                If i > 0 Then
+                    MsgBox("Consignor record deleted.")
+                    ClearFields()
+                Else
+                    MsgBox("Record not deleted.")
+                End If
+            Catch ex As MySqlException
+                MsgBox(ex.Message)
+            Finally
+                conn.Close()
+            End Try
+            LoadConsignorData()
+        End If
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        Try
+            conn.Open()
+            sql = "SELECT c.consignor_id As '#', " &
+              "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
+              "c.phone As 'Contact', " &
+              "'10%' As 'Commission', " &
+              "COUNT(i.item_id) As 'Items Listed', " &
+              "IFNULL(SUM(CASE WHEN i.status = 'Sold' THEN i.price ELSE 0 END), 0.00) As 'TotalPriceSold' " &
+              "FROM consignors c " &
+              "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
+              "WHERE c.first_name LIKE @search OR c.last_name LIKE @search OR c.consignor_id LIKE @search " &
+              "GROUP BY c.consignor_id, c.first_name, c.last_name, c.phone"
+
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
+
+            DataAdapter1 = New MySqlDataAdapter(dbcomm)
+            Dim dt As New DataTable()
+            DataAdapter1.Fill(dt)
+            dt.Columns.Add("Total Earned", GetType(Decimal))
+            For Each row As DataRow In dt.Rows
+                Dim totalSales As Decimal = Convert.ToDecimal(row("TotalPriceSold"))
+                row("Total Earned") = totalSales * 0.1D
+            Next
+            dt.Columns.Remove("TotalPriceSold")
+
+            DataGridView1.DataSource = dt
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
+            Dim selectedId As String = row.Cells("#").Value.ToString()
+
+            Try
+                conn.Open()
+                sql = "SELECT * FROM consignors WHERE consignor_id=@id"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.Parameters.AddWithValue("@id", selectedId)
+                Dim dbread As MySqlDataReader = dbcomm.ExecuteReader()
+
+                If dbread.Read() Then
+                    txtConsignorId.Text = dbread("consignor_id").ToString()
+                    txtFullName.Text = dbread("first_name").ToString() & " " & dbread("last_name").ToString()
+                    txtContactNumber.Text = dbread("phone").ToString()
+                    txtEmailAddress.Text = dbread("email").ToString()
+                End If
+                dbread.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                conn.Close()
+            End Try
+        End If
     End Sub
 
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
-        ClearForm()
+        ClearFields()
+    End Sub
+
+    Private Sub ClearFields()
+        txtConsignorId.Clear()
+        txtFullName.Clear()
+        txtContactNumber.Clear()
+        txtEmailAddress.Clear()
+        txtSearch.Clear()
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
@@ -125,5 +268,6 @@ Public Class Form5
         frm9.Show()
         Me.Hide()
     End Sub
+
 
 End Class

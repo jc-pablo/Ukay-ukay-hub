@@ -1,70 +1,152 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form3
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
-    Private Sub LoadCategories()
-        Dim query As String = "SELECT c.category_id As '#', " &
-                          "c.category_name As 'Category Name', " &
-                          "COUNT(i.item_id) As 'Item Count', " &
-                          "c.date_added As 'Date Added' " &
-                          "FROM categories c " &
-                          "LEFT JOIN inventory i ON c.category_id = i.category_id " &
-                          "GROUP BY c.category_id, c.category_name, c.date_added"
+    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public dbcomm As MySqlCommand
+    Public dbread As MySqlDataReader
+    Public DataAdapter1 As MySqlDataAdapter
+    Public ds As DataSet
+    Dim selectedCategoryId As Integer = 0
 
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim table As New DataTable()
-                    adapter.Fill(table)
-                    dgvCategories.Columns.Clear()
-                    dgvCategories.AutoGenerateColumns = True
-                    dgvCategories.DataSource = table
-                    dgvCategories.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-                Catch ex As MySqlException
-                    MessageBox.Show("Error loading categories: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
-    End Sub
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If String.IsNullOrWhiteSpace(txtCategoryName.Text) Then
-            MessageBox.Show("Please enter a category name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Dim query As String = "INSERT INTO categories (category_name) VALUES (@name)"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@name", txtCategoryName.Text.Trim())
-
-                Try
-                    conn.Open()
-                    cmd.ExecuteNonQuery()
-                    MessageBox.Show("Category saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                    txtCategoryName.Clear()
-                    LoadCategories()
-                Catch ex As MySqlException
-                    If ex.Number = 1062 Then
-                        MessageBox.Show("This category already exists.", "Duplicate Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-                    Else
-                        MessageBox.Show("Error saving category: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    End If
-                End Try
-            End Using
-        End Using
-    End Sub
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        dgvCategories.Columns(0).DataPropertyName = "category_id"
-        dgvCategories.Columns(1).DataPropertyName = "category_name"
-        dgvCategories.Columns(2).DataPropertyName = "item_count"
-        dgvCategories.Columns(3).DataPropertyName = "date_added"
-
         LoadCategories()
     End Sub
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+
+    Private Sub LoadCategories()
+        Try
+            conn.Open()
+            sql = "SELECT c.category_id as '#', c.category_name AS 'Category Name', 
+            count(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' 
+            FROM categories c 
+            LEFT JOIN inventory i 
+            ON (c.category_id = i.category_id) 
+            GROUP BY c.category_id, c.category_name, c.date_added 
+            ORDER BY c.category_id DESC"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "categories")
+            dgvCategories.DataSource = ds
+            dgvCategories.DataMember = "categories"
+
+        Catch ex As Exception
+            MsgBox("Error in collecting data from Database. Error is :" & ex.Message)
+        End Try
+        conn.Close()
+    End Sub
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Try
+            conn.Open()
+            txtCategoryName.Text.Trim()
+
+            sql = $"INSERT INTO categories (category_id, category_name, date_added) 
+            VALUES('{txtCategoryId.Text.Trim()}', '{txtCategoryName.Text.Trim()}', now())"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim i As Integer = dbcomm.ExecuteNonQuery
+
+            If (i > 0) Then
+                MsgBox("record saved")
+            Else
+                MsgBox("record not saved")
+            End If
+
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        conn.Close()
+
         txtCategoryName.Clear()
+        LoadCategories()
+    End Sub
+
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        Try
+            conn.Open()
+            sql = $"UPDATE categories SET category_name = '{txtCategoryName.Text.Trim()}' WHERE category_id = '{txtCategoryId.Text.Trim()}'"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim i As Integer = dbcomm.ExecuteNonQuery
+
+            If (i > 0) Then
+                MsgBox("record saved")
+            Else
+                MsgBox("record not saved")
+            End If
+
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        conn.Close()
+
+        txtCategoryName.Clear()
+        selectedCategoryId = 0
+        LoadCategories()
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Try
+            conn.Open()
+            Dim ans = MessageBox.Show("do you want to delete this record?", "record deleted", MessageBoxButtons.YesNoCancel)
+            If ans = DialogResult.Yes Then
+                sql = $"DELETE FROM categories WHERE category_id = '{txtCategoryId.Text.Trim()}'"
+                dbcomm = New MySqlCommand(sql, conn)
+                Dim i As Integer = dbcomm.ExecuteNonQuery
+
+                If (i > 0) Then
+                    MsgBox("item deleted")
+                Else
+                    MsgBox("item not deleted")
+                End If
+                txtCategoryName.Clear()
+                selectedCategoryId = 0
+            End If
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        conn.Close()
+        LoadCategories()
+    End Sub
+
+    Private Sub dgvCategories_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategories.CellContentClick
+        dgvCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        If e.RowIndex >= 0 Then
+            Dim selectedRow As DataGridViewRow = dgvCategories.Rows(e.RowIndex)
+
+            txtCategoryId.Text = selectedRow.Cells("#").Value.ToString()
+            txtCategoryName.Text = selectedRow.Cells("Category Name").Value.ToString()
+        End If
+    End Sub
+
+    Private Sub txtSearchCategory_TextChanged(sender As Object, e As EventArgs) Handles txtSearchCategory.TextChanged
+        Try
+            conn.Open()
+            sql = $"SELECT c.category_id as '#', c.category_name AS 'Category Name', 
+            count(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' 
+            FROM categories c 
+            LEFT JOIN inventory i ON (c.category_id = i.category_id) 
+            WHERE c.category_name LIKE '%{txtSearchCategory.Text.Trim()}%' 
+            GROUP BY c.category_id, c.category_name, c.date_added ORDER BY c.category_name DESC"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "categories search")
+            dgvCategories.DataSource = ds
+            dgvCategories.DataMember = "categories search"
+            dgvCategories.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+
+        Catch ex As MySqlException
+            MsgBox("Error in collecting data from Database. Error is :" & ex.Message)
+        Catch ex As Exception
+            MsgBox("Error in collecting data from Database. Error is :" & ex.Message)
+        End Try
+        conn.Close()
     End Sub
 
 
@@ -116,5 +198,9 @@ Public Class Form3
         Me.Hide()
     End Sub
 
-
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim frm13 As New Form13()
+        frm13.Show()
+        Me.Hide()
+    End Sub
 End Class

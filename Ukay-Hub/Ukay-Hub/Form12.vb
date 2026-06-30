@@ -1,37 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class Form12
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
 
-    Private Sub Form12_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadConsignorEarningsLedger()
-    End Sub
-
-    Private Sub LoadConsignorEarningsLedger()
-        Dim query As String = "SELECT c.full_name As 'Consignor', " &
-                              "COUNT(t.transaction_id) As 'Item Sold', " &
-                              "COALESCE(SUM(t.selling_price), 0) As 'Total Sales', " &
-                              "CONCAT(c.commission_rate, '%') As 'Rate', " &
-                              "COALESCE(SUM(t.consignor_share), 0) As 'Total Earned', " &
-                              "COALESCE((SELECT p.date_saved FROM payouts p WHERE p.consignor_id = c.consignor_id ORDER BY p.date_saved DESC LIMIT 1), 'No Payouts Yet') As 'Last Payout' " &
-                              "FROM consignors c " &
-                              "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
-                              "LEFT JOIN transactions t ON i.item_id = t.item_id AND i.status = 'Sold' " &
-                              "GROUP BY c.consignor_id, c.full_name, c.commission_rate"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim table As New DataTable()
-                    adapter.Fill(table)
-
-                    dgvConsignorEarningsReport.DataSource = table
-                    dgvConsignorEarningsReport.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-                Catch ex As Exception
-                End Try
-            End Using
-        End Using
-    End Sub
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()
         frm1.Show()

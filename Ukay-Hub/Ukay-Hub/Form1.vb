@@ -1,49 +1,46 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form1
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        If String.IsNullOrWhiteSpace(txtUsername.Text) OrElse String.IsNullOrWhiteSpace(txtPassword.Text) Then
-            MessageBox.Show("Please enter username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-        Dim isLoginValid As Boolean = AuthenticateUser(txtUsername.Text, txtPassword.Text)
-        If isLoginValid Then
-            Dim frm2 As New Form2()
-            frm2.Show()
-            Me.Hide()
-        End If
+    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public dbcomm As MySqlCommand
+    Public dbread As MySqlDataReader
+
+    ' LOGIN BUTTON (Patterned after Form1 Button1_Click / Button1_Click ng prof mo)
+    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Try
+            conn.Open()
+            ' Ginamit ang string interpolation at tinanggal ang @ parameters para sa istilo ng prof mo
+            sql = $"SELECT * FROM users WHERE username = '{txtUsername.Text.Trim()}' AND password = '{txtPassword.Text.Trim()}'"
+
+            dbcomm = New MySqlCommand(sql, conn)
+            dbread = dbcomm.ExecuteReader()
+
+            ' Tinitingnan kung may nahanap na row gamit ang dbread.Read()
+            If dbread.Read() Then
+                MsgBox("Login Successful! Welcome to UkayHub.")
+
+                ' Kailangang isara ang reader at connection bago magpakita ng bagong form
+                dbread.Close()
+                conn.Close()
+
+                Dim frm2 As New Form2()
+                frm2.Show()
+                Me.Hide()
+            Else
+                MsgBox("Invalid username or password.")
+                dbread.Close()
+                conn.Close()
+            End If
+
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+            conn.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
     End Sub
-
-    Private Function AuthenticateUser(username As String, password As String) As Boolean
-        Dim isValid As Boolean = False
-        Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
-        Dim query As String = "SELECT COUNT(*) FROM users WHERE username = @username AND password = @password"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@username", username)
-                cmd.Parameters.AddWithValue("@password", password)
-
-                Try
-                    conn.Open()
-                    Dim userCount As Integer = Convert.ToInt32(cmd.ExecuteScalar())
-
-                    If userCount > 0 Then
-                        MessageBox.Show("Login Successful! Welcome to UkayHub.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        isValid = True
-                    Else
-                        MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                        isValid = False
-                    End If
-
-                Catch ex As MySqlException
-                    MessageBox.Show("Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                    isValid = False
-                End Try
-            End Using
-        End Using
-
-        Return isValid
-    End Function
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtPassword.PasswordChar = "*"c
@@ -52,6 +49,12 @@ Public Class Form1
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         Dim Frm13 As New Form13()
         Frm13.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim Frm3 As New Form3()
+        Frm3.Show()
         Me.Hide()
     End Sub
 End Class

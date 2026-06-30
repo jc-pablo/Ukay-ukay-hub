@@ -1,74 +1,186 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form4
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
+    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Dim sql As String
+    Dim dbcomm As MySqlCommand
+    Dim DataAdapter1 As MySqlDataAdapter
+    Dim ds As DataSet
 
-    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadDonors()
+    Private Sub LoadDonorData()
+        Try
+            conn.Open()
+            sql = "SELECT d.donor_id As '#', " &
+              "d.full_name As 'Name', " &
+              "d.contact_number As 'Contact', " &
+              "COUNT(i.item_id) As 'Items Donated', " &
+              "d.date_registered As 'Date Registered' " &
+              "FROM donors d " &
+              "LEFT JOIN inventory i ON d.donor_id = i.donor_id " &
+              "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered " &
+              "ORDER BY d.date_registered DESC"
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "donors")
+            DataGridView1.DataSource = ds
+            DataGridView1.DataMember = "donors"
+        Catch ex As Exception
+            MsgBox("Error loading donor data: " & ex.Message)
+        Finally
+            conn.Close()
+        End Try
     End Sub
-    Private Sub LoadDonors()
-        Dim query As String = "SELECT d.donor_id As '#', d.full_name As 'Name', d.contact_number As 'Contact', " &
-                              "COUNT(i.item_id) As 'Items Donated', d.date_registered As 'Date Registered' " &
-                              "FROM donors d " &
-                              "LEFT JOIN inventory i ON d.donor_id = i.donor_id " &
-                              "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim table As New DataTable()
-                    adapter.Fill(table)
-
-                    dgvDonors.Columns.Clear()
-                    dgvDonors.AutoGenerateColumns = True
-                    dgvDonors.DataSource = table
-                    dgvDonors.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-                Catch ex As MySqlException
-                    MessageBox.Show("Error loading donors: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
+    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadDonorData()
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If String.IsNullOrWhiteSpace(txtFullName.Text) Then
-            MessageBox.Show("Please enter the donor's full name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
+        Try
+            conn.Open()
+            sql = "INSERT INTO donors (donor_id, full_name, contact_number, email_address, address) VALUES (@id, @name, @contact, @email, @address)"
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@address", txtAddress.Text.Trim())
 
-        Dim query As String = "INSERT INTO donors (full_name, contact_number, email_address, address) " &
-                              "VALUES (@name, @contact, @email, @address)"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
-                cmd.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
-                cmd.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
-                cmd.Parameters.AddWithValue("@address", txtAddress.Text.Trim())
-
-                Try
-                    conn.Open()
-                    cmd.ExecuteNonQuery()
-                    MessageBox.Show("Donor registered successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                    ClearForm()
-                    LoadDonors()
-                Catch ex As MySqlException
-                    MessageBox.Show("Error saving donor: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+            If i > 0 Then
+                MsgBox("Donor record saved successfully!")
+                ClearFields()
+            Else
+                MsgBox("Record not saved.")
+            End If
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        LoadDonorData()
     End Sub
 
-    Private Sub ClearForm()
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        Try
+            conn.Open()
+            sql = "UPDATE donors SET full_name=@name, contact_number=@contact, email_address=@email, address=@address WHERE donor_id=@id"
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@address", txtAddress.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
+
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+            If i > 0 Then
+                MsgBox("Donor record updated successfully!")
+            Else
+                MsgBox("Record not updated.")
+            End If
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        LoadDonorData()
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If String.IsNullOrEmpty(txtDonorId.Text) Then
+            MsgBox("Please select a donor to delete.")
+            Return
+        End If
+
+        Dim ans = MessageBox.Show("Are you sure you want to delete this donor record?", "Confirm Delete", MessageBoxButtons.YesNo)
+        If ans = DialogResult.Yes Then
+            Try
+                conn.Open()
+                sql = "DELETE FROM donors WHERE donor_id=@id"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
+
+                Dim i As Integer = dbcomm.ExecuteNonQuery()
+                If i > 0 Then
+                    MsgBox("Donor record deleted.")
+                    ClearFields()
+                Else
+                    MsgBox("Record not deleted.")
+                End If
+            Catch ex As MySqlException
+                MsgBox(ex.Message)
+            Finally
+                conn.Close()
+            End Try
+            LoadDonorData()
+        End If
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        Try
+            conn.Open()
+            sql = "SELECT d.donor_id As '#', " &
+              "d.full_name As 'Name', " &
+              "d.contact_number As 'Contact', " &
+              "COUNT(i.item_id) As 'Items Donated', " &
+              "d.date_registered As 'Date Registered' " &
+              "FROM donors d " &
+              "LEFT JOIN inventory i ON d.donor_id = i.donor_id " &
+              "WHERE d.full_name LIKE @search OR d.donor_id LIKE @search " &
+              "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered"
+            dbcomm = New MySqlCommand(sql, conn)
+            dbcomm.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
+
+            DataAdapter1 = New MySqlDataAdapter(dbcomm)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "donors_search")
+            DataGridView1.DataSource = ds
+            DataGridView1.DataMember = "donors_search"
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+    End Sub
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
+            Dim selectedId As String = row.Cells("#").Value.ToString()
+
+            Try
+                conn.Open()
+                sql = "SELECT * FROM donors WHERE donor_id=@id"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.Parameters.AddWithValue("@id", selectedId)
+                Dim dbread As MySqlDataReader = dbcomm.ExecuteReader()
+
+                If dbread.Read() Then
+                    txtDonorId.Text = dbread("donor_id").ToString()
+                    txtFullName.Text = dbread("full_name").ToString()
+                    txtContactNumber.Text = dbread("contact_number").ToString()
+                    txtEmailAddress.Text = dbread("email_address").ToString()
+                    txtAddress.Text = dbread("address").ToString()
+                End If
+                dbread.Close()
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                conn.Close()
+            End Try
+        End If
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearFields()
+    End Sub
+
+    Private Sub ClearFields()
+        txtDonorId.Clear()
         txtFullName.Clear()
         txtContactNumber.Clear()
         txtEmailAddress.Clear()
         txtAddress.Clear()
+        txtSearch.Clear()
     End Sub
-
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
-        ClearForm()
-    End Sub
-
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
         Dim frm2 As New Form2()

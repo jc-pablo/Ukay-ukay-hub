@@ -17,9 +17,9 @@
         End Set
     End Property
 
-    Public Event AddToCartClicked(sender As Object, name As String, price As Integer)
+    Public Event AddToCart(sender As Object, name As String, price As Integer)
 
     Private Sub btnAddToCart_Click(sender As Object, e As EventArgs) Handles btnAddToCart.Click
-        RaiseEvent AddToCartClicked(Me, ItemName, Price)
+        RaiseEvent AddToCart(Me, lblTitle.Text, Convert.ToInt32(lblPrice.Text.Replace("₱", "")))
     End Sub
 End Class

@@ -48,13 +48,12 @@ Partial Class Form7
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.cmbItemSelection = New System.Windows.Forms.ComboBox()
+        Me.cmbItem = New System.Windows.Forms.ComboBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtSellingPrice = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.btnClear = New System.Windows.Forms.Button()
         Me.btnRecordSale = New System.Windows.Forms.Button()
         Me.txtDateFrom = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -66,14 +65,19 @@ Partial Class Form7
         Me.Label31 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.lblListedPrice = New System.Windows.Forms.Label()
-        Me.lblSourceType = New System.Windows.Forms.Label()
+        Me.lblSource = New System.Windows.Forms.Label()
         Me.lblConsignorShare = New System.Windows.Forms.Label()
         Me.lblShareRevenue = New System.Windows.Forms.Label()
-        Me.dgvSalesHistory = New System.Windows.Forms.DataGridView()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.dtpSaleDate = New System.Windows.Forms.DateTimePicker()
+        Me.btnUpdate = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnView = New System.Windows.Forms.Button()
+        Me.txtTransactionId = New System.Windows.Forms.TextBox()
+        Me.Label33 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvSalesHistory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -363,15 +367,15 @@ Partial Class Form7
         Me.Label20.TabIndex = 39
         Me.Label20.Text = "Record Sales"
         '
-        'cmbItemSelection
+        'cmbItem
         '
-        Me.cmbItemSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbItemSelection.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbItemSelection.FormattingEnabled = True
-        Me.cmbItemSelection.Location = New System.Drawing.Point(434, 435)
-        Me.cmbItemSelection.Name = "cmbItemSelection"
-        Me.cmbItemSelection.Size = New System.Drawing.Size(398, 28)
-        Me.cmbItemSelection.TabIndex = 61
+        Me.cmbItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbItem.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbItem.FormattingEnabled = True
+        Me.cmbItem.Location = New System.Drawing.Point(499, 435)
+        Me.cmbItem.Name = "cmbItem"
+        Me.cmbItem.Size = New System.Drawing.Size(333, 28)
+        Me.cmbItem.TabIndex = 61
         '
         'Label29
         '
@@ -379,7 +383,7 @@ Partial Class Form7
         Me.Label29.BackColor = System.Drawing.Color.Transparent
         Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label29.ForeColor = System.Drawing.Color.DimGray
-        Me.Label29.Location = New System.Drawing.Point(431, 416)
+        Me.Label29.Location = New System.Drawing.Point(495, 416)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(243, 16)
         Me.Label29.TabIndex = 60
@@ -429,18 +433,6 @@ Partial Class Form7
         Me.Label22.Size = New System.Drawing.Size(118, 16)
         Me.Label22.TabIndex = 63
         Me.Label22.Text = "SELLING PRICE"
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.Color.Linen
-        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClear.ForeColor = System.Drawing.Color.Black
-        Me.btnClear.Location = New System.Drawing.Point(623, 837)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(119, 50)
-        Me.btnClear.TabIndex = 68
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
         '
         'btnRecordSale
         '
@@ -574,17 +566,17 @@ Partial Class Form7
         Me.lblListedPrice.TabIndex = 78
         Me.lblListedPrice.Text = "price"
         '
-        'lblSourceType
+        'lblSource
         '
-        Me.lblSourceType.AutoSize = True
-        Me.lblSourceType.BackColor = System.Drawing.Color.Transparent
-        Me.lblSourceType.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSourceType.ForeColor = System.Drawing.Color.Black
-        Me.lblSourceType.Location = New System.Drawing.Point(736, 538)
-        Me.lblSourceType.Name = "lblSourceType"
-        Me.lblSourceType.Size = New System.Drawing.Size(54, 18)
-        Me.lblSourceType.TabIndex = 79
-        Me.lblSourceType.Text = "source"
+        Me.lblSource.AutoSize = True
+        Me.lblSource.BackColor = System.Drawing.Color.Transparent
+        Me.lblSource.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSource.ForeColor = System.Drawing.Color.Black
+        Me.lblSource.Location = New System.Drawing.Point(736, 538)
+        Me.lblSource.Name = "lblSource"
+        Me.lblSource.Size = New System.Drawing.Size(54, 18)
+        Me.lblSource.TabIndex = 79
+        Me.lblSource.Text = "source"
         '
         'lblConsignorShare
         '
@@ -610,9 +602,9 @@ Partial Class Form7
         Me.lblShareRevenue.TabIndex = 81
         Me.lblShareRevenue.Text = "price"
         '
-        'dgvSalesHistory
+        'DataGridView1
         '
-        Me.dgvSalesHistory.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -621,13 +613,13 @@ Partial Class Form7
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvSalesHistory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvSalesHistory.ColumnHeadersHeight = 40
-        Me.dgvSalesHistory.EnableHeadersVisualStyles = False
-        Me.dgvSalesHistory.Location = New System.Drawing.Point(879, 477)
-        Me.dgvSalesHistory.Name = "dgvSalesHistory"
-        Me.dgvSalesHistory.Size = New System.Drawing.Size(968, 371)
-        Me.dgvSalesHistory.TabIndex = 82
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeight = 40
+        Me.DataGridView1.EnableHeadersVisualStyles = False
+        Me.DataGridView1.Location = New System.Drawing.Point(879, 477)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(968, 371)
+        Me.DataGridView1.TabIndex = 82
         '
         'dtpSaleDate
         '
@@ -639,6 +631,66 @@ Partial Class Form7
         Me.dtpSaleDate.Size = New System.Drawing.Size(164, 31)
         Me.dtpSaleDate.TabIndex = 83
         '
+        'btnUpdate
+        '
+        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
+        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
+        Me.btnUpdate.Location = New System.Drawing.Point(744, 764)
+        Me.btnUpdate.Name = "btnUpdate"
+        Me.btnUpdate.Size = New System.Drawing.Size(100, 50)
+        Me.btnUpdate.TabIndex = 87
+        Me.btnUpdate.Text = "Update"
+        Me.btnUpdate.UseVisualStyleBackColor = False
+        '
+        'btnDelete
+        '
+        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
+        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(637, 837)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
+        Me.btnDelete.TabIndex = 86
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnView
+        '
+        Me.btnView.BackColor = System.Drawing.Color.Linen
+        Me.btnView.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnView.ForeColor = System.Drawing.Color.Black
+        Me.btnView.Location = New System.Drawing.Point(624, 764)
+        Me.btnView.Name = "btnView"
+        Me.btnView.Size = New System.Drawing.Size(114, 50)
+        Me.btnView.TabIndex = 85
+        Me.btnView.Text = "View Sales"
+        Me.btnView.UseVisualStyleBackColor = False
+        '
+        'txtTransactionId
+        '
+        Me.txtTransactionId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtTransactionId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtTransactionId.Location = New System.Drawing.Point(439, 433)
+        Me.txtTransactionId.Multiline = True
+        Me.txtTransactionId.Name = "txtTransactionId"
+        Me.txtTransactionId.Size = New System.Drawing.Size(54, 31)
+        Me.txtTransactionId.TabIndex = 88
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.BackColor = System.Drawing.Color.Transparent
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.ForeColor = System.Drawing.Color.DimGray
+        Me.Label33.Location = New System.Drawing.Point(443, 414)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(15, 16)
+        Me.Label33.TabIndex = 89
+        Me.Label33.Text = "#"
+        '
         'Form7
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -646,11 +698,16 @@ Partial Class Form7
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.Label33)
+        Me.Controls.Add(Me.txtTransactionId)
+        Me.Controls.Add(Me.btnUpdate)
+        Me.Controls.Add(Me.btnDelete)
+        Me.Controls.Add(Me.btnView)
         Me.Controls.Add(Me.dtpSaleDate)
-        Me.Controls.Add(Me.dgvSalesHistory)
+        Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.lblShareRevenue)
         Me.Controls.Add(Me.lblConsignorShare)
-        Me.Controls.Add(Me.lblSourceType)
+        Me.Controls.Add(Me.lblSource)
         Me.Controls.Add(Me.lblListedPrice)
         Me.Controls.Add(Me.Label32)
         Me.Controls.Add(Me.Label31)
@@ -661,13 +718,12 @@ Partial Class Form7
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.txtDateFrom)
         Me.Controls.Add(Me.Label30)
-        Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.btnRecordSale)
         Me.Controls.Add(Me.Label23)
         Me.Controls.Add(Me.txtSellingPrice)
         Me.Controls.Add(Me.Label22)
         Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.cmbItemSelection)
+        Me.Controls.Add(Me.cmbItem)
         Me.Controls.Add(Me.Label29)
         Me.Controls.Add(Me.Label26)
         Me.Controls.Add(Me.Label21)
@@ -686,7 +742,7 @@ Partial Class Form7
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvSalesHistory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -716,13 +772,12 @@ Partial Class Form7
     Friend WithEvents Label26 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Label20 As Label
-    Friend WithEvents cmbItemSelection As ComboBox
+    Friend WithEvents cmbItem As ComboBox
     Friend WithEvents Label29 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label23 As Label
     Friend WithEvents txtSellingPrice As TextBox
     Friend WithEvents Label22 As Label
-    Friend WithEvents btnClear As Button
     Friend WithEvents btnRecordSale As Button
     Friend WithEvents txtDateFrom As TextBox
     Friend WithEvents Label30 As Label
@@ -734,9 +789,14 @@ Partial Class Form7
     Friend WithEvents Label31 As Label
     Friend WithEvents Label32 As Label
     Friend WithEvents lblListedPrice As Label
-    Friend WithEvents lblSourceType As Label
+    Friend WithEvents lblSource As Label
     Friend WithEvents lblConsignorShare As Label
     Friend WithEvents lblShareRevenue As Label
-    Friend WithEvents dgvSalesHistory As DataGridView
+    Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents dtpSaleDate As DateTimePicker
+    Friend WithEvents btnUpdate As Button
+    Friend WithEvents btnDelete As Button
+    Friend WithEvents btnView As Button
+    Friend WithEvents txtTransactionId As TextBox
+    Friend WithEvents Label33 As Label
 End Class

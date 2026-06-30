@@ -1,138 +1,198 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class Form7
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
-    Dim itemTable As New DataTable()
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Dim sql As String
+    Dim dbcomm As MySqlCommand
+    Dim DataAdapter1 As MySqlDataAdapter
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+        If e.RowIndex >= 0 Then
+            Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
+
+            Dim selectedTransId As String = row.Cells("Transaction ID").Value.ToString()
+
+            Try
+                conn.Open()
+                sql = "SELECT t.transaction_id, t.item_id, t.selling_price, t.sale_date " &
+                  "FROM transactions t WHERE t.transaction_id = @id"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.Parameters.AddWithValue("@id", selectedTransId)
+                Dim dbread As MySqlDataReader = dbcomm.ExecuteReader()
+
+                If dbread.Read() Then
+                    txtTransactionId.Text = dbread("transaction_id").ToString()
+                    txtSellingPrice.Text = Convert.ToDecimal(dbread("selling_price")).ToString("F2")
+                    dtpSaleDate.Value = Convert.ToDateTime(dbread("sale_date"))
+                    cmbItem.SelectedValue = dbread("item_id").ToString()
+                End If
+                dbread.Close()
+            Catch ex As Exception
+                MsgBox("Error selecting record: " & ex.Message)
+            Finally
+                conn.Close()
+            End Try
+        End If
+    End Sub
+    Private Sub btnRecordSale_Click(sender As Object, e As EventArgs) Handles btnRecordSale.Click
+        Try
+            conn.Open()
+            sql = $"INSERT INTO transactions (transaction_id, item_id, selling_price, sale_date, payout_status) " &
+              $"VALUES('{txtTransactionId.Text.Trim()}', '{cmbItem.SelectedValue}', '{txtSellingPrice.Text.Trim()}', '{dtpSaleDate.Value.ToString("yyyy-MM-dd")}', 'Unpaid'); " &
+              $"UPDATE inventory SET status = 'Sold' WHERE item_id = '{cmbItem.SelectedValue}'"
+
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+
+            If (i > 0) Then
+                MsgBox("record saved")
+            Else
+                MsgBox("record not saved")
+            End If
+
+        Catch ex As MySqlException
+            If ex.Number = 1062 Then
+                MsgBox("Transaction ID already exists!")
+            Else
+                MsgBox(ex.Message)
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        conn.Close()
+
+        txtTransactionId.Clear()
+        txtSellingPrice.Clear()
+        cmbItem.SelectedIndex = -1
+        LoadAvailableItems()
+        LoadTransactionHistory()
+    End Sub
+    Private Sub LoadAvailableItems()
+        Try
+            conn.Open()
+            sql = "SELECT item_id, item_name, price, source_type FROM inventory WHERE status = 'Available'"
+            Dim dt As New DataTable()
+            Dim da As New MySqlDataAdapter(sql, conn)
+            da.Fill(dt)
+
+            cmbItem.DataSource = dt
+            cmbItem.DisplayMember = "item_name"
+            cmbItem.ValueMember = "item_id"
+            cmbItem.SelectedIndex = -1
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+        DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
+    End Sub
+
+    Private Sub cmbItem_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbItem.SelectedIndexChanged
+        If cmbItem.SelectedIndex <> -1 AndAlso TypeOf cmbItem.SelectedItem Is DataRowView Then
+            Dim row As DataRowView = CType(cmbItem.SelectedItem, DataRowView)
+
+            Dim listedPrice As Decimal = Convert.ToDecimal(row("price"))
+            Dim source As String = row("source_type").ToString()
+
+            lblListedPrice.Text = listedPrice.ToString("F2")
+            lblSource.Text = source
+            txtSellingPrice.Text = listedPrice.ToString("F2")
+            Dim consignorShare As Decimal = 0
+            Dim storeRevenue As Decimal = 0
+
+            If source = "Consigned" Then
+                consignorShare = listedPrice * 0.9D
+                storeRevenue = listedPrice * 0.1D
+            ElseIf source = "Donated" Then
+                consignorShare = 0
+                storeRevenue = listedPrice
+            End If
+
+            lblConsignorShare.Text = consignorShare.ToString("F2")
+            lblShareRevenue.Text = storeRevenue.ToString("F2")
+        End If
+    End Sub
+    Private Sub btnView_Click(sender As Object, e As EventArgs) Handles btnView.Click
+        LoadTransactionHistory()
+    End Sub
+
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        Try
+            conn.Open()
+            sql = $"UPDATE transactions SET item_id = '{cmbItem.SelectedValue}', selling_price = '{txtSellingPrice.Text.Trim()}', sale_date = '{dtpSaleDate.Value.ToString("yyyy-MM-dd")}' WHERE transaction_id = '{txtTransactionId.Text.Trim()}'"
+
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+
+            If (i > 0) Then
+                MsgBox("record saved")
+            Else
+                MsgBox("record not saved")
+            End If
+
+        Catch ex As MySqlException
+            MsgBox(ex.Message)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        conn.Close()
+
+        txtTransactionId.Clear()
+        txtSellingPrice.Clear()
+        cmbItem.SelectedIndex = -1
+        LoadAvailableItems()
+        LoadTransactionHistory()
+    End Sub
+    Private Sub LoadTransactionHistory()
+        Try
+            conn.Open()
+            sql = "SELECT t.transaction_id As 'Transaction ID', i.item_name As 'Item', t.selling_price As 'Sold Price', t.sale_date As 'Date' " &
+                  "FROM transactions t INNER JOIN inventory i ON t.item_id = i.item_id ORDER BY t.sale_date DESC"
+            Dim dt As New DataTable()
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            DataAdapter1.Fill(dt)
+            DataGridView1.DataSource = dt
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        Finally
+            conn.Close()
+        End Try
+
+    End Sub
 
     Private Sub Form7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadAvailableItems()
-        LoadSalesHistoryGrid()
-        dtpSaleDate.Value = DateTime.Now
+        LoadTransactionHistory()
     End Sub
-    Private Sub LoadAvailableItems()
-        Dim query As String = "SELECT i.item_id, CONCAT(i.item_name, ' (', c.category_name, ')') As item_display, " &
-                              "i.price, i.source_type, COALESCE(con.commission_rate, 0) As rate " &
-                              "FROM inventory i " &
-                              "LEFT JOIN categories c ON i.category_id = c.category_id " &
-                              "LEFT JOIN consignors con ON i.consignor_id = con.consignor_id " &
-                              "WHERE i.status = 'Available' ORDER BY i.item_name ASC"
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        Dim ans = MessageBox.Show("Do you want to delete this record?", "Confirm Delete", MessageBoxButtons.YesNo)
+        If ans = DialogResult.Yes Then
+            Try
+                conn.Open()
+                sql = $"UPDATE inventory SET status = 'Available' WHERE item_id = '{cmbItem.SelectedValue}'; " &
+                  $"DELETE FROM transactions WHERE transaction_id = '{txtTransactionId.Text.Trim()}'"
 
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    itemTable.Clear()
-                    adapter.Fill(itemTable)
+                dbcomm = New MySqlCommand(sql, conn)
+                Dim i As Integer = dbcomm.ExecuteNonQuery()
 
-                    cmbItemSelection.DataSource = itemTable
-                    cmbItemSelection.DisplayMember = "item_display"
-                    cmbItemSelection.ValueMember = "item_id"
-                    cmbItemSelection.SelectedIndex = -1
-                    ClearCalculatedLabels()
-                Catch ex As MySqlException
-                    MessageBox.Show("Error fetching inventory stock: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
-    End Sub
-    Private Sub cmbItemSelection_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbItemSelection.SelectedIndexChanged
-        If cmbItemSelection.SelectedIndex <> -1 AndAlso itemTable.Rows.Count > 0 Then
-            Dim selectedRow As DataRow = itemTable.Rows(cmbItemSelection.SelectedIndex)
+                If i > 0 Then
+                    MsgBox("Record deleted and item reverted to Available!")
+                Else
+                    MsgBox("No record was deleted.")
+                End If
 
-            Dim listedPrice As Decimal = Convert.ToDecimal(selectedRow("price"))
-            Dim source As String = selectedRow("source_type").ToString()
-            Dim rate As Decimal = Convert.ToDecimal(selectedRow("rate"))
+                txtTransactionId.Clear()
+                txtSellingPrice.Clear()
+                cmbItem.SelectedIndex = -1
 
-            Dim consignorCut As Decimal = 0
-            If source = "Consigned" Then
-                consignorCut = listedPrice * (rate / 100)
-            End If
-            Dim storeCut As Decimal = listedPrice - consignorCut
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            Finally
+                conn.Close()
+            End Try
 
-            lblListedPrice.Text = listedPrice.ToString("F2")
-            lblSourceType.Text = source
-            lblConsignorShare.Text = consignorCut.ToString("F2")
-            lblShareRevenue.Text = storeCut.ToString("F2")
-            txtSellingPrice.Text = listedPrice.ToString("F2")
+            LoadAvailableItems()
+            LoadTransactionHistory()
         End If
     End Sub
-
-    Private Sub btnRecordSale_Click(sender As Object, e As EventArgs) Handles btnRecordSale.Click
-        If cmbItemSelection.SelectedIndex = -1 Then
-            MessageBox.Show("Please pick an available item to finalize sale.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Dim itemId As Integer = Convert.ToInt32(cmbItemSelection.SelectedValue)
-        Dim sellingPrice As Decimal = Convert.ToDecimal(txtSellingPrice.Text)
-        Dim source As String = lblSourceType.Text
-        Dim consignorShare As Decimal = Convert.ToDecimal(lblConsignorShare.Text)
-        Dim storeShare As Decimal = sellingPrice - consignorShare
-        Dim payoutStatus As String = If(source = "Consigned", "Unpaid", "N/A")
-
-        Dim insertQuery As String = "INSERT INTO transactions (item_id, selling_price, consignor_share, store_share, sale_date, payout_status) " &
-                                    "VALUES (@itemId, @sellPrice, @conShare, @storeShare, @saleDate, @status);" &
-                                    "UPDATE inventory SET status = 'Sold' WHERE item_id = @itemId;"
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(insertQuery, conn)
-                cmd.Parameters.AddWithValue("@itemId", itemId)
-                cmd.Parameters.AddWithValue("@sellPrice", sellingPrice)
-                cmd.Parameters.AddWithValue("@conShare", consignorShare)
-                cmd.Parameters.AddWithValue("@storeShare", storeShare)
-                cmd.Parameters.AddWithValue("@saleDate", dtpSaleDate.Value)
-                cmd.Parameters.AddWithValue("@status", payoutStatus)
-
-                Try
-                    conn.Open()
-                    cmd.ExecuteNonQuery()
-                    MessageBox.Show("Sale transaction logged securely!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                    ClearForm()
-                    LoadAvailableItems()
-                    LoadSalesHistoryGrid()
-                Catch ex As MySqlException
-                    MessageBox.Show("Error execution failed: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
-    End Sub
-
-    Private Sub LoadSalesHistoryGrid()
-        Dim query As String = "SELECT t.transaction_id As '#', i.item_name As 'Item', t.selling_price As 'Sale Price', " &
-                              "i.source_type As 'Source', t.consignor_share As 'Consignor Share', t.sale_date As 'Date' " &
-                              "FROM transactions t INNER JOIN inventory i ON t.item_id = i.item_id ORDER BY t.transaction_id DESC"
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim dt As New DataTable()
-                    adapter.Fill(dt)
-                    dgvSalesHistory.DataSource = dt
-                    dgvSalesHistory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-                Catch ex As Exception
-                End Try
-            End Using
-        End Using
-    End Sub
-
-    Private Sub ClearForm()
-        cmbItemSelection.SelectedIndex = -1
-        txtSellingPrice.Clear()
-        ClearCalculatedLabels()
-    End Sub
-
-    Private Sub ClearCalculatedLabels()
-        lblListedPrice.Text = "0.00"
-        lblSourceType.Text = "---"
-        lblConsignorShare.Text = "0.00"
-        lblShareRevenue.Text = "0.00"
-    End Sub
-
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
-        ClearForm()
-    End Sub
-
-
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()
         frm1.Show()

@@ -55,13 +55,8 @@ Partial Class Form5
         Me.txtFullName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.txtCommissionRate = New System.Windows.Forms.TextBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.lblRateDisplay = New System.Windows.Forms.Label()
-        Me.btnDelete = New System.Windows.Forms.Button()
-        Me.btnClear = New System.Windows.Forms.Button()
-        Me.btnsave = New System.Windows.Forms.Button()
-        Me.dgvConsignors = New System.Windows.Forms.DataGridView()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.colConNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colConName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colConContact = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -69,11 +64,17 @@ Partial Class Form5
         Me.colConItemsListed = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colConTotalEarned = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.txtSearch = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
+        Me.btnUpdate = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnClear = New System.Windows.Forms.Button()
+        Me.btnSave = New System.Windows.Forms.Button()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.txtConsignorId = New System.Windows.Forms.TextBox()
+        Me.Label30 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvConsignors, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -417,10 +418,10 @@ Partial Class Form5
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtFullName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFullName.Location = New System.Drawing.Point(429, 449)
+        Me.txtFullName.Location = New System.Drawing.Point(485, 449)
         Me.txtFullName.Multiline = True
         Me.txtFullName.Name = "txtFullName"
-        Me.txtFullName.Size = New System.Drawing.Size(386, 38)
+        Me.txtFullName.Size = New System.Drawing.Size(330, 38)
         Me.txtFullName.TabIndex = 40
         '
         'Label22
@@ -429,7 +430,7 @@ Partial Class Form5
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(426, 430)
+        Me.Label22.Location = New System.Drawing.Point(482, 430)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(90, 16)
         Me.Label22.TabIndex = 39
@@ -441,32 +442,11 @@ Partial Class Form5
         Me.Label25.BackColor = System.Drawing.Color.Transparent
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label25.ForeColor = System.Drawing.Color.DimGray
-        Me.Label25.Location = New System.Drawing.Point(426, 682)
+        Me.Label25.Location = New System.Drawing.Point(426, 679)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(174, 16)
         Me.Label25.TabIndex = 45
         Me.Label25.Text = "COMMISSION RATE (%)"
-        '
-        'txtCommissionRate
-        '
-        Me.txtCommissionRate.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCommissionRate.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCommissionRate.Location = New System.Drawing.Point(429, 711)
-        Me.txtCommissionRate.Multiline = True
-        Me.txtCommissionRate.Name = "txtCommissionRate"
-        Me.txtCommissionRate.Size = New System.Drawing.Size(96, 38)
-        Me.txtCommissionRate.TabIndex = 46
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.BackColor = System.Drawing.Color.FloralWhite
-        Me.PictureBox1.Location = New System.Drawing.Point(543, 711)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(197, 38)
-        Me.PictureBox1.TabIndex = 47
-        Me.PictureBox1.TabStop = False
         '
         'lblRateDisplay
         '
@@ -474,51 +454,15 @@ Partial Class Form5
         Me.lblRateDisplay.BackColor = System.Drawing.Color.Transparent
         Me.lblRateDisplay.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblRateDisplay.ForeColor = System.Drawing.Color.Chocolate
-        Me.lblRateDisplay.Location = New System.Drawing.Point(557, 722)
+        Me.lblRateDisplay.Location = New System.Drawing.Point(606, 677)
         Me.lblRateDisplay.Name = "lblRateDisplay"
-        Me.lblRateDisplay.Size = New System.Drawing.Size(66, 18)
+        Me.lblRateDisplay.Size = New System.Drawing.Size(40, 18)
         Me.lblRateDisplay.TabIndex = 48
-        Me.lblRateDisplay.Text = "Label27"
+        Me.lblRateDisplay.Text = "10%"
         '
-        'btnDelete
+        'DataGridView1
         '
-        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
-        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDelete.ForeColor = System.Drawing.Color.White
-        Me.btnDelete.Location = New System.Drawing.Point(696, 772)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
-        Me.btnDelete.TabIndex = 51
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = False
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.Color.Linen
-        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClear.ForeColor = System.Drawing.Color.Black
-        Me.btnClear.Location = New System.Drawing.Point(566, 772)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(119, 50)
-        Me.btnClear.TabIndex = 50
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
-        '
-        'btnsave
-        '
-        Me.btnsave.BackColor = System.Drawing.SystemColors.WindowFrame
-        Me.btnsave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnsave.ForeColor = System.Drawing.Color.White
-        Me.btnsave.Location = New System.Drawing.Point(429, 772)
-        Me.btnsave.Name = "btnsave"
-        Me.btnsave.Size = New System.Drawing.Size(119, 50)
-        Me.btnsave.TabIndex = 49
-        Me.btnsave.Text = "Save"
-        Me.btnsave.UseVisualStyleBackColor = False
-        '
-        'dgvConsignors
-        '
-        Me.dgvConsignors.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -527,48 +471,54 @@ Partial Class Form5
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvConsignors.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvConsignors.ColumnHeadersHeight = 40
-        Me.dgvConsignors.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colConNumber, Me.colConName, Me.colConContact, Me.colConCommission, Me.colConItemsListed, Me.colConTotalEarned})
-        Me.dgvConsignors.EnableHeadersVisualStyles = False
-        Me.dgvConsignors.Location = New System.Drawing.Point(874, 499)
-        Me.dgvConsignors.Name = "dgvConsignors"
-        Me.dgvConsignors.Size = New System.Drawing.Size(968, 371)
-        Me.dgvConsignors.TabIndex = 52
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeight = 40
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colConNumber, Me.colConName, Me.colConContact, Me.colConCommission, Me.colConItemsListed, Me.colConTotalEarned})
+        Me.DataGridView1.EnableHeadersVisualStyles = False
+        Me.DataGridView1.Location = New System.Drawing.Point(874, 499)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(968, 371)
+        Me.DataGridView1.TabIndex = 52
         '
         'colConNumber
         '
+        Me.colConNumber.DataPropertyName = "#"
         Me.colConNumber.HeaderText = "#"
         Me.colConNumber.Name = "colConNumber"
         Me.colConNumber.Width = 60
         '
         'colConName
         '
+        Me.colConName.DataPropertyName = "Name"
         Me.colConName.HeaderText = "Name"
         Me.colConName.Name = "colConName"
         Me.colConName.Width = 250
         '
         'colConContact
         '
+        Me.colConContact.DataPropertyName = "Contact"
         Me.colConContact.HeaderText = "Contact"
         Me.colConContact.Name = "colConContact"
         Me.colConContact.Width = 180
         '
         'colConCommission
         '
+        Me.colConCommission.DataPropertyName = "Commission"
         Me.colConCommission.HeaderText = "Commission"
         Me.colConCommission.Name = "colConCommission"
         Me.colConCommission.Width = 150
         '
         'colConItemsListed
         '
+        Me.colConItemsListed.DataPropertyName = "Items Listed"
         Me.colConItemsListed.HeaderText = "Items Listed"
         Me.colConItemsListed.Name = "colConItemsListed"
         Me.colConItemsListed.Width = 150
         '
         'colConTotalEarned
         '
-        Me.colConTotalEarned.HeaderText = "Total Earned"
+        Me.colConTotalEarned.DataPropertyName = "Earned"
+        Me.colConTotalEarned.HeaderText = "Earned"
         Me.colConTotalEarned.Name = "colConTotalEarned"
         Me.colConTotalEarned.Width = 150
         '
@@ -584,17 +534,17 @@ Partial Class Form5
         Me.Label28.TabIndex = 53
         Me.Label28.Text = "Consignors sell through the store and recieve a cut of each sale."
         '
-        'TextBox5
+        'txtSearch
         '
-        Me.TextBox5.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.txtSearch.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox5.Location = New System.Drawing.Point(874, 449)
-        Me.TextBox5.Multiline = True
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(968, 38)
-        Me.TextBox5.TabIndex = 55
+        Me.txtSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSearch.Location = New System.Drawing.Point(874, 449)
+        Me.txtSearch.Multiline = True
+        Me.txtSearch.Name = "txtSearch"
+        Me.txtSearch.Size = New System.Drawing.Size(968, 38)
+        Me.txtSearch.TabIndex = 55
         '
         'Label29
         '
@@ -608,6 +558,90 @@ Partial Class Form5
         Me.Label29.TabIndex = 54
         Me.Label29.Text = "SEARCH"
         '
+        'btnUpdate
+        '
+        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
+        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
+        Me.btnUpdate.Location = New System.Drawing.Point(603, 743)
+        Me.btnUpdate.Name = "btnUpdate"
+        Me.btnUpdate.Size = New System.Drawing.Size(100, 50)
+        Me.btnUpdate.TabIndex = 59
+        Me.btnUpdate.Text = "Update"
+        Me.btnUpdate.UseVisualStyleBackColor = False
+        '
+        'btnDelete
+        '
+        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
+        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(709, 742)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
+        Me.btnDelete.TabIndex = 58
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnClear
+        '
+        Me.btnClear.BackColor = System.Drawing.Color.Linen
+        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClear.ForeColor = System.Drawing.Color.Black
+        Me.btnClear.Location = New System.Drawing.Point(518, 743)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(79, 50)
+        Me.btnClear.TabIndex = 57
+        Me.btnClear.Text = "Clear"
+        Me.btnClear.UseVisualStyleBackColor = False
+        '
+        'btnSave
+        '
+        Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.ForeColor = System.Drawing.Color.White
+        Me.btnSave.Location = New System.Drawing.Point(430, 743)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(82, 50)
+        Me.btnSave.TabIndex = 56
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = False
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.BackColor = System.Drawing.Color.Transparent
+        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label27.ForeColor = System.Drawing.Color.DimGray
+        Me.Label27.Location = New System.Drawing.Point(431, 430)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(15, 16)
+        Me.Label27.TabIndex = 60
+        Me.Label27.Text = "#"
+        '
+        'txtConsignorId
+        '
+        Me.txtConsignorId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtConsignorId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtConsignorId.Location = New System.Drawing.Point(427, 450)
+        Me.txtConsignorId.Multiline = True
+        Me.txtConsignorId.Name = "txtConsignorId"
+        Me.txtConsignorId.Size = New System.Drawing.Size(52, 38)
+        Me.txtConsignorId.TabIndex = 61
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.BackColor = System.Drawing.Color.Transparent
+        Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label30.ForeColor = System.Drawing.Color.Black
+        Me.Label30.Location = New System.Drawing.Point(426, 820)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(402, 15)
+        Me.Label30.TabIndex = 62
+        Me.Label30.Text = "-------------------------------------------------------------------------------"
+        '
         'Form5
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -615,16 +649,18 @@ Partial Class Form5
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
-        Me.Controls.Add(Me.TextBox5)
-        Me.Controls.Add(Me.Label29)
-        Me.Controls.Add(Me.Label28)
-        Me.Controls.Add(Me.dgvConsignors)
+        Me.Controls.Add(Me.Label30)
+        Me.Controls.Add(Me.txtConsignorId)
+        Me.Controls.Add(Me.Label27)
+        Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnClear)
-        Me.Controls.Add(Me.btnsave)
+        Me.Controls.Add(Me.btnSave)
+        Me.Controls.Add(Me.txtSearch)
+        Me.Controls.Add(Me.Label29)
+        Me.Controls.Add(Me.Label28)
+        Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.lblRateDisplay)
-        Me.Controls.Add(Me.PictureBox1)
-        Me.Controls.Add(Me.txtCommissionRate)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.txtEmailAddress)
         Me.Controls.Add(Me.Label24)
@@ -648,8 +684,7 @@ Partial Class Form5
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvConsignors, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -686,20 +721,22 @@ Partial Class Form5
     Friend WithEvents txtFullName As TextBox
     Friend WithEvents Label22 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents txtCommissionRate As TextBox
-    Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents lblRateDisplay As Label
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Label28 As Label
+    Friend WithEvents txtSearch As TextBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnClear As Button
-    Friend WithEvents btnsave As Button
-    Friend WithEvents dgvConsignors As DataGridView
+    Friend WithEvents btnSave As Button
+    Friend WithEvents Label27 As Label
+    Friend WithEvents txtConsignorId As TextBox
     Friend WithEvents colConNumber As DataGridViewTextBoxColumn
     Friend WithEvents colConName As DataGridViewTextBoxColumn
     Friend WithEvents colConContact As DataGridViewTextBoxColumn
     Friend WithEvents colConCommission As DataGridViewTextBoxColumn
     Friend WithEvents colConItemsListed As DataGridViewTextBoxColumn
     Friend WithEvents colConTotalEarned As DataGridViewTextBoxColumn
-    Friend WithEvents Label28 As Label
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents Label29 As Label
+    Friend WithEvents Label30 As Label
 End Class

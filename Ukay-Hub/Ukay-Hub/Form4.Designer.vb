@@ -56,20 +56,23 @@ Partial Class Form4
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtAddress = New System.Windows.Forms.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.txtSearch = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
+        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.btnUpdate = New System.Windows.Forms.Button()
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.txtSearchDonor = New System.Windows.Forms.TextBox()
-        Me.Label28 = New System.Windows.Forms.Label()
-        Me.dgvDonors = New System.Windows.Forms.DataGridView()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.txtDonorId = New System.Windows.Forms.TextBox()
         Me.colDonNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colDonName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colDonContact = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colDonItemsDonated = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colDonDateRegistered = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
-        CType(Me.dgvDonors, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Panel1
@@ -365,10 +368,10 @@ Partial Class Form4
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtFullName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFullName.Location = New System.Drawing.Point(424, 460)
+        Me.txtFullName.Location = New System.Drawing.Point(480, 460)
         Me.txtFullName.Multiline = True
         Me.txtFullName.Name = "txtFullName"
-        Me.txtFullName.Size = New System.Drawing.Size(386, 38)
+        Me.txtFullName.Size = New System.Drawing.Size(330, 38)
         Me.txtFullName.TabIndex = 34
         '
         'Label22
@@ -377,7 +380,7 @@ Partial Class Form4
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(421, 441)
+        Me.Label22.Location = New System.Drawing.Point(477, 441)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(90, 16)
         Me.Label22.TabIndex = 33
@@ -455,42 +458,6 @@ Partial Class Form4
         Me.Label25.TabIndex = 39
         Me.Label25.Text = "ADDRESS"
         '
-        'btnDelete
-        '
-        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
-        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDelete.ForeColor = System.Drawing.Color.White
-        Me.btnDelete.Location = New System.Drawing.Point(691, 790)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
-        Me.btnDelete.TabIndex = 43
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = False
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.Color.Linen
-        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClear.ForeColor = System.Drawing.Color.Black
-        Me.btnClear.Location = New System.Drawing.Point(561, 790)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(119, 50)
-        Me.btnClear.TabIndex = 42
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
-        Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(424, 790)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(119, 50)
-        Me.btnSave.TabIndex = 41
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
         'Label27
         '
         Me.Label27.AutoSize = True
@@ -503,17 +470,17 @@ Partial Class Form4
         Me.Label27.TabIndex = 44
         Me.Label27.Text = "Donors give items freely with no share in sales."
         '
-        'txtSearchDonor
+        'txtSearch
         '
-        Me.txtSearchDonor.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.txtSearch.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSearchDonor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtSearchDonor.Location = New System.Drawing.Point(869, 460)
-        Me.txtSearchDonor.Multiline = True
-        Me.txtSearchDonor.Name = "txtSearchDonor"
-        Me.txtSearchDonor.Size = New System.Drawing.Size(968, 38)
-        Me.txtSearchDonor.TabIndex = 46
+        Me.txtSearch.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtSearch.Location = New System.Drawing.Point(869, 460)
+        Me.txtSearch.Multiline = True
+        Me.txtSearch.Name = "txtSearch"
+        Me.txtSearch.Size = New System.Drawing.Size(968, 38)
+        Me.txtSearch.TabIndex = 46
         '
         'Label28
         '
@@ -527,9 +494,9 @@ Partial Class Form4
         Me.Label28.TabIndex = 45
         Me.Label28.Text = "SEARCH"
         '
-        'dgvDonors
+        'DataGridView1
         '
-        Me.dgvDonors.BackgroundColor = System.Drawing.Color.White
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -538,41 +505,118 @@ Partial Class Form4
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvDonors.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvDonors.ColumnHeadersHeight = 40
-        Me.dgvDonors.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colDonNumber, Me.colDonName, Me.colDonContact, Me.colDonItemsDonated, Me.colDonDateRegistered})
-        Me.dgvDonors.EnableHeadersVisualStyles = False
-        Me.dgvDonors.Location = New System.Drawing.Point(869, 519)
-        Me.dgvDonors.Name = "dgvDonors"
-        Me.dgvDonors.Size = New System.Drawing.Size(968, 371)
-        Me.dgvDonors.TabIndex = 47
+        Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeight = 40
+        Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colDonNumber, Me.colDonName, Me.colDonContact, Me.colDonItemsDonated, Me.colDonDateRegistered})
+        Me.DataGridView1.EnableHeadersVisualStyles = False
+        Me.DataGridView1.Location = New System.Drawing.Point(869, 519)
+        Me.DataGridView1.Name = "DataGridView1"
+        Me.DataGridView1.Size = New System.Drawing.Size(968, 371)
+        Me.DataGridView1.TabIndex = 47
+        '
+        'btnUpdate
+        '
+        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
+        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
+        Me.btnUpdate.Location = New System.Drawing.Point(587, 802)
+        Me.btnUpdate.Name = "btnUpdate"
+        Me.btnUpdate.Size = New System.Drawing.Size(100, 50)
+        Me.btnUpdate.TabIndex = 51
+        Me.btnUpdate.Text = "Update"
+        Me.btnUpdate.UseVisualStyleBackColor = False
+        '
+        'btnDelete
+        '
+        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
+        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(693, 801)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
+        Me.btnDelete.TabIndex = 50
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnClear
+        '
+        Me.btnClear.BackColor = System.Drawing.Color.Linen
+        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClear.ForeColor = System.Drawing.Color.Black
+        Me.btnClear.Location = New System.Drawing.Point(502, 802)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(79, 50)
+        Me.btnClear.TabIndex = 49
+        Me.btnClear.Text = "Clear"
+        Me.btnClear.UseVisualStyleBackColor = False
+        '
+        'btnSave
+        '
+        Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.ForeColor = System.Drawing.Color.White
+        Me.btnSave.Location = New System.Drawing.Point(414, 802)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(82, 50)
+        Me.btnSave.TabIndex = 48
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = False
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.BackColor = System.Drawing.Color.Transparent
+        Me.Label29.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label29.ForeColor = System.Drawing.Color.DimGray
+        Me.Label29.Location = New System.Drawing.Point(431, 441)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(15, 16)
+        Me.Label29.TabIndex = 52
+        Me.Label29.Text = "#"
+        '
+        'txtDonorId
+        '
+        Me.txtDonorId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtDonorId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtDonorId.Location = New System.Drawing.Point(424, 460)
+        Me.txtDonorId.Multiline = True
+        Me.txtDonorId.Name = "txtDonorId"
+        Me.txtDonorId.Size = New System.Drawing.Size(48, 38)
+        Me.txtDonorId.TabIndex = 53
         '
         'colDonNumber
         '
+        Me.colDonNumber.DataPropertyName = "#"
         Me.colDonNumber.HeaderText = "#"
         Me.colDonNumber.Name = "colDonNumber"
         Me.colDonNumber.Width = 60
         '
         'colDonName
         '
+        Me.colDonName.DataPropertyName = "Name"
         Me.colDonName.HeaderText = "Name"
         Me.colDonName.Name = "colDonName"
         Me.colDonName.Width = 280
         '
         'colDonContact
         '
+        Me.colDonContact.DataPropertyName = "Contact"
         Me.colDonContact.HeaderText = "Contact"
         Me.colDonContact.Name = "colDonContact"
         Me.colDonContact.Width = 200
         '
         'colDonItemsDonated
         '
+        Me.colDonItemsDonated.DataPropertyName = "Items Donated"
         Me.colDonItemsDonated.HeaderText = "Items Donated"
         Me.colDonItemsDonated.Name = "colDonItemsDonated"
         Me.colDonItemsDonated.Width = 240
         '
         'colDonDateRegistered
         '
+        Me.colDonDateRegistered.DataPropertyName = "Date Registered"
         Me.colDonDateRegistered.HeaderText = "Date Registered"
         Me.colDonDateRegistered.Name = "colDonDateRegistered"
         Me.colDonDateRegistered.Width = 150
@@ -583,13 +627,16 @@ Partial Class Form4
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
-        Me.Controls.Add(Me.dgvDonors)
-        Me.Controls.Add(Me.txtSearchDonor)
-        Me.Controls.Add(Me.Label28)
-        Me.Controls.Add(Me.Label27)
+        Me.Controls.Add(Me.txtDonorId)
+        Me.Controls.Add(Me.Label29)
+        Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.btnSave)
+        Me.Controls.Add(Me.DataGridView1)
+        Me.Controls.Add(Me.txtSearch)
+        Me.Controls.Add(Me.Label28)
+        Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.txtAddress)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.txtEmailAddress)
@@ -606,6 +653,7 @@ Partial Class Form4
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Panel1)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.Name = "Form4"
@@ -613,7 +661,7 @@ Partial Class Form4
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.dgvDonors, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -651,13 +699,16 @@ Partial Class Form4
     Friend WithEvents Label24 As Label
     Friend WithEvents txtAddress As TextBox
     Friend WithEvents Label25 As Label
+    Friend WithEvents Label27 As Label
+    Friend WithEvents txtSearch As TextBox
+    Friend WithEvents Label28 As Label
+    Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents btnUpdate As Button
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnSave As Button
-    Friend WithEvents Label27 As Label
-    Friend WithEvents txtSearchDonor As TextBox
-    Friend WithEvents Label28 As Label
-    Friend WithEvents dgvDonors As DataGridView
+    Friend WithEvents Label29 As Label
+    Friend WithEvents txtDonorId As TextBox
     Friend WithEvents colDonNumber As DataGridViewTextBoxColumn
     Friend WithEvents colDonName As DataGridViewTextBoxColumn
     Friend WithEvents colDonContact As DataGridViewTextBoxColumn

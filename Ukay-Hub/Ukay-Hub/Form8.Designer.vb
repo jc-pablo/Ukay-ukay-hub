@@ -49,7 +49,7 @@ Partial Class Form8
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.cmbConsignors = New System.Windows.Forms.ComboBox()
+        Me.cmbConsignor = New System.Windows.Forms.ComboBox()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
@@ -57,25 +57,22 @@ Partial Class Form8
         Me.btnCompute = New System.Windows.Forms.Button()
         Me.Label32 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.btnSavePayoutRecord = New System.Windows.Forms.Button()
+        Me.btnSavePayout = New System.Windows.Forms.Button()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.lblRcptNameDate = New System.Windows.Forms.Label()
+        Me.lblSummaryNameDate = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.lblRcptTotalPayout = New System.Windows.Forms.Label()
-        Me.lblRcptItemsSold = New System.Windows.Forms.Label()
-        Me.lblRcptTotalSales = New System.Windows.Forms.Label()
-        Me.lblRcptCommRate = New System.Windows.Forms.Label()
-        Me.dgvUnpaidItems = New System.Windows.Forms.DataGridView()
-        Me.colCnNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnSalePrice = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnCommission = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colTrDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblTotalPayout = New System.Windows.Forms.Label()
+        Me.lblItemsSold = New System.Windows.Forms.Label()
+        Me.lblTotalSales = New System.Windows.Forms.Label()
+        Me.lblCommissionRate = New System.Windows.Forms.Label()
+        Me.dgvItemsSold = New System.Windows.Forms.DataGridView()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgvPayoutHistory = New System.Windows.Forms.DataGridView()
+        Me.dtpFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtpTo = New System.Windows.Forms.DateTimePicker()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnConsignor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnPeriod = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -83,11 +80,13 @@ Partial Class Form8
         Me.colCnTotalSales = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnPayout = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnDateSaved = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dtpFrom = New System.Windows.Forms.DateTimePicker()
-        Me.dtpTo = New System.Windows.Forms.DateTimePicker()
+        Me.colCnItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCnSalePrice = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCnCommission = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTrDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dgvUnpaidItems, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvItemsSold, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvPayoutHistory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -378,15 +377,15 @@ Partial Class Form8
         Me.Label20.TabIndex = 42
         Me.Label20.Text = "Consignor Payouts"
         '
-        'cmbConsignors
+        'cmbConsignor
         '
-        Me.cmbConsignors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbConsignors.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbConsignors.FormattingEnabled = True
-        Me.cmbConsignors.Location = New System.Drawing.Point(428, 437)
-        Me.cmbConsignors.Name = "cmbConsignors"
-        Me.cmbConsignors.Size = New System.Drawing.Size(353, 28)
-        Me.cmbConsignors.TabIndex = 63
+        Me.cmbConsignor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbConsignor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbConsignor.FormattingEnabled = True
+        Me.cmbConsignor.Location = New System.Drawing.Point(428, 437)
+        Me.cmbConsignor.Name = "cmbConsignor"
+        Me.cmbConsignor.Size = New System.Drawing.Size(353, 28)
+        Me.cmbConsignor.TabIndex = 63
         '
         'Label29
         '
@@ -471,17 +470,17 @@ Partial Class Form8
         Me.PictureBox1.TabIndex = 80
         Me.PictureBox1.TabStop = False
         '
-        'btnSavePayoutRecord
+        'btnSavePayout
         '
-        Me.btnSavePayoutRecord.BackColor = System.Drawing.Color.DimGray
-        Me.btnSavePayoutRecord.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSavePayoutRecord.ForeColor = System.Drawing.Color.White
-        Me.btnSavePayoutRecord.Location = New System.Drawing.Point(428, 936)
-        Me.btnSavePayoutRecord.Name = "btnSavePayoutRecord"
-        Me.btnSavePayoutRecord.Size = New System.Drawing.Size(353, 50)
-        Me.btnSavePayoutRecord.TabIndex = 81
-        Me.btnSavePayoutRecord.Text = "Save Payout Record"
-        Me.btnSavePayoutRecord.UseVisualStyleBackColor = False
+        Me.btnSavePayout.BackColor = System.Drawing.Color.DimGray
+        Me.btnSavePayout.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSavePayout.ForeColor = System.Drawing.Color.White
+        Me.btnSavePayout.Location = New System.Drawing.Point(428, 936)
+        Me.btnSavePayout.Name = "btnSavePayout"
+        Me.btnSavePayout.Size = New System.Drawing.Size(353, 50)
+        Me.btnSavePayout.TabIndex = 81
+        Me.btnSavePayout.Text = "Save Payout Record"
+        Me.btnSavePayout.UseVisualStyleBackColor = False
         '
         'Label22
         '
@@ -495,17 +494,17 @@ Partial Class Form8
         Me.Label22.TabIndex = 82
         Me.Label22.Text = "EARNINGS SUMMARY"
         '
-        'lblRcptNameDate
+        'lblSummaryNameDate
         '
-        Me.lblRcptNameDate.AutoSize = True
-        Me.lblRcptNameDate.BackColor = System.Drawing.Color.DimGray
-        Me.lblRcptNameDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRcptNameDate.ForeColor = System.Drawing.Color.PeachPuff
-        Me.lblRcptNameDate.Location = New System.Drawing.Point(502, 719)
-        Me.lblRcptNameDate.Name = "lblRcptNameDate"
-        Me.lblRcptNameDate.Size = New System.Drawing.Size(82, 13)
-        Me.lblRcptNameDate.TabIndex = 83
-        Me.lblRcptNameDate.Text = "Name -- Date"
+        Me.lblSummaryNameDate.AutoSize = True
+        Me.lblSummaryNameDate.BackColor = System.Drawing.Color.DimGray
+        Me.lblSummaryNameDate.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSummaryNameDate.ForeColor = System.Drawing.Color.PeachPuff
+        Me.lblSummaryNameDate.Location = New System.Drawing.Point(502, 719)
+        Me.lblSummaryNameDate.Name = "lblSummaryNameDate"
+        Me.lblSummaryNameDate.Size = New System.Drawing.Size(82, 13)
+        Me.lblSummaryNameDate.TabIndex = 83
+        Me.lblSummaryNameDate.Text = "Name -- Date"
         '
         'Label25
         '
@@ -555,57 +554,57 @@ Partial Class Form8
         Me.Label31.TabIndex = 87
         Me.Label31.Text = "Total Payout"
         '
-        'lblRcptTotalPayout
+        'lblTotalPayout
         '
-        Me.lblRcptTotalPayout.AutoSize = True
-        Me.lblRcptTotalPayout.BackColor = System.Drawing.Color.DimGray
-        Me.lblRcptTotalPayout.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRcptTotalPayout.ForeColor = System.Drawing.Color.LemonChiffon
-        Me.lblRcptTotalPayout.Location = New System.Drawing.Point(500, 848)
-        Me.lblRcptTotalPayout.Name = "lblRcptTotalPayout"
-        Me.lblRcptTotalPayout.Size = New System.Drawing.Size(51, 25)
-        Me.lblRcptTotalPayout.TabIndex = 88
-        Me.lblRcptTotalPayout.Text = "009"
+        Me.lblTotalPayout.AutoSize = True
+        Me.lblTotalPayout.BackColor = System.Drawing.Color.DimGray
+        Me.lblTotalPayout.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalPayout.ForeColor = System.Drawing.Color.LemonChiffon
+        Me.lblTotalPayout.Location = New System.Drawing.Point(500, 848)
+        Me.lblTotalPayout.Name = "lblTotalPayout"
+        Me.lblTotalPayout.Size = New System.Drawing.Size(51, 25)
+        Me.lblTotalPayout.TabIndex = 88
+        Me.lblTotalPayout.Text = "009"
         '
-        'lblRcptItemsSold
+        'lblItemsSold
         '
-        Me.lblRcptItemsSold.AutoSize = True
-        Me.lblRcptItemsSold.BackColor = System.Drawing.Color.DimGray
-        Me.lblRcptItemsSold.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRcptItemsSold.ForeColor = System.Drawing.Color.White
-        Me.lblRcptItemsSold.Location = New System.Drawing.Point(658, 746)
-        Me.lblRcptItemsSold.Name = "lblRcptItemsSold"
-        Me.lblRcptItemsSold.Size = New System.Drawing.Size(15, 15)
-        Me.lblRcptItemsSold.TabIndex = 89
-        Me.lblRcptItemsSold.Text = "0"
+        Me.lblItemsSold.AutoSize = True
+        Me.lblItemsSold.BackColor = System.Drawing.Color.DimGray
+        Me.lblItemsSold.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblItemsSold.ForeColor = System.Drawing.Color.White
+        Me.lblItemsSold.Location = New System.Drawing.Point(658, 746)
+        Me.lblItemsSold.Name = "lblItemsSold"
+        Me.lblItemsSold.Size = New System.Drawing.Size(15, 15)
+        Me.lblItemsSold.TabIndex = 89
+        Me.lblItemsSold.Text = "0"
         '
-        'lblRcptTotalSales
+        'lblTotalSales
         '
-        Me.lblRcptTotalSales.AutoSize = True
-        Me.lblRcptTotalSales.BackColor = System.Drawing.Color.DimGray
-        Me.lblRcptTotalSales.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRcptTotalSales.ForeColor = System.Drawing.Color.White
-        Me.lblRcptTotalSales.Location = New System.Drawing.Point(658, 771)
-        Me.lblRcptTotalSales.Name = "lblRcptTotalSales"
-        Me.lblRcptTotalSales.Size = New System.Drawing.Size(15, 15)
-        Me.lblRcptTotalSales.TabIndex = 90
-        Me.lblRcptTotalSales.Text = "0"
+        Me.lblTotalSales.AutoSize = True
+        Me.lblTotalSales.BackColor = System.Drawing.Color.DimGray
+        Me.lblTotalSales.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalSales.ForeColor = System.Drawing.Color.White
+        Me.lblTotalSales.Location = New System.Drawing.Point(658, 771)
+        Me.lblTotalSales.Name = "lblTotalSales"
+        Me.lblTotalSales.Size = New System.Drawing.Size(15, 15)
+        Me.lblTotalSales.TabIndex = 90
+        Me.lblTotalSales.Text = "0"
         '
-        'lblRcptCommRate
+        'lblCommissionRate
         '
-        Me.lblRcptCommRate.AutoSize = True
-        Me.lblRcptCommRate.BackColor = System.Drawing.Color.DimGray
-        Me.lblRcptCommRate.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblRcptCommRate.ForeColor = System.Drawing.Color.White
-        Me.lblRcptCommRate.Location = New System.Drawing.Point(658, 796)
-        Me.lblRcptCommRate.Name = "lblRcptCommRate"
-        Me.lblRcptCommRate.Size = New System.Drawing.Size(27, 15)
-        Me.lblRcptCommRate.TabIndex = 91
-        Me.lblRcptCommRate.Text = "0%"
+        Me.lblCommissionRate.AutoSize = True
+        Me.lblCommissionRate.BackColor = System.Drawing.Color.DimGray
+        Me.lblCommissionRate.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCommissionRate.ForeColor = System.Drawing.Color.White
+        Me.lblCommissionRate.Location = New System.Drawing.Point(658, 796)
+        Me.lblCommissionRate.Name = "lblCommissionRate"
+        Me.lblCommissionRate.Size = New System.Drawing.Size(27, 15)
+        Me.lblCommissionRate.TabIndex = 91
+        Me.lblCommissionRate.Text = "0%"
         '
-        'dgvUnpaidItems
+        'dgvItemsSold
         '
-        Me.dgvUnpaidItems.BackgroundColor = System.Drawing.Color.White
+        Me.dgvItemsSold.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -614,44 +613,14 @@ Partial Class Form8
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvUnpaidItems.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvUnpaidItems.ColumnHeadersHeight = 40
-        Me.dgvUnpaidItems.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCnNumber, Me.colCnItem, Me.colCnSalePrice, Me.colCnCommission, Me.colTrDate})
-        Me.dgvUnpaidItems.EnableHeadersVisualStyles = False
-        Me.dgvUnpaidItems.Location = New System.Drawing.Point(823, 418)
-        Me.dgvUnpaidItems.Name = "dgvUnpaidItems"
-        Me.dgvUnpaidItems.Size = New System.Drawing.Size(1026, 231)
-        Me.dgvUnpaidItems.TabIndex = 92
-        '
-        'colCnNumber
-        '
-        Me.colCnNumber.HeaderText = "#"
-        Me.colCnNumber.Name = "colCnNumber"
-        Me.colCnNumber.Width = 60
-        '
-        'colCnItem
-        '
-        Me.colCnItem.HeaderText = "Item "
-        Me.colCnItem.Name = "colCnItem"
-        Me.colCnItem.Width = 285
-        '
-        'colCnSalePrice
-        '
-        Me.colCnSalePrice.HeaderText = "Sale Price"
-        Me.colCnSalePrice.Name = "colCnSalePrice"
-        Me.colCnSalePrice.Width = 230
-        '
-        'colCnCommission
-        '
-        Me.colCnCommission.HeaderText = "Commission"
-        Me.colCnCommission.Name = "colCnCommission"
-        Me.colCnCommission.Width = 250
-        '
-        'colTrDate
-        '
-        Me.colTrDate.HeaderText = "Date"
-        Me.colTrDate.Name = "colTrDate"
-        Me.colTrDate.Width = 165
+        Me.dgvItemsSold.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgvItemsSold.ColumnHeadersHeight = 40
+        Me.dgvItemsSold.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCnItem, Me.colCnSalePrice, Me.colCnCommission, Me.colTrDate})
+        Me.dgvItemsSold.EnableHeadersVisualStyles = False
+        Me.dgvItemsSold.Location = New System.Drawing.Point(823, 418)
+        Me.dgvItemsSold.Name = "dgvItemsSold"
+        Me.dgvItemsSold.Size = New System.Drawing.Size(1026, 231)
+        Me.dgvItemsSold.TabIndex = 92
         '
         'Label37
         '
@@ -685,48 +654,6 @@ Partial Class Form8
         Me.dgvPayoutHistory.Size = New System.Drawing.Size(1026, 231)
         Me.dgvPayoutHistory.TabIndex = 94
         '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "#"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 60
-        '
-        'colCnConsignor
-        '
-        Me.colCnConsignor.HeaderText = "Consignor"
-        Me.colCnConsignor.Name = "colCnConsignor"
-        Me.colCnConsignor.Width = 220
-        '
-        'colCnPeriod
-        '
-        Me.colCnPeriod.HeaderText = "Period"
-        Me.colCnPeriod.Name = "colCnPeriod"
-        Me.colCnPeriod.Width = 150
-        '
-        'colCnItems
-        '
-        Me.colCnItems.HeaderText = "Items"
-        Me.colCnItems.Name = "colCnItems"
-        Me.colCnItems.Width = 120
-        '
-        'colCnTotalSales
-        '
-        Me.colCnTotalSales.HeaderText = "Total Sales"
-        Me.colCnTotalSales.Name = "colCnTotalSales"
-        Me.colCnTotalSales.Width = 175
-        '
-        'colCnPayout
-        '
-        Me.colCnPayout.HeaderText = "Payout"
-        Me.colCnPayout.Name = "colCnPayout"
-        Me.colCnPayout.Width = 135
-        '
-        'colCnDateSaved
-        '
-        Me.colCnDateSaved.HeaderText = "Date Saved"
-        Me.colCnDateSaved.Name = "colCnDateSaved"
-        Me.colCnDateSaved.Width = 135
-        '
         'dtpFrom
         '
         Me.dtpFrom.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -747,6 +674,83 @@ Partial Class Form8
         Me.dtpTo.Size = New System.Drawing.Size(149, 31)
         Me.dtpTo.TabIndex = 96
         '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.DataPropertyName = "#"
+        Me.DataGridViewTextBoxColumn1.HeaderText = "#"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Width = 60
+        '
+        'colCnConsignor
+        '
+        Me.colCnConsignor.DataPropertyName = "Consignor"
+        Me.colCnConsignor.HeaderText = "Consignor"
+        Me.colCnConsignor.Name = "colCnConsignor"
+        Me.colCnConsignor.Width = 220
+        '
+        'colCnPeriod
+        '
+        Me.colCnPeriod.DataPropertyName = "Period"
+        Me.colCnPeriod.HeaderText = "Period"
+        Me.colCnPeriod.Name = "colCnPeriod"
+        Me.colCnPeriod.Width = 150
+        '
+        'colCnItems
+        '
+        Me.colCnItems.DataPropertyName = "Items"
+        Me.colCnItems.HeaderText = "Items"
+        Me.colCnItems.Name = "colCnItems"
+        Me.colCnItems.Width = 120
+        '
+        'colCnTotalSales
+        '
+        Me.colCnTotalSales.DataPropertyName = "Total Sales"
+        Me.colCnTotalSales.HeaderText = "Total Sales"
+        Me.colCnTotalSales.Name = "colCnTotalSales"
+        Me.colCnTotalSales.Width = 175
+        '
+        'colCnPayout
+        '
+        Me.colCnPayout.DataPropertyName = "Payout"
+        Me.colCnPayout.HeaderText = "Payout"
+        Me.colCnPayout.Name = "colCnPayout"
+        Me.colCnPayout.Width = 135
+        '
+        'colCnDateSaved
+        '
+        Me.colCnDateSaved.DataPropertyName = "Date Saved"
+        Me.colCnDateSaved.HeaderText = "Date Saved"
+        Me.colCnDateSaved.Name = "colCnDateSaved"
+        Me.colCnDateSaved.Width = 135
+        '
+        'colCnItem
+        '
+        Me.colCnItem.DataPropertyName = "Item"
+        Me.colCnItem.HeaderText = "Item "
+        Me.colCnItem.Name = "colCnItem"
+        Me.colCnItem.Width = 285
+        '
+        'colCnSalePrice
+        '
+        Me.colCnSalePrice.DataPropertyName = "Sale Price"
+        Me.colCnSalePrice.HeaderText = "Sale Price"
+        Me.colCnSalePrice.Name = "colCnSalePrice"
+        Me.colCnSalePrice.Width = 230
+        '
+        'colCnCommission
+        '
+        Me.colCnCommission.DataPropertyName = "Commission"
+        Me.colCnCommission.HeaderText = "Commission"
+        Me.colCnCommission.Name = "colCnCommission"
+        Me.colCnCommission.Width = 250
+        '
+        'colTrDate
+        '
+        Me.colTrDate.DataPropertyName = "Date"
+        Me.colTrDate.HeaderText = "Date"
+        Me.colTrDate.Name = "colTrDate"
+        Me.colTrDate.Width = 165
+        '
         'Form8
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -758,25 +762,25 @@ Partial Class Form8
         Me.Controls.Add(Me.dtpFrom)
         Me.Controls.Add(Me.dgvPayoutHistory)
         Me.Controls.Add(Me.Label37)
-        Me.Controls.Add(Me.dgvUnpaidItems)
-        Me.Controls.Add(Me.lblRcptCommRate)
-        Me.Controls.Add(Me.lblRcptTotalSales)
-        Me.Controls.Add(Me.lblRcptItemsSold)
-        Me.Controls.Add(Me.lblRcptTotalPayout)
+        Me.Controls.Add(Me.dgvItemsSold)
+        Me.Controls.Add(Me.lblCommissionRate)
+        Me.Controls.Add(Me.lblTotalSales)
+        Me.Controls.Add(Me.lblItemsSold)
+        Me.Controls.Add(Me.lblTotalPayout)
         Me.Controls.Add(Me.Label31)
         Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.Label25)
-        Me.Controls.Add(Me.lblRcptNameDate)
+        Me.Controls.Add(Me.lblSummaryNameDate)
         Me.Controls.Add(Me.Label22)
-        Me.Controls.Add(Me.btnSavePayoutRecord)
+        Me.Controls.Add(Me.btnSavePayout)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label32)
         Me.Controls.Add(Me.btnClear)
         Me.Controls.Add(Me.btnCompute)
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.Label30)
-        Me.Controls.Add(Me.cmbConsignors)
+        Me.Controls.Add(Me.cmbConsignor)
         Me.Controls.Add(Me.Label29)
         Me.Controls.Add(Me.Label26)
         Me.Controls.Add(Me.Label21)
@@ -795,7 +799,7 @@ Partial Class Form8
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dgvUnpaidItems, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvItemsSold, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvPayoutHistory, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -826,7 +830,7 @@ Partial Class Form8
     Friend WithEvents Label26 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Label20 As Label
-    Friend WithEvents cmbConsignors As ComboBox
+    Friend WithEvents cmbConsignor As ComboBox
     Friend WithEvents Label29 As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents Label30 As Label
@@ -834,25 +838,22 @@ Partial Class Form8
     Friend WithEvents btnCompute As Button
     Friend WithEvents Label32 As Label
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents btnSavePayoutRecord As Button
+    Friend WithEvents btnSavePayout As Button
     Friend WithEvents Label22 As Label
-    Friend WithEvents lblRcptNameDate As Label
+    Friend WithEvents lblSummaryNameDate As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents Label27 As Label
     Friend WithEvents Label28 As Label
     Friend WithEvents Label31 As Label
-    Friend WithEvents lblRcptTotalPayout As Label
-    Friend WithEvents lblRcptItemsSold As Label
-    Friend WithEvents lblRcptTotalSales As Label
-    Friend WithEvents lblRcptCommRate As Label
-    Friend WithEvents dgvUnpaidItems As DataGridView
+    Friend WithEvents lblTotalPayout As Label
+    Friend WithEvents lblItemsSold As Label
+    Friend WithEvents lblTotalSales As Label
+    Friend WithEvents lblCommissionRate As Label
+    Friend WithEvents dgvItemsSold As DataGridView
     Friend WithEvents Label37 As Label
-    Friend WithEvents colCnNumber As DataGridViewTextBoxColumn
-    Friend WithEvents colCnItem As DataGridViewTextBoxColumn
-    Friend WithEvents colCnSalePrice As DataGridViewTextBoxColumn
-    Friend WithEvents colCnCommission As DataGridViewTextBoxColumn
-    Friend WithEvents colTrDate As DataGridViewTextBoxColumn
     Friend WithEvents dgvPayoutHistory As DataGridView
+    Friend WithEvents dtpFrom As DateTimePicker
+    Friend WithEvents dtpTo As DateTimePicker
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents colCnConsignor As DataGridViewTextBoxColumn
     Friend WithEvents colCnPeriod As DataGridViewTextBoxColumn
@@ -860,6 +861,8 @@ Partial Class Form8
     Friend WithEvents colCnTotalSales As DataGridViewTextBoxColumn
     Friend WithEvents colCnPayout As DataGridViewTextBoxColumn
     Friend WithEvents colCnDateSaved As DataGridViewTextBoxColumn
-    Friend WithEvents dtpFrom As DateTimePicker
-    Friend WithEvents dtpTo As DateTimePicker
+    Friend WithEvents colCnItem As DataGridViewTextBoxColumn
+    Friend WithEvents colCnSalePrice As DataGridViewTextBoxColumn
+    Friend WithEvents colCnCommission As DataGridViewTextBoxColumn
+    Friend WithEvents colTrDate As DataGridViewTextBoxColumn
 End Class

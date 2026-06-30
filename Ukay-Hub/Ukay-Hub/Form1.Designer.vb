@@ -43,6 +43,7 @@ Partial Class Form1
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label4
@@ -270,12 +271,21 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(68, 688)
+        Me.Button1.Location = New System.Drawing.Point(68, 684)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(79, 39)
+        Me.Button1.Size = New System.Drawing.Size(109, 46)
         Me.Button1.TabIndex = 23
-        Me.Button1.Text = "Form13"
+        Me.Button1.Text = "CUSTOMER"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(230, 684)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(116, 46)
+        Me.Button2.TabIndex = 24
+        Me.Button2.Text = "CATEGORIES"
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'Form1
         '
@@ -284,6 +294,7 @@ Partial Class Form1
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.Label15)
@@ -335,4 +346,5 @@ Partial Class Form1
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
     Friend WithEvents Button1 As Button
+    Friend WithEvents Button2 As Button
 End Class

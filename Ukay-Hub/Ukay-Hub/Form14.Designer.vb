@@ -28,11 +28,11 @@ Partial Class Form14
         Me.lblCart = New System.Windows.Forms.LinkLabel()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.pnlCart = New System.Windows.Forms.Panel()
-        Me.lblCartTitle = New System.Windows.Forms.Label()
-        Me.flpCartItems = New System.Windows.Forms.FlowLayoutPanel()
-        Me.lblTotaltext = New System.Windows.Forms.Label()
-        Me.lblTotalAmount = New System.Windows.Forms.Label()
         Me.btnCheckout = New System.Windows.Forms.Button()
+        Me.lblTotalAmount = New System.Windows.Forms.Label()
+        Me.lblTotaltext = New System.Windows.Forms.Label()
+        Me.flpCartItems = New System.Windows.Forms.FlowLayoutPanel()
+        Me.lblCartTitle = New System.Windows.Forms.Label()
         Me.pnlCart.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -55,10 +55,10 @@ Partial Class Form14
         Me.LinkLabel1.LinkColor = System.Drawing.Color.RosyBrown
         Me.LinkLabel1.Location = New System.Drawing.Point(1804, 115)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(68, 24)
+        Me.LinkLabel1.Size = New System.Drawing.Size(65, 24)
         Me.LinkLabel1.TabIndex = 43
         Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "Logout"
+        Me.LinkLabel1.Text = "Admin"
         '
         'lblCart
         '
@@ -99,37 +99,17 @@ Partial Class Form14
         Me.pnlCart.TabIndex = 57
         Me.pnlCart.Visible = False
         '
-        'lblCartTitle
+        'btnCheckout
         '
-        Me.lblCartTitle.AutoSize = True
-        Me.lblCartTitle.BackColor = System.Drawing.Color.Transparent
-        Me.lblCartTitle.Font = New System.Drawing.Font("Georgia", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCartTitle.ForeColor = System.Drawing.Color.Maroon
-        Me.lblCartTitle.Location = New System.Drawing.Point(20, 21)
-        Me.lblCartTitle.Name = "lblCartTitle"
-        Me.lblCartTitle.Size = New System.Drawing.Size(195, 41)
-        Me.lblCartTitle.TabIndex = 58
-        Me.lblCartTitle.Text = "Your Cart"
-        '
-        'flpCartItems
-        '
-        Me.flpCartItems.AutoScroll = True
-        Me.flpCartItems.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.flpCartItems.Location = New System.Drawing.Point(6, 68)
-        Me.flpCartItems.Name = "flpCartItems"
-        Me.flpCartItems.Size = New System.Drawing.Size(394, 674)
-        Me.flpCartItems.TabIndex = 59
-        '
-        'lblTotaltext
-        '
-        Me.lblTotaltext.AutoSize = True
-        Me.lblTotaltext.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotaltext.ForeColor = System.Drawing.Color.Black
-        Me.lblTotaltext.Location = New System.Drawing.Point(12, 759)
-        Me.lblTotaltext.Name = "lblTotaltext"
-        Me.lblTotaltext.Size = New System.Drawing.Size(56, 24)
-        Me.lblTotaltext.TabIndex = 60
-        Me.lblTotaltext.Text = "Total:"
+        Me.btnCheckout.BackColor = System.Drawing.Color.Firebrick
+        Me.btnCheckout.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnCheckout.ForeColor = System.Drawing.Color.White
+        Me.btnCheckout.Location = New System.Drawing.Point(16, 786)
+        Me.btnCheckout.Name = "btnCheckout"
+        Me.btnCheckout.Size = New System.Drawing.Size(215, 50)
+        Me.btnCheckout.TabIndex = 62
+        Me.btnCheckout.Text = "Checkout"
+        Me.btnCheckout.UseVisualStyleBackColor = False
         '
         'lblTotalAmount
         '
@@ -142,17 +122,37 @@ Partial Class Form14
         Me.lblTotalAmount.TabIndex = 61
         Me.lblTotalAmount.Text = "₱0"
         '
-        'btnCheckout
+        'lblTotaltext
         '
-        Me.btnCheckout.BackColor = System.Drawing.Color.Firebrick
-        Me.btnCheckout.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnCheckout.ForeColor = System.Drawing.Color.White
-        Me.btnCheckout.Location = New System.Drawing.Point(16, 786)
-        Me.btnCheckout.Name = "btnCheckout"
-        Me.btnCheckout.Size = New System.Drawing.Size(153, 50)
-        Me.btnCheckout.TabIndex = 62
-        Me.btnCheckout.Text = "Checkout "
-        Me.btnCheckout.UseVisualStyleBackColor = False
+        Me.lblTotaltext.AutoSize = True
+        Me.lblTotaltext.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotaltext.ForeColor = System.Drawing.Color.Black
+        Me.lblTotaltext.Location = New System.Drawing.Point(12, 759)
+        Me.lblTotaltext.Name = "lblTotaltext"
+        Me.lblTotaltext.Size = New System.Drawing.Size(56, 24)
+        Me.lblTotaltext.TabIndex = 60
+        Me.lblTotaltext.Text = "Total:"
+        '
+        'flpCartItems
+        '
+        Me.flpCartItems.AutoScroll = True
+        Me.flpCartItems.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
+        Me.flpCartItems.Location = New System.Drawing.Point(6, 68)
+        Me.flpCartItems.Name = "flpCartItems"
+        Me.flpCartItems.Size = New System.Drawing.Size(394, 674)
+        Me.flpCartItems.TabIndex = 59
+        '
+        'lblCartTitle
+        '
+        Me.lblCartTitle.AutoSize = True
+        Me.lblCartTitle.BackColor = System.Drawing.Color.Transparent
+        Me.lblCartTitle.Font = New System.Drawing.Font("Georgia", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCartTitle.ForeColor = System.Drawing.Color.Maroon
+        Me.lblCartTitle.Location = New System.Drawing.Point(20, 21)
+        Me.lblCartTitle.Name = "lblCartTitle"
+        Me.lblCartTitle.Size = New System.Drawing.Size(195, 41)
+        Me.lblCartTitle.TabIndex = 58
+        Me.lblCartTitle.Text = "Your Cart"
         '
         'Form14
         '
@@ -166,6 +166,7 @@ Partial Class Form14
         Me.Controls.Add(Me.lblCart)
         Me.Controls.Add(Me.LinkLabel1)
         Me.Controls.Add(Me.flpProducts)
+        Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
         Me.Name = "Form14"

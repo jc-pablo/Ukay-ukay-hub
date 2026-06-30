@@ -1,17 +1,27 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form6
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
+    Dim connString As String = "server=localhost;user=root;password=root;database=ukayukay_db"
     Dim selectedSourceType As String = ""
-    Dim currentSelectedItemId As Integer = 0
+
+    Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cmbCondition.Items.AddRange(New String() {"Brand New", "Like New", "Good", "Fair"})
+        cmbStatus.Items.AddRange(New String() {"Available", "Sold", "Reserved"})
+
+        LoadCategoryComboBox()
+        LoadInventoryGrid()
+    End Sub
+
     Private Sub LoadInventoryGrid()
         Dim query As String = "SELECT i.item_id As '#', i.item_name As 'Item Name', c.category_name As 'Category', " &
-                          "i.item_condition As 'COND.', i.source_type As 'Source', " &
-                          "COALESCE(d.full_name, con.full_name, 'No Supplier') As 'Supplier', " &
-                          "i.price As 'Price', i.status As 'Status' " &
-                          "FROM inventory i " &
-                          "LEFT JOIN categories c ON i.category_id = c.category_id " &
-                          "LEFT JOIN donors d ON i.donor_id = d.donor_id " &
-                          "LEFT JOIN consignors con ON i.consignor_id = con.consignor_id"
+                              "i.item_condition As 'COND.', i.source_type As 'Source', " &
+                              "d.full_name As 'Donor', CONCAT(con.first_name, ' ', con.last_name) As 'Consignor', " &
+                              "i.price As 'Price', i.status As 'Status' " &
+                              "FROM inventory i " &
+                              "LEFT JOIN categories c ON i.category_id = c.category_id " &
+                              "LEFT JOIN donors d ON i.donor_id = d.donor_id " &
+                              "LEFT JOIN consignors con ON i.consignor_id = con.consignor_id " &
+                              "ORDER BY i.item_id DESC"
 
         Using conn As New MySqlConnection(connString)
             Using cmd As New MySqlCommand(query, conn)
@@ -63,98 +73,6 @@ Public Class Form6
             LoadConsignorsIntoComboBox()
         End If
     End Sub
-    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        If String.IsNullOrWhiteSpace(txtItemName.Text) OrElse cmbCategory.SelectedIndex = -1 OrElse String.IsNullOrWhiteSpace(txtPrice.Text) Then
-            MessageBox.Show("Please fill out the Item Name, Category, and Price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Dim price As Decimal
-        Decimal.TryParse(txtPrice.Text, price)
-
-        Dim query As String = ""
-
-        If currentSelectedItemId = 0 Then
-            query = "INSERT INTO inventory (item_name, description, category_id, item_condition, source_type, price, status, donor_id, consignor_id) " &
-                "VALUES (@name, @desc, @catId, @cond, @source, @price, @status, @donorId, @consignorId)"
-        Else
-            query = "UPDATE inventory SET item_name=@name, description=@desc, category_id=@catId, item_condition=@cond, " &
-                "source_type=@source, price=@price, status=@status, donor_id=@donorId, consignor_id=@consignorId " &
-                "WHERE item_id=@itemId"
-        End If
-
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                cmd.Parameters.AddWithValue("@name", txtItemName.Text.Trim())
-                cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim())
-                cmd.Parameters.AddWithValue("@catId", cmbCategory.SelectedValue)
-                cmd.Parameters.AddWithValue("@cond", If(cmbCondition.SelectedIndex <> -1, cmbCondition.SelectedItem.ToString(), DBNull.Value))
-                cmd.Parameters.AddWithValue("@source", If(selectedSourceType <> "", selectedSourceType, DBNull.Value))
-                cmd.Parameters.AddWithValue("@price", price)
-                cmd.Parameters.AddWithValue("@status", If(cmbStatus.SelectedIndex <> -1, cmbStatus.SelectedItem.ToString(), "Available"))
-                If selectedSourceType = "Donated" AndAlso cmbSupplier.SelectedIndex <> -1 Then
-                    cmd.Parameters.AddWithValue("@donorId", cmbSupplier.SelectedValue)
-                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
-                ElseIf selectedSourceType = "Consigned" AndAlso cmbSupplier.SelectedIndex <> -1 Then
-                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
-                    cmd.Parameters.AddWithValue("@consignorId", cmbSupplier.SelectedValue)
-                Else
-                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
-                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
-                End If
-
-                If currentSelectedItemId <> 0 Then
-                    cmd.Parameters.AddWithValue("@itemId", currentSelectedItemId)
-                End If
-
-                Try
-                    conn.Open()
-                    cmd.ExecuteNonQuery()
-                    MessageBox.Show("Inventory record processed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                    ClearForm()
-                    LoadInventoryGrid()
-                Catch ex As MySqlException
-                    MessageBox.Show("Error saving inventory changes: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End Try
-            End Using
-        End Using
-    End Sub
-
-
-    Private Sub ClearForm()
-        txtItemName.Clear()
-        txtDescription.Clear()
-        cmbCategory.SelectedIndex = -1
-        cmbCondition.SelectedIndex = -1
-        cmbStatus.SelectedIndex = -1
-        txtPrice.Clear()
-        selectedSourceType = ""
-        cmbSupplier.DataSource = Nothing
-
-        radDonated.Checked = False
-        radConsigned.Checked = False
-        currentSelectedItemId = 0
-        btnSave.Text = "Save"
-    End Sub
-
-    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
-        ClearForm()
-    End Sub
-    Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        dgvInventory.Columns(0).DataPropertyName = "#"
-        dgvInventory.Columns(1).DataPropertyName = "Item Name"
-        dgvInventory.Columns(2).DataPropertyName = "Category"
-        dgvInventory.Columns(3).DataPropertyName = "COND."
-        dgvInventory.Columns(4).DataPropertyName = "Source"
-        dgvInventory.Columns(5).DataPropertyName = "Price"
-        dgvInventory.Columns(6).DataPropertyName = "Status"
-
-        LoadCategoryComboBox()
-        LoadInventoryGrid()
-        cmbCondition.Items.AddRange(New String() {"Brand New", "Like New", "Good", "Fair"})
-        cmbStatus.Items.AddRange(New String() {"Available", "Sold", "Reserved"})
-    End Sub
     Private Sub LoadDonorsIntoComboBox()
         Dim query As String = "SELECT donor_id As id, full_name As name FROM donors ORDER BY full_name ASC"
         Using conn As New MySqlConnection(connString)
@@ -176,7 +94,7 @@ Public Class Form6
     End Sub
 
     Private Sub LoadConsignorsIntoComboBox()
-        Dim query As String = "SELECT consignor_id As id, full_name As name FROM consignors ORDER BY full_name ASC"
+        Dim query As String = "SELECT consignor_id As id, CONCAT(first_name, ' ', last_name) As name FROM consignors ORDER BY name ASC"
         Using conn As New MySqlConnection(connString)
             Using cmd As New MySqlCommand(query, conn)
                 Try
@@ -194,10 +112,165 @@ Public Class Form6
             End Using
         End Using
     End Sub
-    Private Sub dgvInventory_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvInventory.CellContentClick
+
+    Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        If String.IsNullOrWhiteSpace(txtItemId.Text) OrElse String.IsNullOrWhiteSpace(txtItemName.Text) OrElse cmbCategory.SelectedIndex = -1 OrElse String.IsNullOrWhiteSpace(txtPrice.Text) Then
+            MessageBox.Show("Please fill out the Item ID, Item Name, Category, and Price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Dim price As Decimal
+        Decimal.TryParse(txtPrice.Text, price)
+
+        Using conn As New MySqlConnection(connString)
+            Using cmd As New MySqlCommand("INSERT INTO inventory (item_id, item_name, description, category_id, item_condition, source_type, price, status, donor_id, consignor_id) " &
+                                      "VALUES (@itemId, @name, @desc, @catId, @cond, @source, @price, @status, @donorId, @consignorId)", conn)
+
+                cmd.Parameters.AddWithValue("@itemId", txtItemId.Text.Trim())
+                cmd.Parameters.AddWithValue("@name", txtItemName.Text.Trim())
+                cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim())
+                cmd.Parameters.AddWithValue("@catId", cmbCategory.SelectedValue)
+                cmd.Parameters.AddWithValue("@cond", If(cmbCondition.SelectedIndex <> -1, cmbCondition.SelectedItem.ToString(), DBNull.Value))
+                cmd.Parameters.AddWithValue("@source", If(selectedSourceType <> "", selectedSourceType, DBNull.Value))
+                cmd.Parameters.AddWithValue("@price", price)
+                cmd.Parameters.AddWithValue("@status", If(cmbStatus.SelectedIndex <> -1, cmbStatus.SelectedItem.ToString(), "Available"))
+
+                If selectedSourceType = "Donated" AndAlso cmbSupplier.SelectedIndex <> -1 Then
+                    cmd.Parameters.AddWithValue("@donorId", cmbSupplier.SelectedValue)
+                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
+                ElseIf selectedSourceType = "Consigned" AndAlso cmbSupplier.SelectedIndex <> -1 Then
+                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
+                    cmd.Parameters.AddWithValue("@consignorId", cmbSupplier.SelectedValue)
+                Else
+                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
+                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
+                End If
+
+                Try
+                    conn.Open()
+                    cmd.ExecuteNonQuery()
+                    MessageBox.Show("Inventory record saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    ClearForm()
+                    LoadInventoryGrid()
+                Catch ex As MySqlException
+                    MessageBox.Show("Error saving inventory record: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        If String.IsNullOrWhiteSpace(txtItemId.Text) Then
+            MessageBox.Show("Please select an item from the list to update.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        If String.IsNullOrWhiteSpace(txtItemName.Text) OrElse cmbCategory.SelectedIndex = -1 OrElse String.IsNullOrWhiteSpace(txtPrice.Text) Then
+            MessageBox.Show("Please fill out the Item Name, Category, and Price.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Dim price As Decimal
+        Decimal.TryParse(txtPrice.Text, price)
+
+        Using conn As New MySqlConnection(connString)
+            Using cmd As New MySqlCommand("UPDATE inventory SET item_name=@name, description=@desc, category_id=@catId, item_condition=@cond, " &
+                                      "source_type=@source, price=@price, status=@status, donor_id=@donorId, consignor_id=@consignorId " &
+                                      "WHERE item_id=@itemId", conn)
+
+                cmd.Parameters.AddWithValue("@itemId", txtItemId.Text.Trim())
+                cmd.Parameters.AddWithValue("@name", txtItemName.Text.Trim())
+                cmd.Parameters.AddWithValue("@desc", txtDescription.Text.Trim())
+                cmd.Parameters.AddWithValue("@catId", cmbCategory.SelectedValue)
+                cmd.Parameters.AddWithValue("@cond", If(cmbCondition.SelectedIndex <> -1, cmbCondition.SelectedItem.ToString(), DBNull.Value))
+                cmd.Parameters.AddWithValue("@source", If(selectedSourceType <> "", selectedSourceType, DBNull.Value))
+                cmd.Parameters.AddWithValue("@price", price)
+                cmd.Parameters.AddWithValue("@status", If(cmbStatus.SelectedIndex <> -1, cmbStatus.SelectedItem.ToString(), "Available"))
+
+                If selectedSourceType = "Donated" AndAlso cmbSupplier.SelectedIndex <> -1 Then
+                    cmd.Parameters.AddWithValue("@donorId", cmbSupplier.SelectedValue)
+                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
+                ElseIf selectedSourceType = "Consigned" AndAlso cmbSupplier.SelectedIndex <> -1 Then
+                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
+                    cmd.Parameters.AddWithValue("@consignorId", cmbSupplier.SelectedValue)
+                Else
+                    cmd.Parameters.AddWithValue("@donorId", DBNull.Value)
+                    cmd.Parameters.AddWithValue("@consignorId", DBNull.Value)
+                End If
+
+                Try
+                    conn.Open()
+                    cmd.ExecuteNonQuery()
+                    MessageBox.Show("Inventory record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    ClearForm()
+                    LoadInventoryGrid()
+                Catch ex As MySqlException
+                    MessageBox.Show("Error updating inventory record: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If String.IsNullOrWhiteSpace(txtItemId.Text) Then
+            MessageBox.Show("Please select an item from the list to delete.", "Selection Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to delete this inventory record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            Dim query As String = "DELETE FROM inventory WHERE item_id=@itemId"
+            Using conn As New MySqlConnection(connString)
+                Using cmd As New MySqlCommand(query, conn)
+                    cmd.Parameters.AddWithValue("@itemId", txtItemId.Text.Trim())
+                    Try
+                        conn.Open()
+                        cmd.ExecuteNonQuery()
+                        MessageBox.Show("Item deleted successfully.", "Record Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        ClearForm()
+                        LoadInventoryGrid()
+                    Catch ex As MySqlException
+                        MessageBox.Show("Error deleting record: " & ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End Using
+            End Using
+        End If
+    End Sub
+
+    Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
+        Dim query As String = "SELECT i.item_id As '#', i.item_name As 'Item Name', c.category_name As 'Category', " &
+                              "i.item_condition As 'COND.', i.source_type As 'Source', " &
+                              "d.full_name As 'Donor', CONCAT(con.first_name, ' ', con.last_name) As 'Consignor', " &
+                              "i.price As 'Price', i.status As 'Status' " &
+                              "FROM inventory i " &
+                              "LEFT JOIN categories c ON i.category_id = c.category_id " &
+                              "LEFT JOIN donors d ON i.donor_id = d.donor_id " &
+                              "LEFT JOIN consignors con ON i.consignor_id = con.consignor_id " &
+                              "WHERE i.item_name LIKE @search OR i.item_id LIKE @search OR c.category_name LIKE @search " &
+                              "ORDER BY i.item_id DESC"
+
+        Using conn As New MySqlConnection(connString)
+            Using cmd As New MySqlCommand(query, conn)
+                cmd.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
+                Try
+                    Dim adapter As New MySqlDataAdapter(cmd)
+                    Dim table As New DataTable()
+                    adapter.Fill(table)
+                    dgvInventory.DataSource = table
+                Catch ex As Exception
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Private Sub dgvInventory_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvInventory.CellClick
+        dgvInventory.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = dgvInventory.Rows(e.RowIndex)
-            currentSelectedItemId = Convert.ToInt32(row.Cells("#").Value)
+
+            txtItemId.Text = row.Cells("#").Value.ToString()
+            txtItemId.Enabled = False
+
             txtItemName.Text = row.Cells("Item Name").Value.ToString()
             txtPrice.Text = row.Cells("Price").Value.ToString()
 
@@ -208,18 +281,37 @@ Public Class Form6
             Dim source As String = row.Cells("Source").Value.ToString()
 
             If source = "Donated" Then
-                radDonated.PerformClick()
-                cmbSupplier.Text = row.Cells("Supplier").Value.ToString()
+                radDonated.Checked = True
+                cmbSupplier.Text = row.Cells("Donor").Value.ToString()
             ElseIf source = "Consigned" Then
-                radConsigned.PerformClick()
-                cmbSupplier.Text = row.Cells("Supplier").Value.ToString()
+                radConsigned.Checked = True
+                cmbSupplier.Text = row.Cells("Consignor").Value.ToString()
             Else
                 selectedSourceType = ""
                 cmbSupplier.DataSource = Nothing
             End If
-
-            btnSave.Text = "Update"
         End If
+    End Sub
+
+    Private Sub ClearForm()
+        txtItemId.Clear()
+        txtItemName.Clear()
+        txtDescription.Clear()
+        cmbCategory.SelectedIndex = -1
+        cmbCondition.SelectedIndex = -1
+        cmbStatus.SelectedIndex = -1
+        txtPrice.Clear()
+        txtSearch.Clear()
+        selectedSourceType = ""
+        cmbSupplier.DataSource = Nothing
+
+        radDonated.Checked = False
+        radConsigned.Checked = False
+        txtItemId.Enabled = True
+    End Sub
+
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
     End Sub
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()
