@@ -16,6 +16,14 @@
             lblPrice.Text = "₱" & value.ToString()
         End Set
     End Property
+    Public Property ItemDescription As String
+        Get
+            Return lblDescription.Text
+        End Get
+        Set(value As String)
+            lblDescription.Text = value
+        End Set
+    End Property
 
     Public Event AddToCart(sender As Object, name As String, price As Integer)
 

@@ -55,10 +55,10 @@ Partial Class Form14
         Me.LinkLabel1.LinkColor = System.Drawing.Color.RosyBrown
         Me.LinkLabel1.Location = New System.Drawing.Point(1804, 115)
         Me.LinkLabel1.Name = "LinkLabel1"
-        Me.LinkLabel1.Size = New System.Drawing.Size(65, 24)
+        Me.LinkLabel1.Size = New System.Drawing.Size(68, 24)
         Me.LinkLabel1.TabIndex = 43
         Me.LinkLabel1.TabStop = True
-        Me.LinkLabel1.Text = "Admin"
+        Me.LinkLabel1.Text = "Logout"
         '
         'lblCart
         '

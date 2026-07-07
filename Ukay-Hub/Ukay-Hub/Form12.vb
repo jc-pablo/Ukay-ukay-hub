@@ -1,5 +1,42 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form12
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public DataAdapter1 As MySqlDataAdapter
+    Public ds As DataSet
+
+    Private Sub Form12_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadConsignorEarningsReport()
+    End Sub
+
+    Public Sub LoadConsignorEarningsReport()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            sql = "SELECT CONCAT(c.first_name, ' ', c.last_name) As 'Consignor', " &
+                  "COUNT(t.transaction_id) As 'Item Sold', " &
+                  "SUM(t.selling_price) As 'Total Sales', " &
+                  "'70%' As 'Rate', " &
+                  "SUM(t.selling_price) * 0.70 As 'Total Earned', " &
+                  "MAX(p.date_saved) As 'Last Payout' " &
+                  "FROM consignors c " &
+                  "INNER JOIN inventory i ON c.consignor_id = i.consignor_id " &
+                  "INNER JOIN transactions t ON i.item_id = t.item_id " &
+                  "LEFT JOIN payouts p ON c.consignor_id = p.consignor_id " &
+                  "GROUP BY c.consignor_id"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "ConsignorEarnings")
+            dgvConsignorEarnings.DataSource = ds
+            dgvConsignorEarnings.DataMember = "ConsignorEarnings"
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
+    End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()

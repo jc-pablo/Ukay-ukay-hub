@@ -1,7 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class Form5
-    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
     Dim sql As String
     Dim dbcomm As MySqlCommand
     Dim DataAdapter1 As MySqlDataAdapter
@@ -12,9 +12,7 @@ Public Class Form5
     End Sub
 
     Private Sub LoadConsignorData()
-        Try
-            conn.Open()
-            sql = "SELECT c.consignor_id As '#', " &
+        sql = "SELECT c.consignor_id As '#', " &
               "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
               "c.phone As 'Contact', " &
               "'10%' As 'Commission', " &
@@ -24,27 +22,28 @@ Public Class Form5
               "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
               "GROUP BY c.consignor_id, c.first_name, c.last_name, c.phone " &
               "ORDER BY c.consignor_id DESC"
-
+        Try
+            conn.Open()
             DataAdapter1 = New MySqlDataAdapter(sql, conn)
-            Dim dt As New DataTable()
-            DataAdapter1.Fill(dt)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "consignors")
 
+            Dim dt As DataTable = ds.Tables("consignors")
             dt.Columns.Add("Earned", GetType(Decimal))
 
             For Each row As DataRow In dt.Rows
                 Dim Sales As Decimal = Convert.ToDecimal(row("TotalPriceSold"))
-                row("Earned") = Sales * 0.1D
+                row("Earned") = Sales * 0.7D
             Next
 
             dt.Columns.Remove("TotalPriceSold")
             DataGridView1.DataSource = dt
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         Catch ex As Exception
             MsgBox("Error loading consignor data: " & ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
     End Sub
-
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim fullName As String = txtFullName.Text.Trim()
@@ -56,12 +55,10 @@ Public Class Form5
             firstName = parts(0)
             lastName = parts(1)
         End If
-
+        sql = "INSERT INTO consignors (first_name, last_name, phone, email) VALUES (@fname, @lname, @phone, @email)"
         Try
             conn.Open()
-            sql = "INSERT INTO consignors (consignor_id, first_name, last_name, phone, email) VALUES (@id, @fname, @lname, @phone, @email)"
             dbcomm = New MySqlCommand(sql, conn)
-            dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
             dbcomm.Parameters.AddWithValue("@fname", firstName)
             dbcomm.Parameters.AddWithValue("@lname", lastName)
             dbcomm.Parameters.AddWithValue("@phone", txtContactNumber.Text.Trim())
@@ -76,9 +73,8 @@ Public Class Form5
             End If
         Catch ex As MySqlException
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
         LoadConsignorData()
     End Sub
 
@@ -93,9 +89,9 @@ Public Class Form5
             lastName = parts(1)
         End If
 
+        sql = "UPDATE consignors SET first_name=@fname, last_name=@lname, phone=@phone, email=@email WHERE consignor_id=@id"
         Try
             conn.Open()
-            sql = "UPDATE consignors SET first_name=@fname, last_name=@lname, phone=@phone, email=@email WHERE consignor_id=@id"
             dbcomm = New MySqlCommand(sql, conn)
             dbcomm.Parameters.AddWithValue("@fname", firstName)
             dbcomm.Parameters.AddWithValue("@lname", lastName)
@@ -111,9 +107,8 @@ Public Class Form5
             End If
         Catch ex As MySqlException
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
         LoadConsignorData()
     End Sub
 
@@ -125,9 +120,9 @@ Public Class Form5
 
         Dim ans = MessageBox.Show("Are you sure you want to delete this consignor record?", "Confirm Delete", MessageBoxButtons.YesNo)
         If ans = DialogResult.Yes Then
+            sql = "DELETE FROM consignors WHERE consignor_id=@id"
             Try
                 conn.Open()
-                sql = "DELETE FROM consignors WHERE consignor_id=@id"
                 dbcomm = New MySqlCommand(sql, conn)
                 dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
 
@@ -140,17 +135,14 @@ Public Class Form5
                 End If
             Catch ex As MySqlException
                 MsgBox(ex.Message)
-            Finally
-                conn.Close()
             End Try
+            conn.Close()
             LoadConsignorData()
         End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
-        Try
-            conn.Open()
-            sql = "SELECT c.consignor_id As '#', " &
+        sql = "SELECT c.consignor_id As '#', " &
               "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
               "c.phone As 'Contact', " &
               "'10%' As 'Commission', " &
@@ -159,14 +151,18 @@ Public Class Form5
               "FROM consignors c " &
               "LEFT JOIN inventory i ON c.consignor_id = i.consignor_id " &
               "WHERE c.first_name LIKE @search OR c.last_name LIKE @search OR c.consignor_id LIKE @search " &
-              "GROUP BY c.consignor_id, c.first_name, c.last_name, c.phone"
-
+              "GROUP BY c.consignor_id, c.first_name, c.last_name, c.phone " &
+              "ORDER BY c.consignor_id DESC"
+        Try
+            conn.Open()
             dbcomm = New MySqlCommand(sql, conn)
             dbcomm.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
 
             DataAdapter1 = New MySqlDataAdapter(dbcomm)
-            Dim dt As New DataTable()
-            DataAdapter1.Fill(dt)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "consignors")
+
+            Dim dt As DataTable = ds.Tables("consignors")
             dt.Columns.Add("Total Earned", GetType(Decimal))
             For Each row As DataRow In dt.Rows
                 Dim totalSales As Decimal = Convert.ToDecimal(row("TotalPriceSold"))
@@ -177,15 +173,14 @@ Public Class Form5
             DataGridView1.DataSource = dt
         Catch ex As Exception
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
     End Sub
 
     Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
-            Dim selectedId As String = row.Cells("#").Value.ToString()
+            Dim selectedId As String = row.Cells(0).Value.ToString()
 
             Try
                 conn.Open()
@@ -203,9 +198,8 @@ Public Class Form5
                 dbread.Close()
             Catch ex As Exception
                 MsgBox(ex.Message)
-            Finally
-                conn.Close()
             End Try
+            conn.Close()
         End If
     End Sub
 

@@ -68,12 +68,6 @@ Partial Class Form6
         Me.txtSearch = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.dgvInventory = New System.Windows.Forms.DataGridView()
-        Me.btnUpdate = New System.Windows.Forms.Button()
-        Me.btnDelete = New System.Windows.Forms.Button()
-        Me.btnClear = New System.Windows.Forms.Button()
-        Me.btnSave = New System.Windows.Forms.Button()
-        Me.Label32 = New System.Windows.Forms.Label()
-        Me.txtItemId = New System.Windows.Forms.TextBox()
         Me.colInNumber = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colInItemName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colInCategory = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -81,6 +75,10 @@ Partial Class Form6
         Me.colInSource = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colInPrice = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colInStatus = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.btnUpdate = New System.Windows.Forms.Button()
+        Me.btnDelete = New System.Windows.Forms.Button()
+        Me.btnClear = New System.Windows.Forms.Button()
+        Me.btnSave = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvInventory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -402,10 +400,10 @@ Partial Class Form6
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtItemName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtItemName.Location = New System.Drawing.Point(505, 435)
+        Me.txtItemName.Location = New System.Drawing.Point(430, 435)
         Me.txtItemName.Multiline = True
         Me.txtItemName.Name = "txtItemName"
-        Me.txtItemName.Size = New System.Drawing.Size(311, 38)
+        Me.txtItemName.Size = New System.Drawing.Size(386, 38)
         Me.txtItemName.TabIndex = 44
         '
         'Label22
@@ -414,7 +412,7 @@ Partial Class Form6
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(502, 416)
+        Me.Label22.Location = New System.Drawing.Point(431, 416)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(90, 16)
         Me.Label22.TabIndex = 43
@@ -616,78 +614,6 @@ Partial Class Form6
         Me.dgvInventory.Size = New System.Drawing.Size(968, 371)
         Me.dgvInventory.TabIndex = 65
         '
-        'btnUpdate
-        '
-        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
-        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
-        Me.btnUpdate.Location = New System.Drawing.Point(603, 890)
-        Me.btnUpdate.Name = "btnUpdate"
-        Me.btnUpdate.Size = New System.Drawing.Size(100, 50)
-        Me.btnUpdate.TabIndex = 69
-        Me.btnUpdate.Text = "Update"
-        Me.btnUpdate.UseVisualStyleBackColor = False
-        '
-        'btnDelete
-        '
-        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
-        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnDelete.ForeColor = System.Drawing.Color.White
-        Me.btnDelete.Location = New System.Drawing.Point(709, 889)
-        Me.btnDelete.Name = "btnDelete"
-        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
-        Me.btnDelete.TabIndex = 68
-        Me.btnDelete.Text = "Delete"
-        Me.btnDelete.UseVisualStyleBackColor = False
-        '
-        'btnClear
-        '
-        Me.btnClear.BackColor = System.Drawing.Color.Linen
-        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnClear.ForeColor = System.Drawing.Color.Black
-        Me.btnClear.Location = New System.Drawing.Point(518, 890)
-        Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(79, 50)
-        Me.btnClear.TabIndex = 67
-        Me.btnClear.Text = "Clear"
-        Me.btnClear.UseVisualStyleBackColor = False
-        '
-        'btnSave
-        '
-        Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
-        Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSave.ForeColor = System.Drawing.Color.White
-        Me.btnSave.Location = New System.Drawing.Point(430, 890)
-        Me.btnSave.Name = "btnSave"
-        Me.btnSave.Size = New System.Drawing.Size(82, 50)
-        Me.btnSave.TabIndex = 66
-        Me.btnSave.Text = "Save"
-        Me.btnSave.UseVisualStyleBackColor = False
-        '
-        'Label32
-        '
-        Me.Label32.AutoSize = True
-        Me.Label32.BackColor = System.Drawing.Color.Transparent
-        Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label32.ForeColor = System.Drawing.Color.DimGray
-        Me.Label32.Location = New System.Drawing.Point(431, 416)
-        Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(15, 16)
-        Me.Label32.TabIndex = 70
-        Me.Label32.Text = "#"
-        '
-        'txtItemId
-        '
-        Me.txtItemId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtItemId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtItemId.Location = New System.Drawing.Point(430, 435)
-        Me.txtItemId.Multiline = True
-        Me.txtItemId.Name = "txtItemId"
-        Me.txtItemId.Size = New System.Drawing.Size(66, 38)
-        Me.txtItemId.TabIndex = 71
-        '
         'colInNumber
         '
         Me.colInNumber.DataPropertyName = "#"
@@ -737,6 +663,54 @@ Partial Class Form6
         Me.colInStatus.Name = "colInStatus"
         Me.colInStatus.Width = 135
         '
+        'btnUpdate
+        '
+        Me.btnUpdate.BackColor = System.Drawing.Color.BurlyWood
+        Me.btnUpdate.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdate.ForeColor = System.Drawing.Color.Black
+        Me.btnUpdate.Location = New System.Drawing.Point(603, 890)
+        Me.btnUpdate.Name = "btnUpdate"
+        Me.btnUpdate.Size = New System.Drawing.Size(100, 50)
+        Me.btnUpdate.TabIndex = 69
+        Me.btnUpdate.Text = "Update"
+        Me.btnUpdate.UseVisualStyleBackColor = False
+        '
+        'btnDelete
+        '
+        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
+        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(709, 889)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(119, 50)
+        Me.btnDelete.TabIndex = 68
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.UseVisualStyleBackColor = False
+        '
+        'btnClear
+        '
+        Me.btnClear.BackColor = System.Drawing.Color.Linen
+        Me.btnClear.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClear.ForeColor = System.Drawing.Color.Black
+        Me.btnClear.Location = New System.Drawing.Point(518, 890)
+        Me.btnClear.Name = "btnClear"
+        Me.btnClear.Size = New System.Drawing.Size(79, 50)
+        Me.btnClear.TabIndex = 67
+        Me.btnClear.Text = "Clear"
+        Me.btnClear.UseVisualStyleBackColor = False
+        '
+        'btnSave
+        '
+        Me.btnSave.BackColor = System.Drawing.SystemColors.WindowFrame
+        Me.btnSave.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnSave.ForeColor = System.Drawing.Color.White
+        Me.btnSave.Location = New System.Drawing.Point(430, 890)
+        Me.btnSave.Name = "btnSave"
+        Me.btnSave.Size = New System.Drawing.Size(82, 50)
+        Me.btnSave.TabIndex = 66
+        Me.btnSave.Text = "Save"
+        Me.btnSave.UseVisualStyleBackColor = False
+        '
         'Form6
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -744,8 +718,6 @@ Partial Class Form6
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
-        Me.Controls.Add(Me.txtItemId)
-        Me.Controls.Add(Me.Label32)
         Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnClear)
@@ -840,8 +812,6 @@ Partial Class Form6
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnSave As Button
-    Friend WithEvents Label32 As Label
-    Friend WithEvents txtItemId As TextBox
     Friend WithEvents colInNumber As DataGridViewTextBoxColumn
     Friend WithEvents colInItemName As DataGridViewTextBoxColumn
     Friend WithEvents colInCategory As DataGridViewTextBoxColumn

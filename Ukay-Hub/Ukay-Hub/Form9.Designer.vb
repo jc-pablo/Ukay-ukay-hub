@@ -23,6 +23,7 @@ Partial Class Form9
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form9))
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -49,13 +50,13 @@ Partial Class Form9
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.lblTdaySales = New System.Windows.Forms.Label()
+        Me.lblTodaySales = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.lblWeekSale = New System.Windows.Forms.Label()
+        Me.lblThisWeekSales = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.lblAVGDay = New System.Windows.Forms.Label()
+        Me.lblAvgPerDay = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.lblBestDay = New System.Windows.Forms.Label()
@@ -367,17 +368,17 @@ Partial Class Form9
         Me.Label23.TabIndex = 34
         Me.Label23.Text = "Consignor Earnings"
         '
-        'lblTdaySales
+        'lblTodaySales
         '
-        Me.lblTdaySales.AutoSize = True
-        Me.lblTdaySales.BackColor = System.Drawing.Color.Transparent
-        Me.lblTdaySales.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTdaySales.ForeColor = System.Drawing.Color.White
-        Me.lblTdaySales.Location = New System.Drawing.Point(458, 497)
-        Me.lblTdaySales.Name = "lblTdaySales"
-        Me.lblTdaySales.Size = New System.Drawing.Size(136, 36)
-        Me.lblTdaySales.TabIndex = 37
-        Me.lblTdaySales.Text = "Label23"
+        Me.lblTodaySales.AutoSize = True
+        Me.lblTodaySales.BackColor = System.Drawing.Color.Transparent
+        Me.lblTodaySales.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTodaySales.ForeColor = System.Drawing.Color.White
+        Me.lblTodaySales.Location = New System.Drawing.Point(458, 497)
+        Me.lblTodaySales.Name = "lblTodaySales"
+        Me.lblTodaySales.Size = New System.Drawing.Size(136, 36)
+        Me.lblTodaySales.TabIndex = 37
+        Me.lblTodaySales.Text = "Label23"
         '
         'Label24
         '
@@ -403,17 +404,17 @@ Partial Class Form9
         Me.Label25.TabIndex = 36
         Me.Label25.Text = "TODAY'S SALES"
         '
-        'lblWeekSale
+        'lblThisWeekSales
         '
-        Me.lblWeekSale.AutoSize = True
-        Me.lblWeekSale.BackColor = System.Drawing.Color.Transparent
-        Me.lblWeekSale.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblWeekSale.ForeColor = System.Drawing.Color.Black
-        Me.lblWeekSale.Location = New System.Drawing.Point(794, 497)
-        Me.lblWeekSale.Name = "lblWeekSale"
-        Me.lblWeekSale.Size = New System.Drawing.Size(136, 36)
-        Me.lblWeekSale.TabIndex = 40
-        Me.lblWeekSale.Text = "Label23"
+        Me.lblThisWeekSales.AutoSize = True
+        Me.lblThisWeekSales.BackColor = System.Drawing.Color.Transparent
+        Me.lblThisWeekSales.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblThisWeekSales.ForeColor = System.Drawing.Color.Black
+        Me.lblThisWeekSales.Location = New System.Drawing.Point(794, 497)
+        Me.lblThisWeekSales.Name = "lblThisWeekSales"
+        Me.lblThisWeekSales.Size = New System.Drawing.Size(41, 36)
+        Me.lblThisWeekSales.TabIndex = 40
+        Me.lblThisWeekSales.Text = "D"
         '
         'Label27
         '
@@ -439,17 +440,17 @@ Partial Class Form9
         Me.Label28.TabIndex = 39
         Me.Label28.Text = "THIS WEEK"
         '
-        'lblAVGDay
+        'lblAvgPerDay
         '
-        Me.lblAVGDay.AutoSize = True
-        Me.lblAVGDay.BackColor = System.Drawing.Color.Transparent
-        Me.lblAVGDay.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAVGDay.ForeColor = System.Drawing.Color.Black
-        Me.lblAVGDay.Location = New System.Drawing.Point(1167, 497)
-        Me.lblAVGDay.Name = "lblAVGDay"
-        Me.lblAVGDay.Size = New System.Drawing.Size(136, 36)
-        Me.lblAVGDay.TabIndex = 43
-        Me.lblAVGDay.Text = "Label23"
+        Me.lblAvgPerDay.AutoSize = True
+        Me.lblAvgPerDay.BackColor = System.Drawing.Color.Transparent
+        Me.lblAvgPerDay.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAvgPerDay.ForeColor = System.Drawing.Color.Black
+        Me.lblAvgPerDay.Location = New System.Drawing.Point(1167, 497)
+        Me.lblAvgPerDay.Name = "lblAvgPerDay"
+        Me.lblAvgPerDay.Size = New System.Drawing.Size(136, 36)
+        Me.lblAvgPerDay.TabIndex = 43
+        Me.lblAvgPerDay.Text = "Label23"
         '
         'Label30
         '
@@ -459,9 +460,9 @@ Partial Class Form9
         Me.Label30.ForeColor = System.Drawing.Color.Black
         Me.Label30.Location = New System.Drawing.Point(1170, 547)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(34, 15)
+        Me.Label30.Size = New System.Drawing.Size(68, 15)
         Me.Label30.TabIndex = 41
-        Me.Label30.Text = "lbl30"
+        Me.Label30.Text = "Last 7 days"
         '
         'Label31
         '
@@ -536,7 +537,16 @@ Partial Class Form9
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgvDailySalesLog.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dgvDailySalesLog.ColumnHeadersHeight = 40
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvDailySalesLog.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvDailySalesLog.EnableHeadersVisualStyles = False
+        Me.dgvDailySalesLog.GridColor = System.Drawing.SystemColors.ControlLight
         Me.dgvDailySalesLog.Location = New System.Drawing.Point(438, 659)
         Me.dgvDailySalesLog.Name = "dgvDailySalesLog"
         Me.dgvDailySalesLog.Size = New System.Drawing.Size(1381, 231)
@@ -567,13 +577,13 @@ Partial Class Form9
         Me.Controls.Add(Me.lblBestDay)
         Me.Controls.Add(Me.Label33)
         Me.Controls.Add(Me.Label34)
-        Me.Controls.Add(Me.lblAVGDay)
+        Me.Controls.Add(Me.lblAvgPerDay)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.Label31)
-        Me.Controls.Add(Me.lblWeekSale)
+        Me.Controls.Add(Me.lblThisWeekSales)
         Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.Label28)
-        Me.Controls.Add(Me.lblTdaySales)
+        Me.Controls.Add(Me.lblTodaySales)
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.Label23)
@@ -624,13 +634,13 @@ Partial Class Form9
     Friend WithEvents Label21 As Label
     Friend WithEvents Label22 As Label
     Friend WithEvents Label23 As Label
-    Friend WithEvents lblTdaySales As Label
+    Friend WithEvents lblTodaySales As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents lblWeekSale As Label
+    Friend WithEvents lblThisWeekSales As Label
     Friend WithEvents Label27 As Label
     Friend WithEvents Label28 As Label
-    Friend WithEvents lblAVGDay As Label
+    Friend WithEvents lblAvgPerDay As Label
     Friend WithEvents Label30 As Label
     Friend WithEvents Label31 As Label
     Friend WithEvents lblBestDay As Label

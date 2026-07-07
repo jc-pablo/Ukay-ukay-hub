@@ -1,16 +1,18 @@
 ﻿Imports MySql.Data.MySqlClient
 
 Public Class Form4
-    Dim conn As MySqlConnection = New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
     Dim sql As String
     Dim dbcomm As MySqlCommand
     Dim DataAdapter1 As MySqlDataAdapter
     Dim ds As DataSet
 
+    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadDonorData()
+    End Sub
+
     Private Sub LoadDonorData()
-        Try
-            conn.Open()
-            sql = "SELECT d.donor_id As '#', " &
+        sql = "SELECT d.donor_id As '#', " &
               "d.full_name As 'Name', " &
               "d.contact_number As 'Contact', " &
               "COUNT(i.item_id) As 'Items Donated', " &
@@ -18,27 +20,26 @@ Public Class Form4
               "FROM donors d " &
               "LEFT JOIN inventory i ON d.donor_id = i.donor_id " &
               "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered " &
-              "ORDER BY d.date_registered DESC"
+              "ORDER BY d.donor_id DESC"
+        Try
+            conn.Open()
             DataAdapter1 = New MySqlDataAdapter(sql, conn)
             ds = New DataSet()
             DataAdapter1.Fill(ds, "donors")
             DataGridView1.DataSource = ds
             DataGridView1.DataMember = "donors"
+            DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
         Catch ex As Exception
             MsgBox("Error loading donor data: " & ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
     End Sub
-    Private Sub Form4_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadDonorData()
-    End Sub
+
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        sql = "INSERT INTO donors (full_name, contact_number, email_address, address) VALUES (@name, @contact, @email, @address)"
         Try
             conn.Open()
-            sql = "INSERT INTO donors (donor_id, full_name, contact_number, email_address, address) VALUES (@id, @name, @contact, @email, @address)"
             dbcomm = New MySqlCommand(sql, conn)
-            dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
             dbcomm.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
             dbcomm.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
             dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
@@ -53,16 +54,15 @@ Public Class Form4
             End If
         Catch ex As MySqlException
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
         LoadDonorData()
     End Sub
 
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        sql = "UPDATE donors SET full_name=@name, contact_number=@contact, email_address=@email, address=@address WHERE donor_id=@id"
         Try
             conn.Open()
-            sql = "UPDATE donors SET full_name=@name, contact_number=@contact, email_address=@email, address=@address WHERE donor_id=@id"
             dbcomm = New MySqlCommand(sql, conn)
             dbcomm.Parameters.AddWithValue("@name", txtFullName.Text.Trim())
             dbcomm.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
@@ -78,9 +78,8 @@ Public Class Form4
             End If
         Catch ex As MySqlException
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
         LoadDonorData()
     End Sub
 
@@ -92,9 +91,9 @@ Public Class Form4
 
         Dim ans = MessageBox.Show("Are you sure you want to delete this donor record?", "Confirm Delete", MessageBoxButtons.YesNo)
         If ans = DialogResult.Yes Then
+            sql = "DELETE FROM donors WHERE donor_id=@id"
             Try
                 conn.Open()
-                sql = "DELETE FROM donors WHERE donor_id=@id"
                 dbcomm = New MySqlCommand(sql, conn)
                 dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
 
@@ -107,17 +106,14 @@ Public Class Form4
                 End If
             Catch ex As MySqlException
                 MsgBox(ex.Message)
-            Finally
-                conn.Close()
             End Try
+            conn.Close()
             LoadDonorData()
         End If
     End Sub
 
     Private Sub txtSearch_TextChanged(sender As Object, e As EventArgs) Handles txtSearch.TextChanged
-        Try
-            conn.Open()
-            sql = "SELECT d.donor_id As '#', " &
+        sql = "SELECT d.donor_id As '#', " &
               "d.full_name As 'Name', " &
               "d.contact_number As 'Contact', " &
               "COUNT(i.item_id) As 'Items Donated', " &
@@ -125,26 +121,28 @@ Public Class Form4
               "FROM donors d " &
               "LEFT JOIN inventory i ON d.donor_id = i.donor_id " &
               "WHERE d.full_name LIKE @search OR d.donor_id LIKE @search " &
-              "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered"
+              "GROUP BY d.donor_id, d.full_name, d.contact_number, d.date_registered " &
+              "ORDER BY d.donor_id DESC"
+        Try
+            conn.Open()
             dbcomm = New MySqlCommand(sql, conn)
             dbcomm.Parameters.AddWithValue("@search", "%" & txtSearch.Text.Trim() & "%")
 
             DataAdapter1 = New MySqlDataAdapter(dbcomm)
             ds = New DataSet()
-            DataAdapter1.Fill(ds, "donors_search")
+            DataAdapter1.Fill(ds, "donors")
             DataGridView1.DataSource = ds
-            DataGridView1.DataMember = "donors_search"
+            DataGridView1.DataMember = "donors"
         Catch ex As Exception
             MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
+        conn.Close()
     End Sub
 
     Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
         If e.RowIndex >= 0 Then
             Dim row As DataGridViewRow = DataGridView1.Rows(e.RowIndex)
-            Dim selectedId As String = row.Cells("#").Value.ToString()
+            Dim selectedId As String = row.Cells(0).Value.ToString()
 
             Try
                 conn.Open()
@@ -163,9 +161,8 @@ Public Class Form4
                 dbread.Close()
             Catch ex As Exception
                 MsgBox(ex.Message)
-            Finally
-                conn.Close()
             End Try
+            conn.Close()
         End If
     End Sub
 

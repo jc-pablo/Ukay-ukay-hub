@@ -23,8 +23,8 @@ Partial Class Form8
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form8))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
@@ -69,10 +69,12 @@ Partial Class Form8
         Me.lblTotalSales = New System.Windows.Forms.Label()
         Me.lblCommissionRate = New System.Windows.Forms.Label()
         Me.dgvItemsSold = New System.Windows.Forms.DataGridView()
+        Me.colCnItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCnSalePrice = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colCnCommission = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colTrDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.dgvPayoutHistory = New System.Windows.Forms.DataGridView()
-        Me.dtpFrom = New System.Windows.Forms.DateTimePicker()
-        Me.dtpTo = New System.Windows.Forms.DateTimePicker()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnConsignor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnPeriod = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -80,10 +82,9 @@ Partial Class Form8
         Me.colCnTotalSales = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnPayout = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCnDateSaved = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnItem = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnSalePrice = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colCnCommission = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colTrDate = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dtpFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtpTo = New System.Windows.Forms.DateTimePicker()
+        Me.btnDelete = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvItemsSold, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -430,7 +431,7 @@ Partial Class Form8
         Me.btnClear.ForeColor = System.Drawing.Color.Black
         Me.btnClear.Location = New System.Drawing.Point(590, 543)
         Me.btnClear.Name = "btnClear"
-        Me.btnClear.Size = New System.Drawing.Size(119, 50)
+        Me.btnClear.Size = New System.Drawing.Size(83, 50)
         Me.btnClear.TabIndex = 78
         Me.btnClear.Text = "Clear"
         Me.btnClear.UseVisualStyleBackColor = False
@@ -477,7 +478,7 @@ Partial Class Form8
         Me.btnSavePayout.ForeColor = System.Drawing.Color.White
         Me.btnSavePayout.Location = New System.Drawing.Point(428, 936)
         Me.btnSavePayout.Name = "btnSavePayout"
-        Me.btnSavePayout.Size = New System.Drawing.Size(353, 50)
+        Me.btnSavePayout.Size = New System.Drawing.Size(257, 50)
         Me.btnSavePayout.TabIndex = 81
         Me.btnSavePayout.Text = "Save Payout Record"
         Me.btnSavePayout.UseVisualStyleBackColor = False
@@ -605,15 +606,15 @@ Partial Class Form8
         'dgvItemsSold
         '
         Me.dgvItemsSold.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Padding = New System.Windows.Forms.Padding(8, 0, 8, 0)
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvItemsSold.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.Maroon
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle5.Padding = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvItemsSold.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
         Me.dgvItemsSold.ColumnHeadersHeight = 40
         Me.dgvItemsSold.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colCnItem, Me.colCnSalePrice, Me.colCnCommission, Me.colTrDate})
         Me.dgvItemsSold.EnableHeadersVisualStyles = False
@@ -621,6 +622,34 @@ Partial Class Form8
         Me.dgvItemsSold.Name = "dgvItemsSold"
         Me.dgvItemsSold.Size = New System.Drawing.Size(1026, 231)
         Me.dgvItemsSold.TabIndex = 92
+        '
+        'colCnItem
+        '
+        Me.colCnItem.DataPropertyName = "Item"
+        Me.colCnItem.HeaderText = "Item "
+        Me.colCnItem.Name = "colCnItem"
+        Me.colCnItem.Width = 285
+        '
+        'colCnSalePrice
+        '
+        Me.colCnSalePrice.DataPropertyName = "Sale Price"
+        Me.colCnSalePrice.HeaderText = "Sale Price"
+        Me.colCnSalePrice.Name = "colCnSalePrice"
+        Me.colCnSalePrice.Width = 230
+        '
+        'colCnCommission
+        '
+        Me.colCnCommission.DataPropertyName = "Commission"
+        Me.colCnCommission.HeaderText = "Commission"
+        Me.colCnCommission.Name = "colCnCommission"
+        Me.colCnCommission.Width = 250
+        '
+        'colTrDate
+        '
+        Me.colTrDate.DataPropertyName = "Date"
+        Me.colTrDate.HeaderText = "Date"
+        Me.colTrDate.Name = "colTrDate"
+        Me.colTrDate.Width = 165
         '
         'Label37
         '
@@ -637,15 +666,15 @@ Partial Class Form8
         'dgvPayoutHistory
         '
         Me.dgvPayoutHistory.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.Maroon
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Padding = New System.Windows.Forms.Padding(8, 0, 8, 0)
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvPayoutHistory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.Color.Maroon
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Padding = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPayoutHistory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.dgvPayoutHistory.ColumnHeadersHeight = 40
         Me.dgvPayoutHistory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.colCnConsignor, Me.colCnPeriod, Me.colCnItems, Me.colCnTotalSales, Me.colCnPayout, Me.colCnDateSaved})
         Me.dgvPayoutHistory.EnableHeadersVisualStyles = False
@@ -653,26 +682,6 @@ Partial Class Form8
         Me.dgvPayoutHistory.Name = "dgvPayoutHistory"
         Me.dgvPayoutHistory.Size = New System.Drawing.Size(1026, 231)
         Me.dgvPayoutHistory.TabIndex = 94
-        '
-        'dtpFrom
-        '
-        Me.dtpFrom.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpFrom.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpFrom.Location = New System.Drawing.Point(425, 506)
-        Me.dtpFrom.Name = "dtpFrom"
-        Me.dtpFrom.Size = New System.Drawing.Size(148, 31)
-        Me.dtpFrom.TabIndex = 95
-        '
-        'dtpTo
-        '
-        Me.dtpTo.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpTo.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpTo.Location = New System.Drawing.Point(613, 506)
-        Me.dtpTo.Name = "dtpTo"
-        Me.dtpTo.Size = New System.Drawing.Size(149, 31)
-        Me.dtpTo.TabIndex = 96
         '
         'DataGridViewTextBoxColumn1
         '
@@ -723,33 +732,37 @@ Partial Class Form8
         Me.colCnDateSaved.Name = "colCnDateSaved"
         Me.colCnDateSaved.Width = 135
         '
-        'colCnItem
+        'dtpFrom
         '
-        Me.colCnItem.DataPropertyName = "Item"
-        Me.colCnItem.HeaderText = "Item "
-        Me.colCnItem.Name = "colCnItem"
-        Me.colCnItem.Width = 285
+        Me.dtpFrom.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpFrom.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpFrom.Location = New System.Drawing.Point(425, 506)
+        Me.dtpFrom.Name = "dtpFrom"
+        Me.dtpFrom.Size = New System.Drawing.Size(148, 31)
+        Me.dtpFrom.TabIndex = 95
         '
-        'colCnSalePrice
+        'dtpTo
         '
-        Me.colCnSalePrice.DataPropertyName = "Sale Price"
-        Me.colCnSalePrice.HeaderText = "Sale Price"
-        Me.colCnSalePrice.Name = "colCnSalePrice"
-        Me.colCnSalePrice.Width = 230
+        Me.dtpTo.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpTo.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpTo.Location = New System.Drawing.Point(613, 506)
+        Me.dtpTo.Name = "dtpTo"
+        Me.dtpTo.Size = New System.Drawing.Size(149, 31)
+        Me.dtpTo.TabIndex = 96
         '
-        'colCnCommission
+        'btnDelete
         '
-        Me.colCnCommission.DataPropertyName = "Commission"
-        Me.colCnCommission.HeaderText = "Commission"
-        Me.colCnCommission.Name = "colCnCommission"
-        Me.colCnCommission.Width = 250
-        '
-        'colTrDate
-        '
-        Me.colTrDate.DataPropertyName = "Date"
-        Me.colTrDate.HeaderText = "Date"
-        Me.colTrDate.Name = "colTrDate"
-        Me.colTrDate.Width = 165
+        Me.btnDelete.BackColor = System.Drawing.Color.Firebrick
+        Me.btnDelete.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnDelete.ForeColor = System.Drawing.Color.White
+        Me.btnDelete.Location = New System.Drawing.Point(691, 936)
+        Me.btnDelete.Name = "btnDelete"
+        Me.btnDelete.Size = New System.Drawing.Size(95, 50)
+        Me.btnDelete.TabIndex = 97
+        Me.btnDelete.Text = "Delete"
+        Me.btnDelete.UseVisualStyleBackColor = False
         '
         'Form8
         '
@@ -758,6 +771,7 @@ Partial Class Form8
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.dtpTo)
         Me.Controls.Add(Me.dtpFrom)
         Me.Controls.Add(Me.dgvPayoutHistory)
@@ -865,4 +879,5 @@ Partial Class Form8
     Friend WithEvents colCnSalePrice As DataGridViewTextBoxColumn
     Friend WithEvents colCnCommission As DataGridViewTextBoxColumn
     Friend WithEvents colTrDate As DataGridViewTextBoxColumn
+    Friend WithEvents btnDelete As Button
 End Class

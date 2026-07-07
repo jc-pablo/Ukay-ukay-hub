@@ -50,27 +50,27 @@ Partial Class Form11
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
-        Me.lblAvailableCard = New System.Windows.Forms.Label()
+        Me.lblAvailableCount = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.lblSold = New System.Windows.Forms.Label()
+        Me.lblSoldCount = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
-        Me.lblReserved = New System.Windows.Forms.Label()
+        Me.lblReservedCount = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label31 = New System.Windows.Forms.Label()
-        Me.lblTotal = New System.Windows.Forms.Label()
+        Me.lblTotalCount = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.dgvInventorycategory = New System.Windows.Forms.DataGridView()
+        Me.dgvInventoryCategory = New System.Windows.Forms.DataGridView()
         Me.colRepCtgry = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepAvailable = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepSold = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepReserved = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
-        CType(Me.dgvInventorycategory, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvInventoryCategory, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label17
@@ -384,17 +384,17 @@ Partial Class Form11
         Me.Label20.TabIndex = 97
         Me.Label20.Text = "Dashboard / Weekly Sales"
         '
-        'lblAvailableCard
+        'lblAvailableCount
         '
-        Me.lblAvailableCard.AutoSize = True
-        Me.lblAvailableCard.BackColor = System.Drawing.Color.Transparent
-        Me.lblAvailableCard.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAvailableCard.ForeColor = System.Drawing.Color.White
-        Me.lblAvailableCard.Location = New System.Drawing.Point(463, 509)
-        Me.lblAvailableCard.Name = "lblAvailableCard"
-        Me.lblAvailableCard.Size = New System.Drawing.Size(136, 36)
-        Me.lblAvailableCard.TabIndex = 103
-        Me.lblAvailableCard.Text = "Label23"
+        Me.lblAvailableCount.AutoSize = True
+        Me.lblAvailableCount.BackColor = System.Drawing.Color.Transparent
+        Me.lblAvailableCount.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblAvailableCount.ForeColor = System.Drawing.Color.White
+        Me.lblAvailableCount.Location = New System.Drawing.Point(463, 509)
+        Me.lblAvailableCount.Name = "lblAvailableCount"
+        Me.lblAvailableCount.Size = New System.Drawing.Size(136, 36)
+        Me.lblAvailableCount.TabIndex = 103
+        Me.lblAvailableCount.Text = "Label23"
         '
         'Label24
         '
@@ -420,17 +420,17 @@ Partial Class Form11
         Me.Label25.TabIndex = 102
         Me.Label25.Text = "AVAILABLE"
         '
-        'lblSold
+        'lblSoldCount
         '
-        Me.lblSold.AutoSize = True
-        Me.lblSold.BackColor = System.Drawing.Color.Transparent
-        Me.lblSold.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSold.ForeColor = System.Drawing.Color.Black
-        Me.lblSold.Location = New System.Drawing.Point(806, 507)
-        Me.lblSold.Name = "lblSold"
-        Me.lblSold.Size = New System.Drawing.Size(136, 36)
-        Me.lblSold.TabIndex = 106
-        Me.lblSold.Text = "Label23"
+        Me.lblSoldCount.AutoSize = True
+        Me.lblSoldCount.BackColor = System.Drawing.Color.Transparent
+        Me.lblSoldCount.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSoldCount.ForeColor = System.Drawing.Color.Black
+        Me.lblSoldCount.Location = New System.Drawing.Point(806, 507)
+        Me.lblSoldCount.Name = "lblSoldCount"
+        Me.lblSoldCount.Size = New System.Drawing.Size(136, 36)
+        Me.lblSoldCount.TabIndex = 106
+        Me.lblSoldCount.Text = "Label23"
         '
         'Label27
         '
@@ -456,17 +456,17 @@ Partial Class Form11
         Me.Label28.TabIndex = 105
         Me.Label28.Text = "SOLD"
         '
-        'lblReserved
+        'lblReservedCount
         '
-        Me.lblReserved.AutoSize = True
-        Me.lblReserved.BackColor = System.Drawing.Color.Transparent
-        Me.lblReserved.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblReserved.ForeColor = System.Drawing.Color.Black
-        Me.lblReserved.Location = New System.Drawing.Point(1163, 509)
-        Me.lblReserved.Name = "lblReserved"
-        Me.lblReserved.Size = New System.Drawing.Size(136, 36)
-        Me.lblReserved.TabIndex = 109
-        Me.lblReserved.Text = "Label23"
+        Me.lblReservedCount.AutoSize = True
+        Me.lblReservedCount.BackColor = System.Drawing.Color.Transparent
+        Me.lblReservedCount.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblReservedCount.ForeColor = System.Drawing.Color.Black
+        Me.lblReservedCount.Location = New System.Drawing.Point(1163, 509)
+        Me.lblReservedCount.Name = "lblReservedCount"
+        Me.lblReservedCount.Size = New System.Drawing.Size(136, 36)
+        Me.lblReservedCount.TabIndex = 109
+        Me.lblReservedCount.Text = "Label23"
         '
         'Label30
         '
@@ -492,17 +492,17 @@ Partial Class Form11
         Me.Label31.TabIndex = 108
         Me.Label31.Text = "RESERVED"
         '
-        'lblTotal
+        'lblTotalCount
         '
-        Me.lblTotal.AutoSize = True
-        Me.lblTotal.BackColor = System.Drawing.Color.Transparent
-        Me.lblTotal.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotal.ForeColor = System.Drawing.Color.Black
-        Me.lblTotal.Location = New System.Drawing.Point(1527, 507)
-        Me.lblTotal.Name = "lblTotal"
-        Me.lblTotal.Size = New System.Drawing.Size(136, 36)
-        Me.lblTotal.TabIndex = 112
-        Me.lblTotal.Text = "Label23"
+        Me.lblTotalCount.AutoSize = True
+        Me.lblTotalCount.BackColor = System.Drawing.Color.Transparent
+        Me.lblTotalCount.Font = New System.Drawing.Font("Modern No. 20", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalCount.ForeColor = System.Drawing.Color.Black
+        Me.lblTotalCount.Location = New System.Drawing.Point(1527, 507)
+        Me.lblTotalCount.Name = "lblTotalCount"
+        Me.lblTotalCount.Size = New System.Drawing.Size(136, 36)
+        Me.lblTotalCount.TabIndex = 112
+        Me.lblTotalCount.Text = "Label23"
         '
         'Label33
         '
@@ -540,9 +540,9 @@ Partial Class Form11
         Me.Label35.TabIndex = 113
         Me.Label35.Text = "------- Inventory Category"
         '
-        'dgvInventorycategory
+        'dgvInventoryCategory
         '
-        Me.dgvInventorycategory.BackgroundColor = System.Drawing.Color.White
+        Me.dgvInventoryCategory.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -551,14 +551,14 @@ Partial Class Form11
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvInventorycategory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvInventorycategory.ColumnHeadersHeight = 40
-        Me.dgvInventorycategory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRepCtgry, Me.colRepAvailable, Me.colRepSold, Me.colRepReserved, Me.colRepTotal})
-        Me.dgvInventorycategory.EnableHeadersVisualStyles = False
-        Me.dgvInventorycategory.Location = New System.Drawing.Point(439, 669)
-        Me.dgvInventorycategory.Name = "dgvInventorycategory"
-        Me.dgvInventorycategory.Size = New System.Drawing.Size(1381, 264)
-        Me.dgvInventorycategory.TabIndex = 114
+        Me.dgvInventoryCategory.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgvInventoryCategory.ColumnHeadersHeight = 40
+        Me.dgvInventoryCategory.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRepCtgry, Me.colRepAvailable, Me.colRepSold, Me.colRepReserved, Me.colRepTotal})
+        Me.dgvInventoryCategory.EnableHeadersVisualStyles = False
+        Me.dgvInventoryCategory.Location = New System.Drawing.Point(439, 669)
+        Me.dgvInventoryCategory.Name = "dgvInventoryCategory"
+        Me.dgvInventoryCategory.Size = New System.Drawing.Size(1381, 264)
+        Me.dgvInventoryCategory.TabIndex = 114
         '
         'colRepCtgry
         '
@@ -601,18 +601,18 @@ Partial Class Form11
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
-        Me.Controls.Add(Me.dgvInventorycategory)
+        Me.Controls.Add(Me.dgvInventoryCategory)
         Me.Controls.Add(Me.Label35)
-        Me.Controls.Add(Me.lblTotal)
+        Me.Controls.Add(Me.lblTotalCount)
         Me.Controls.Add(Me.Label33)
         Me.Controls.Add(Me.Label34)
-        Me.Controls.Add(Me.lblReserved)
+        Me.Controls.Add(Me.lblReservedCount)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.Label31)
-        Me.Controls.Add(Me.lblSold)
+        Me.Controls.Add(Me.lblSoldCount)
         Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.Label28)
-        Me.Controls.Add(Me.lblAvailableCard)
+        Me.Controls.Add(Me.lblAvailableCount)
         Me.Controls.Add(Me.Label24)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.Label23)
@@ -632,7 +632,7 @@ Partial Class Form11
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.dgvInventorycategory, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvInventoryCategory, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -664,20 +664,20 @@ Partial Class Form11
     Friend WithEvents Label22 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Label20 As Label
-    Friend WithEvents lblAvailableCard As Label
+    Friend WithEvents lblAvailableCount As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents lblSold As Label
+    Friend WithEvents lblSoldCount As Label
     Friend WithEvents Label27 As Label
     Friend WithEvents Label28 As Label
-    Friend WithEvents lblReserved As Label
+    Friend WithEvents lblReservedCount As Label
     Friend WithEvents Label30 As Label
     Friend WithEvents Label31 As Label
-    Friend WithEvents lblTotal As Label
+    Friend WithEvents lblTotalCount As Label
     Friend WithEvents Label33 As Label
     Friend WithEvents Label34 As Label
     Friend WithEvents Label35 As Label
-    Friend WithEvents dgvInventorycategory As DataGridView
+    Friend WithEvents dgvInventoryCategory As DataGridView
     Friend WithEvents colRepCtgry As DataGridViewTextBoxColumn
     Friend WithEvents colRepAvailable As DataGridViewTextBoxColumn
     Friend WithEvents colRepSold As DataGridViewTextBoxColumn

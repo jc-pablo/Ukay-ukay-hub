@@ -195,3 +195,4 @@ C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay-Hub.v
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay-Hub.exe
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay-Hub.xml
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay-Hub.pdb
+C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay_Hub.Form16.resources

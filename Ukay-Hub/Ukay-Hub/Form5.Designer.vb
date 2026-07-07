@@ -458,7 +458,7 @@ Partial Class Form5
         Me.lblRateDisplay.Name = "lblRateDisplay"
         Me.lblRateDisplay.Size = New System.Drawing.Size(40, 18)
         Me.lblRateDisplay.TabIndex = 48
-        Me.lblRateDisplay.Text = "10%"
+        Me.lblRateDisplay.Text = "70%"
         '
         'DataGridView1
         '

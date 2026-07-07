@@ -1,61 +1,67 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form11
-    Dim connString As String = "server=localhost;user=root;password=root;database=ukayhub_db"
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public dbcomm As MySqlCommand
+    Public DataAdapter1 As MySqlDataAdapter
+    Public ds As DataSet
 
     Private Sub Form11_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadInventoryStatusCounters()
-        LoadInventoryCategoryBreakdown()
+        LoadInventoryCounters()
+        LoadCategoryBreakdown()
     End Sub
 
-    Private Sub LoadInventoryStatusCounters()
-        Dim query As String = "SELECT " &
-                              "COUNT(CASE WHEN status = 'Available' THEN 1 END) As AvailableCount, " &
-                              "COUNT(CASE WHEN status = 'Sold' THEN 1 END) As SoldCount, " &
-                              "COUNT(CASE WHEN status = 'Reserved' THEN 1 END) As ReservedCount, " &
-                              "COUNT(*) As TotalCount FROM inventory"
+    Public Sub LoadInventoryCounters()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
 
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    conn.Open()
-                    Dim reader As MySqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
-                        lblAvailableCard.Text = reader("AvailableCount").ToString()
-                        lblSold.Text = reader("SoldCount").ToString()
-                        lblReserved.Text = reader("ReservedCount").ToString()
-                        lblTotal.Text = reader("TotalCount").ToString()
-                    End If
-                    reader.Close()
-                Catch ex As Exception
-                End Try
-            End Using
-        End Using
+            sql = "SELECT COUNT(*) FROM inventory WHERE status = 'Available'"
+            dbcomm = New MySqlCommand(sql, conn)
+            lblAvailableCount.Text = dbcomm.ExecuteScalar().ToString()
+
+            sql = "SELECT COUNT(*) FROM inventory WHERE status = 'Sold'"
+            dbcomm = New MySqlCommand(sql, conn)
+            lblSoldCount.Text = dbcomm.ExecuteScalar().ToString()
+
+            sql = "SELECT COUNT(*) FROM inventory WHERE status = 'Reserved'"
+            dbcomm = New MySqlCommand(sql, conn)
+            lblReservedCount.Text = dbcomm.ExecuteScalar().ToString()
+
+            sql = "SELECT COUNT(*) FROM inventory"
+            dbcomm = New MySqlCommand(sql, conn)
+            lblTotalCount.Text = dbcomm.ExecuteScalar().ToString()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
     End Sub
 
-    Private Sub LoadInventoryCategoryBreakdown()
-        Dim query As String = "SELECT c.category_name As 'Category', " &
-                              "COUNT(CASE WHEN i.status = 'Available' THEN 1 END) As 'Available', " &
-                              "COUNT(CASE WHEN i.status = 'Sold' THEN 1 END) As 'Sold', " &
-                              "COUNT(CASE WHEN i.status = 'Reserved' THEN 1 END) As 'Reserved', " &
-                              "COUNT(i.item_id) As 'Total' " &
-                              "FROM categories c " &
-                              "LEFT JOIN inventory i ON c.category_id = i.category_id " &
-                              "GROUP BY c.category_id, c.category_name"
+    Public Sub LoadCategoryBreakdown()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
 
-        Using conn As New MySqlConnection(connString)
-            Using cmd As New MySqlCommand(query, conn)
-                Try
-                    Dim adapter As New MySqlDataAdapter(cmd)
-                    Dim table As New DataTable()
-                    adapter.Fill(table)
+            sql = "SELECT c.category_name As 'Category', " &
+                  "SUM(IF(i.status = 'Available', 1, 0)) As 'Available', " &
+                  "SUM(IF(i.status = 'Sold', 1, 0)) As 'Sold', " &
+                  "SUM(IF(i.status = 'Reserved', 1, 0)) As 'Reserved', " &
+                  "COUNT(i.item_id) As 'Total' " &
+                  "FROM categories c " &
+                  "LEFT JOIN inventory i ON c.category_id = i.category_id " &
+                  "GROUP BY c.category_name"
 
-                    dgvInventoryCategory.DataSource = table
-                    dgvInventoryCategory.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-
-                Catch ex As Exception
-                End Try
-            End Using
-        End Using
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "CategoryBreakdown")
+            dgvInventoryCategory.DataSource = ds
+            dgvInventoryCategory.DataMember = "CategoryBreakdown"
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
     End Sub
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()

@@ -1,4 +1,55 @@
-﻿Public Class Form2
+﻿Imports MySql.Data.MySqlClient
+
+Public Class Form2
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public dbcomm As MySqlCommand
+
+    Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadDashboardOverview()
+    End Sub
+
+    Public Sub LoadDashboardOverview()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            sql = "SELECT COUNT(*) FROM inventory"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim totalItems As Object = dbcomm.ExecuteScalar()
+            Label23.Text = Val(totalItems.ToString()).ToString("N0")
+
+            sql = "SELECT COUNT(*) FROM inventory WHERE status = 'Available'"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim availableItems As Object = dbcomm.ExecuteScalar()
+            Label26.Text = Val(availableItems.ToString()).ToString("N0")
+
+            sql = "SELECT COUNT(transaction_id) FROM transactions WHERE DATE(sale_date) = CURDATE()"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim soldToday As Object = dbcomm.ExecuteScalar()
+            Label28.Text = Val(soldToday.ToString()).ToString("N0")
+
+            sql = "SELECT SUM(selling_price) FROM transactions WHERE DATE(sale_date) = CURDATE()"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim revenueToday As Object = dbcomm.ExecuteScalar()
+
+            If revenueToday Is Nothing OrElse revenueToday.ToString() = "" Then
+                Label29.Text = "₱0.00 revenue"
+            Else
+                Dim totalRevenue As Decimal = Convert.ToDecimal(revenueToday)
+                Label29.Text = "₱" & totalRevenue.ToString("N2") & " revenue"
+            End If
+
+            sql = "SELECT COUNT(*) FROM transactions WHERE payout_status = 'Unpaid'"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim pendingPayouts As Object = dbcomm.ExecuteScalar()
+            Label31.Text = Val(pendingPayouts.ToString()).ToString("N0")
+
+        Catch ex As Exception
+            MsgBox("Error loading dashboard data: " & ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
+    End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         lblDate.Text = DateTime.Now.ToString("dddd, MMMM dd, yyyy hh:mm:ss tt")

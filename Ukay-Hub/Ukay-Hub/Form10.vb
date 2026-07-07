@@ -1,5 +1,68 @@
 ﻿Imports MySql.Data.MySqlClient
+
 Public Class Form10
+    Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
+    Public sql As String
+    Public dbcomm As MySqlCommand
+    Public DataAdapter1 As MySqlDataAdapter
+    Public ds As DataSet
+
+    Private Sub Form10_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadTopCategoriesReport()
+    End Sub
+
+    Public Sub LoadTopCategoriesReport()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+
+            sql = "SELECT SUM(selling_price) FROM transactions"
+            dbcomm = New MySqlCommand(sql, conn)
+            Dim grandTotalSales As Decimal = Val(dbcomm.ExecuteScalar().ToString())
+
+            sql = "SELECT c.category_name As 'Category', COUNT(t.transaction_id) As 'Item Sold', SUM(t.selling_price) As 'Total Revenue' " &
+                  "FROM transactions t " &
+                  "INNER JOIN inventory i ON t.item_id = i  .item_id " &
+                  "INNER JOIN categories c ON i.category_id = c.category_id " &
+                  "GROUP BY c.category_name ORDER BY SUM(t.selling_price) DESC"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "RawCategories")
+
+            Dim dt As DataTable = ds.Tables("RawCategories")
+
+            Dim rankCol As New DataColumn("Rank", GetType(Integer))
+            Dim pctCol As New DataColumn("% of Sales", GetType(String))
+
+            dt.Columns.Add(rankCol)
+            dt.Columns.Add(pctCol)
+            rankCol.SetOrdinal(0)
+
+            Dim currentRank As Integer = 1
+            For Each row As DataRow In dt.Rows
+                row("Rank") = currentRank
+                Dim rev As Decimal = 0
+                If Not Convert.IsDBNull(row("Total Revenue")) Then
+                    rev = Convert.ToDecimal(row("Total Revenue"))
+                End If
+
+                If grandTotalSales > 0 Then
+                    Dim pct As Decimal = (rev / grandTotalSales) * 100
+                    row("% of Sales") = pct.ToString("F2") & "%"
+                Else
+                    row("% of Sales") = "0.00%"
+                End If
+
+                currentRank += 1
+            Next
+
+            dgvTopCategories.DataSource = dt
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
+    End Sub
 
     Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
         Dim frm2 As New Form2()

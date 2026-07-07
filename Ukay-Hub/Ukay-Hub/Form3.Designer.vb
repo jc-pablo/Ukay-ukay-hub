@@ -62,8 +62,6 @@ Partial Class Form3
         Me.colCatItemCount = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colCatDateAdded = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnUpdate = New System.Windows.Forms.Button()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.txtCategoryId = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvCategories, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -350,7 +348,7 @@ Partial Class Form3
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(460, 428)
+        Me.Label22.Location = New System.Drawing.Point(421, 428)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(137, 16)
         Me.Label22.TabIndex = 20
@@ -362,10 +360,10 @@ Partial Class Form3
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCategoryName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCategoryName.Location = New System.Drawing.Point(463, 447)
+        Me.txtCategoryName.Location = New System.Drawing.Point(411, 447)
         Me.txtCategoryName.Multiline = True
         Me.txtCategoryName.Name = "txtCategoryName"
-        Me.txtCategoryName.Size = New System.Drawing.Size(333, 38)
+        Me.txtCategoryName.Size = New System.Drawing.Size(385, 38)
         Me.txtCategoryName.TabIndex = 21
         '
         'Label23
@@ -511,30 +509,6 @@ Partial Class Form3
         Me.btnUpdate.Text = "Update"
         Me.btnUpdate.UseVisualStyleBackColor = False
         '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.BackColor = System.Drawing.Color.Transparent
-        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label27.ForeColor = System.Drawing.Color.DimGray
-        Me.Label27.Location = New System.Drawing.Point(407, 428)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(15, 16)
-        Me.Label27.TabIndex = 33
-        Me.Label27.Text = "#"
-        '
-        'txtCategoryId
-        '
-        Me.txtCategoryId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCategoryId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCategoryId.Location = New System.Drawing.Point(399, 447)
-        Me.txtCategoryId.Multiline = True
-        Me.txtCategoryId.Name = "txtCategoryId"
-        Me.txtCategoryId.Size = New System.Drawing.Size(58, 38)
-        Me.txtCategoryId.TabIndex = 34
-        '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.BurlyWood
@@ -555,8 +529,6 @@ Partial Class Form3
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
         Me.Controls.Add(Me.Button1)
-        Me.Controls.Add(Me.txtCategoryId)
-        Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.dgvCategories)
         Me.Controls.Add(Me.Label26)
@@ -623,8 +595,6 @@ Partial Class Form3
     Friend WithEvents Label26 As Label
     Friend WithEvents dgvCategories As DataGridView
     Friend WithEvents btnUpdate As Button
-    Friend WithEvents Label27 As Label
-    Friend WithEvents txtCategoryId As TextBox
     Friend WithEvents colCatNumber As DataGridViewTextBoxColumn
     Friend WithEvents colCatCategoryName As DataGridViewTextBoxColumn
     Friend WithEvents colCatItemCount As DataGridViewTextBoxColumn

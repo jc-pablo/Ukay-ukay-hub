@@ -51,7 +51,7 @@ Partial Class Form12
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
-        Me.dgvConsignorEarningsReport = New System.Windows.Forms.DataGridView()
+        Me.dgvConsignorEarnings = New System.Windows.Forms.DataGridView()
         Me.colRepConsignor = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepITMsold = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepTotalSales = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -59,7 +59,7 @@ Partial Class Form12
         Me.colRepTotalEarned = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colRepLastPayout = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel1.SuspendLayout()
-        CType(Me.dgvConsignorEarningsReport, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgvConsignorEarnings, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label23
@@ -385,9 +385,9 @@ Partial Class Form12
         Me.Label35.TabIndex = 114
         Me.Label35.Text = "------- Consignor Earnings Report"
         '
-        'dgvConsignorEarningsReport
+        'dgvConsignorEarnings
         '
-        Me.dgvConsignorEarningsReport.BackgroundColor = System.Drawing.Color.White
+        Me.dgvConsignorEarnings.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.Maroon
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -396,14 +396,14 @@ Partial Class Form12
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvConsignorEarningsReport.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.dgvConsignorEarningsReport.ColumnHeadersHeight = 40
-        Me.dgvConsignorEarningsReport.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRepConsignor, Me.colRepITMsold, Me.colRepTotalSales, Me.colRepRate, Me.colRepTotalEarned, Me.colRepLastPayout})
-        Me.dgvConsignorEarningsReport.EnableHeadersVisualStyles = False
-        Me.dgvConsignorEarningsReport.Location = New System.Drawing.Point(442, 505)
-        Me.dgvConsignorEarningsReport.Name = "dgvConsignorEarningsReport"
-        Me.dgvConsignorEarningsReport.Size = New System.Drawing.Size(1381, 264)
-        Me.dgvConsignorEarningsReport.TabIndex = 115
+        Me.dgvConsignorEarnings.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgvConsignorEarnings.ColumnHeadersHeight = 40
+        Me.dgvConsignorEarnings.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colRepConsignor, Me.colRepITMsold, Me.colRepTotalSales, Me.colRepRate, Me.colRepTotalEarned, Me.colRepLastPayout})
+        Me.dgvConsignorEarnings.EnableHeadersVisualStyles = False
+        Me.dgvConsignorEarnings.Location = New System.Drawing.Point(442, 505)
+        Me.dgvConsignorEarnings.Name = "dgvConsignorEarnings"
+        Me.dgvConsignorEarnings.Size = New System.Drawing.Size(1381, 264)
+        Me.dgvConsignorEarnings.TabIndex = 115
         '
         'colRepConsignor
         '
@@ -453,7 +453,7 @@ Partial Class Form12
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
-        Me.Controls.Add(Me.dgvConsignorEarningsReport)
+        Me.Controls.Add(Me.dgvConsignorEarnings)
         Me.Controls.Add(Me.Label35)
         Me.Controls.Add(Me.Label36)
         Me.Controls.Add(Me.Label19)
@@ -473,7 +473,7 @@ Partial Class Form12
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.dgvConsignorEarningsReport, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgvConsignorEarnings, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -506,7 +506,7 @@ Partial Class Form12
     Friend WithEvents Label18 As Label
     Friend WithEvents Label36 As Label
     Friend WithEvents Label35 As Label
-    Friend WithEvents dgvConsignorEarningsReport As DataGridView
+    Friend WithEvents dgvConsignorEarnings As DataGridView
     Friend WithEvents colRepConsignor As DataGridViewTextBoxColumn
     Friend WithEvents colRepITMsold As DataGridViewTextBoxColumn
     Friend WithEvents colRepTotalSales As DataGridViewTextBoxColumn

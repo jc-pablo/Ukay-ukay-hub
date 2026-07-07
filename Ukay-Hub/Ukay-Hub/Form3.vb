@@ -7,7 +7,6 @@ Public Class Form3
     Public dbread As MySqlDataReader
     Public DataAdapter1 As MySqlDataAdapter
     Public ds As DataSet
-    Dim selectedCategoryId As Integer = 0
 
     Private Sub Form3_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadCategories()
@@ -16,13 +15,12 @@ Public Class Form3
     Private Sub LoadCategories()
         Try
             conn.Open()
-            sql = "SELECT c.category_id as '#', c.category_name AS 'Category Name', 
-            count(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' 
-            FROM categories c 
-            LEFT JOIN inventory i 
-            ON (c.category_id = i.category_id) 
-            GROUP BY c.category_id, c.category_name, c.date_added 
-            ORDER BY c.category_id DESC"
+            sql = "SELECT c.category_id as '#', c.category_name AS 'Category Name', " &
+                  "count(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' " &
+                  "FROM categories c " &
+                  "LEFT JOIN inventory i ON (c.category_id = i.category_id) " &
+                  "GROUP BY c.category_id, c.category_name, c.date_added " &
+                  "ORDER BY c.category_id DESC"
 
             DataAdapter1 = New MySqlDataAdapter(sql, conn)
             ds = New DataSet()
@@ -39,10 +37,9 @@ Public Class Form3
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Try
             conn.Open()
-            txtCategoryName.Text.Trim()
+            sql = $"INSERT INTO categories (category_name, date_added) " &
+                  $"VALUES('{txtCategoryName.Text.Trim()}', NOW())"
 
-            sql = $"INSERT INTO categories (category_id, category_name, date_added) 
-            VALUES('{txtCategoryId.Text.Trim()}', '{txtCategoryName.Text.Trim()}', now())"
             dbcomm = New MySqlCommand(sql, conn)
             Dim i As Integer = dbcomm.ExecuteNonQuery
 
@@ -64,9 +61,18 @@ Public Class Form3
     End Sub
 
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
+        If dgvCategories.SelectedRows.Count = 0 Then
+            MsgBox("Please select a category from the list first.")
+            Exit Sub
+        End If
+
         Try
+            Dim currentId As String = dgvCategories.SelectedRows(0).Cells(0).Value.ToString()
+
             conn.Open()
-            sql = $"UPDATE categories SET category_name = '{txtCategoryName.Text.Trim()}' WHERE category_id = '{txtCategoryId.Text.Trim()}'"
+            sql = $"UPDATE categories SET category_name = '{txtCategoryName.Text.Trim()}' " &
+                  $"WHERE category_id = {currentId}"
+
             dbcomm = New MySqlCommand(sql, conn)
             Dim i As Integer = dbcomm.ExecuteNonQuery
 
@@ -84,16 +90,23 @@ Public Class Form3
         conn.Close()
 
         txtCategoryName.Clear()
-        selectedCategoryId = 0
         LoadCategories()
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
+        If dgvCategories.SelectedRows.Count = 0 Then
+            MsgBox("Please select a category from the list first.")
+            Exit Sub
+        End If
+
         Try
-            conn.Open()
             Dim ans = MessageBox.Show("do you want to delete this record?", "record deleted", MessageBoxButtons.YesNoCancel)
             If ans = DialogResult.Yes Then
-                sql = $"DELETE FROM categories WHERE category_id = '{txtCategoryId.Text.Trim()}'"
+                Dim currentId As String = dgvCategories.SelectedRows(0).Cells(0).Value.ToString()
+
+                conn.Open()
+                sql = $"DELETE FROM categories WHERE category_id = {currentId}"
+
                 dbcomm = New MySqlCommand(sql, conn)
                 Dim i As Integer = dbcomm.ExecuteNonQuery
 
@@ -103,7 +116,6 @@ Public Class Form3
                     MsgBox("item not deleted")
                 End If
                 txtCategoryName.Clear()
-                selectedCategoryId = 0
             End If
         Catch ex As MySqlException
             MsgBox(ex.Message)
@@ -114,31 +126,33 @@ Public Class Form3
         LoadCategories()
     End Sub
 
-    Private Sub dgvCategories_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategories.CellContentClick
+    Private Sub dgvCategories_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvCategories.CellClick
         dgvCategories.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
         If e.RowIndex >= 0 Then
             Dim selectedRow As DataGridViewRow = dgvCategories.Rows(e.RowIndex)
-
-            txtCategoryId.Text = selectedRow.Cells("#").Value.ToString()
-            txtCategoryName.Text = selectedRow.Cells("Category Name").Value.ToString()
+            selectedRow.Selected = True
+            txtCategoryName.Text = selectedRow.Cells(1).Value.ToString()
         End If
     End Sub
 
     Private Sub txtSearchCategory_TextChanged(sender As Object, e As EventArgs) Handles txtSearchCategory.TextChanged
         Try
             conn.Open()
-            sql = $"SELECT c.category_id as '#', c.category_name AS 'Category Name', 
-            count(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' 
-            FROM categories c 
-            LEFT JOIN inventory i ON (c.category_id = i.category_id) 
-            WHERE c.category_name LIKE '%{txtSearchCategory.Text.Trim()}%' 
-            GROUP BY c.category_id, c.category_name, c.date_added ORDER BY c.category_name DESC"
+
+            sql = "SELECT c.category_id as '#', c.category_name AS 'Category Name', " &
+              "COUNT(i.item_id) AS 'Item Count', c.date_added AS 'Date Added' " &
+              "FROM categories c " &
+              "LEFT JOIN inventory i ON (c.category_id = i.category_id) " &
+              $"WHERE c.category_name LIKE '%{txtSearchCategory.Text.Trim()}%' " &
+              "GROUP BY c.category_id, c.category_name, c.date_added " &
+              "ORDER BY c.category_id DESC"
 
             DataAdapter1 = New MySqlDataAdapter(sql, conn)
             ds = New DataSet()
-            DataAdapter1.Fill(ds, "categories search")
+            DataAdapter1.Fill(ds, "categories")
             dgvCategories.DataSource = ds
-            dgvCategories.DataMember = "categories search"
+            dgvCategories.DataMember = "categories"
             dgvCategories.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
 
         Catch ex As MySqlException
@@ -148,7 +162,6 @@ Public Class Form3
         End Try
         conn.Close()
     End Sub
-
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()

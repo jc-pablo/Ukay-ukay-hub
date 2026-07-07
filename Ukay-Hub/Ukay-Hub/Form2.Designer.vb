@@ -50,12 +50,12 @@ Partial Class Form2
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.lblTotalItems = New System.Windows.Forms.Label()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.lblAvailable = New System.Windows.Forms.Label()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
-        Me.lblSoldToday = New System.Windows.Forms.Label()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.Label29 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Label31 = New System.Windows.Forms.Label()
@@ -385,17 +385,17 @@ Partial Class Form2
         Me.Label22.TabIndex = 16
         Me.Label22.Text = "in inventory"
         '
-        'lblTotalItems
+        'Label23
         '
-        Me.lblTotalItems.AutoSize = True
-        Me.lblTotalItems.BackColor = System.Drawing.Color.Transparent
-        Me.lblTotalItems.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotalItems.ForeColor = System.Drawing.Color.White
-        Me.lblTotalItems.Location = New System.Drawing.Point(456, 432)
-        Me.lblTotalItems.Name = "lblTotalItems"
-        Me.lblTotalItems.Size = New System.Drawing.Size(115, 31)
-        Me.lblTotalItems.TabIndex = 19
-        Me.lblTotalItems.Text = "Label23"
+        Me.Label23.AutoSize = True
+        Me.Label23.BackColor = System.Drawing.Color.Transparent
+        Me.Label23.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label23.ForeColor = System.Drawing.Color.White
+        Me.Label23.Location = New System.Drawing.Point(456, 432)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(115, 31)
+        Me.Label23.TabIndex = 19
+        Me.Label23.Text = "Label23"
         '
         'Label24
         '
@@ -421,17 +421,17 @@ Partial Class Form2
         Me.Label25.TabIndex = 21
         Me.Label25.Text = "ready for sale"
         '
-        'lblAvailable
+        'Label26
         '
-        Me.lblAvailable.AutoSize = True
-        Me.lblAvailable.BackColor = System.Drawing.Color.Transparent
-        Me.lblAvailable.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblAvailable.ForeColor = System.Drawing.Color.Black
-        Me.lblAvailable.Location = New System.Drawing.Point(805, 432)
-        Me.lblAvailable.Name = "lblAvailable"
-        Me.lblAvailable.Size = New System.Drawing.Size(115, 31)
-        Me.lblAvailable.TabIndex = 22
-        Me.lblAvailable.Text = "Label26"
+        Me.Label26.AutoSize = True
+        Me.Label26.BackColor = System.Drawing.Color.Transparent
+        Me.Label26.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label26.ForeColor = System.Drawing.Color.Black
+        Me.Label26.Location = New System.Drawing.Point(805, 432)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(115, 31)
+        Me.Label26.TabIndex = 22
+        Me.Label26.Text = "Label26"
         '
         'Label27
         '
@@ -445,17 +445,17 @@ Partial Class Form2
         Me.Label27.TabIndex = 23
         Me.Label27.Text = "SOLD TODAY"
         '
-        'lblSoldToday
+        'Label28
         '
-        Me.lblSoldToday.AutoSize = True
-        Me.lblSoldToday.BackColor = System.Drawing.Color.Transparent
-        Me.lblSoldToday.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSoldToday.ForeColor = System.Drawing.Color.White
-        Me.lblSoldToday.Location = New System.Drawing.Point(1155, 432)
-        Me.lblSoldToday.Name = "lblSoldToday"
-        Me.lblSoldToday.Size = New System.Drawing.Size(115, 31)
-        Me.lblSoldToday.TabIndex = 24
-        Me.lblSoldToday.Text = "Label28"
+        Me.Label28.AutoSize = True
+        Me.Label28.BackColor = System.Drawing.Color.Transparent
+        Me.Label28.Font = New System.Drawing.Font("Modern No. 20", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.ForeColor = System.Drawing.Color.White
+        Me.Label28.Location = New System.Drawing.Point(1155, 432)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(115, 31)
+        Me.Label28.TabIndex = 24
+        Me.Label28.Text = "Label28"
         '
         'Label29
         '
@@ -732,12 +732,12 @@ Partial Class Form2
         Me.Controls.Add(Me.Label31)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.Label29)
-        Me.Controls.Add(Me.lblSoldToday)
+        Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.Label27)
-        Me.Controls.Add(Me.lblAvailable)
+        Me.Controls.Add(Me.Label26)
         Me.Controls.Add(Me.Label25)
         Me.Controls.Add(Me.Label24)
-        Me.Controls.Add(Me.lblTotalItems)
+        Me.Controls.Add(Me.Label23)
         Me.Controls.Add(Me.Label22)
         Me.Controls.Add(Me.Label21)
         Me.Controls.Add(Me.lblDate)
@@ -794,12 +794,12 @@ Partial Class Form2
     Friend WithEvents Timer1 As Timer
     Friend WithEvents Label22 As Label
     Friend WithEvents Label21 As Label
-    Friend WithEvents lblTotalItems As Label
+    Friend WithEvents Label23 As Label
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
-    Friend WithEvents lblAvailable As Label
+    Friend WithEvents Label26 As Label
     Friend WithEvents Label27 As Label
-    Friend WithEvents lblSoldToday As Label
+    Friend WithEvents Label28 As Label
     Friend WithEvents Label29 As Label
     Friend WithEvents Label30 As Label
     Friend WithEvents Label31 As Label

@@ -2,8 +2,10 @@
 
 Public Class Form8
     Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
-    Dim sql As String
-    Dim dbcomm As MySqlCommand
+    Public sql As String
+    Public dbcomm As MySqlCommand
+    Public DataAdapter1 As MySqlDataAdapter
+    Public ds As DataSet
     Dim dtItems As DataTable
 
     Private Sub Form8_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -13,20 +15,41 @@ Public Class Form8
 
     Private Sub LoadConsignors()
         Try
-            conn.Open()
+            If conn.State = ConnectionState.Closed Then conn.Open()
             sql = "SELECT consignor_id, CONCAT(first_name, ' ', last_name) As c_name FROM consignors"
-            Dim dt As New DataTable()
-            Dim da As New MySqlDataAdapter(sql, conn)
-            da.Fill(dt)
-            cmbConsignor.DataSource = dt
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "consignors")
+
+            cmbConsignor.DataSource = ds.Tables("consignors")
             cmbConsignor.DisplayMember = "c_name"
             cmbConsignor.ValueMember = "consignor_id"
             cmbConsignor.SelectedIndex = -1
         Catch ex As Exception
             MsgBox(ex.Message)
-        Finally
             conn.Close()
         End Try
+        conn.Close()
+    End Sub
+
+    Private Sub LoadPayoutHistory()
+        Try
+            If conn.State = ConnectionState.Closed Then conn.Open()
+            sql = "SELECT p.payout_id As '#', CONCAT(c.first_name, ' ', c.last_name) As 'Consignor', " &
+                  "p.payout_period As 'Period', p.date_saved As 'Date Saved' " &
+                  "FROM payouts p INNER JOIN consignors c ON p.consignor_id = c.consignor_id ORDER BY p.date_saved DESC"
+
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "payouts")
+            dgvPayoutHistory.DataSource = ds
+            dgvPayoutHistory.DataMember = "payouts"
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            conn.Close()
+        End Try
+        conn.Close()
     End Sub
 
     Private Sub btnCompute_Click(sender As Object, e As EventArgs) Handles btnCompute.Click
@@ -36,21 +59,18 @@ Public Class Form8
         End If
 
         Try
-            conn.Open()
+            If conn.State = ConnectionState.Closed Then conn.Open()
             sql = "SELECT t.transaction_id, i.item_name As 'Item', t.selling_price As 'Sale Price', t.sale_date As 'Date' " &
                   "FROM transactions t " &
                   "INNER JOIN inventory i ON t.item_id = i.item_id " &
-                  "WHERE i.consignor_id = @cId AND t.payout_status = 'Unpaid' " &
-                  "AND t.sale_date BETWEEN @dateFrom AND @dateTo"
+                  $"WHERE i.consignor_id = '{cmbConsignor.SelectedValue.ToString()}' AND t.payout_status = 'Unpaid' " &
+                  $"AND t.sale_date BETWEEN '{dtpFrom.Value.ToString("yyyy-MM-dd")}' AND '{dtpTo.Value.ToString("yyyy-MM-dd")}'"
 
-            dbcomm = New MySqlCommand(sql, conn)
-            dbcomm.Parameters.AddWithValue("@cId", cmbConsignor.SelectedValue.ToString())
-            dbcomm.Parameters.AddWithValue("@dateFrom", dtpFrom.Value.ToString("yyyy-MM-dd"))
-            dbcomm.Parameters.AddWithValue("@dateTo", dtpTo.Value.ToString("yyyy-MM-dd"))
+            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            ds = New DataSet()
+            DataAdapter1.Fill(ds, "items_sold")
 
-            Dim da As New MySqlDataAdapter(dbcomm)
-            dtItems = New DataTable()
-            da.Fill(dtItems)
+            dtItems = ds.Tables("items_sold")
             dtItems.Columns.Add("Commission", GetType(Decimal))
 
             Dim itemsCount As Integer = 0
@@ -59,7 +79,7 @@ Public Class Form8
 
             For Each row As DataRow In dtItems.Rows
                 Dim salePrice As Decimal = Convert.ToDecimal(row("Sale Price"))
-                Dim consignorShare As Decimal = salePrice * 0.9D
+                Dim consignorShare As Decimal = salePrice * 0.7D
 
                 row("Commission") = consignorShare
 
@@ -72,14 +92,14 @@ Public Class Form8
             lblSummaryNameDate.Text = cmbConsignor.Text & " -- " & DateTime.Now.ToString("MM/dd/yyyy")
             lblItemsSold.Text = itemsCount.ToString()
             lblTotalSales.Text = totalSales.ToString("F2")
-            lblCommissionRate.Text = "90%"
+            lblCommissionRate.Text = "70%"
             lblTotalPayout.Text = totalPayout.ToString("F2")
 
         Catch ex As Exception
             MsgBox(ex.Message)
-        Finally
             conn.Close()
         End Try
+        conn.Close()
     End Sub
 
     Private Sub btnSavePayout_Click(sender As Object, e As EventArgs) Handles btnSavePayout.Click
@@ -89,22 +109,25 @@ Public Class Form8
         End If
 
         Try
-            conn.Open()
+            If conn.State = ConnectionState.Closed Then conn.Open()
             Dim payoutId As String = "PAY-" & DateTime.Now.ToString("yyyyMMddHHmmss")
             Dim period As String = dtpFrom.Value.ToString("MM/dd/yyyy") & " - " & dtpTo.Value.ToString("MM/dd/yyyy")
-            sql = "INSERT INTO payouts (payout_id, consignor_id, payout_period, date_saved) VALUES (@pId, @cId, @period, CURDATE())"
+
+            sql = $"INSERT INTO payouts (payout_id, consignor_id, payout_period, date_saved) VALUES ('{payoutId}', '{cmbConsignor.SelectedValue.ToString()}', '{period}', CURDATE())"
             dbcomm = New MySqlCommand(sql, conn)
-            dbcomm.Parameters.AddWithValue("@pId", payoutId)
-            dbcomm.Parameters.AddWithValue("@cId", cmbConsignor.SelectedValue.ToString())
-            dbcomm.Parameters.AddWithValue("@period", period)
-            dbcomm.ExecuteNonQuery()
+            Dim i As Integer = dbcomm.ExecuteNonQuery()
+
+            If (i > 0) Then
+                MsgBox("record saved")
+            Else
+                MsgBox("record not saved")
+            End If
 
             For Each row As DataRow In dtItems.Rows
                 Dim transId As String = row("transaction_id").ToString()
-                sql = "UPDATE transactions SET payout_status = 'Paid' WHERE transaction_id = @tId"
-                Dim cmdUpdate As New MySqlCommand(sql, conn)
-                cmdUpdate.Parameters.AddWithValue("@tId", transId)
-                cmdUpdate.ExecuteNonQuery()
+                sql = $"UPDATE transactions SET payout_status = 'Paid' WHERE transaction_id = '{transId}'"
+                dbcomm = New MySqlCommand(sql, conn)
+                dbcomm.ExecuteNonQuery()
             Next
 
             MsgBox("Payout records successfully processed and saved!")
@@ -115,23 +138,6 @@ Public Class Form8
         Catch ex As Exception
             MsgBox(ex.Message)
             If conn.State = ConnectionState.Open Then conn.Close()
-        End Try
-    End Sub
-
-    Private Sub LoadPayoutHistory()
-        Try
-            conn.Open()
-            sql = "SELECT p.payout_id As '#', CONCAT(c.first_name, ' ', c.last_name) As 'Consignor', " &
-                  "p.payout_period As 'Period', p.date_saved As 'Date Saved' " &
-                  "FROM payouts p INNER JOIN consignors c ON p.consignor_id = c.consignor_id ORDER BY p.date_saved DESC"
-            Dim dt As New DataTable()
-            Dim da As New MySqlDataAdapter(sql, conn)
-            da.Fill(dt)
-            dgvPayoutHistory.DataSource = dt
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        Finally
-            conn.Close()
         End Try
     End Sub
 
