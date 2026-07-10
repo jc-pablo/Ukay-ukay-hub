@@ -50,4 +50,8 @@ Public Class Form16
         frm13.Show()
         Me.Hide()
     End Sub
+
+    Private Sub Form16_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        TextBox6.PasswordChar = "*"c
+    End Sub
 End Class

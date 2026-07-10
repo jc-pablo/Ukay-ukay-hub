@@ -39,7 +39,10 @@ Public Class Form2
                 Label29.Text = "₱" & totalRevenue.ToString("N2") & " revenue"
             End If
 
-            sql = "SELECT COUNT(*) FROM transactions WHERE payout_status = 'Unpaid'"
+            sql = "SELECT COUNT(DISTINCT i.consignor_id) FROM transactions t " &
+            "INNER JOIN inventory i ON t.item_id = i.item_id " &
+            "WHERE t.payout_status = 'Unpaid'"
+
             dbcomm = New MySqlCommand(sql, conn)
             Dim pendingPayouts As Object = dbcomm.ExecuteScalar()
             Label31.Text = Val(pendingPayouts.ToString()).ToString("N0")

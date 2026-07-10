@@ -70,8 +70,6 @@ Partial Class Form5
         Me.btnDelete = New System.Windows.Forms.Button()
         Me.btnClear = New System.Windows.Forms.Button()
         Me.btnSave = New System.Windows.Forms.Button()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.txtConsignorId = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -418,10 +416,10 @@ Partial Class Form5
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtFullName.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtFullName.Location = New System.Drawing.Point(485, 449)
+        Me.txtFullName.Location = New System.Drawing.Point(429, 449)
         Me.txtFullName.Multiline = True
         Me.txtFullName.Name = "txtFullName"
-        Me.txtFullName.Size = New System.Drawing.Size(330, 38)
+        Me.txtFullName.Size = New System.Drawing.Size(386, 38)
         Me.txtFullName.TabIndex = 40
         '
         'Label22
@@ -430,7 +428,7 @@ Partial Class Form5
         Me.Label22.BackColor = System.Drawing.Color.Transparent
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label22.ForeColor = System.Drawing.Color.DimGray
-        Me.Label22.Location = New System.Drawing.Point(482, 430)
+        Me.Label22.Location = New System.Drawing.Point(427, 430)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(90, 16)
         Me.Label22.TabIndex = 39
@@ -606,30 +604,6 @@ Partial Class Form5
         Me.btnSave.Text = "Save"
         Me.btnSave.UseVisualStyleBackColor = False
         '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.BackColor = System.Drawing.Color.Transparent
-        Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label27.ForeColor = System.Drawing.Color.DimGray
-        Me.Label27.Location = New System.Drawing.Point(431, 430)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(15, 16)
-        Me.Label27.TabIndex = 60
-        Me.Label27.Text = "#"
-        '
-        'txtConsignorId
-        '
-        Me.txtConsignorId.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtConsignorId.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtConsignorId.Location = New System.Drawing.Point(427, 450)
-        Me.txtConsignorId.Multiline = True
-        Me.txtConsignorId.Name = "txtConsignorId"
-        Me.txtConsignorId.Size = New System.Drawing.Size(52, 38)
-        Me.txtConsignorId.TabIndex = 61
-        '
         'Label30
         '
         Me.Label30.AutoSize = True
@@ -650,8 +624,6 @@ Partial Class Form5
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
         Me.Controls.Add(Me.Label30)
-        Me.Controls.Add(Me.txtConsignorId)
-        Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.btnUpdate)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.btnClear)
@@ -730,8 +702,6 @@ Partial Class Form5
     Friend WithEvents btnDelete As Button
     Friend WithEvents btnClear As Button
     Friend WithEvents btnSave As Button
-    Friend WithEvents Label27 As Label
-    Friend WithEvents txtConsignorId As TextBox
     Friend WithEvents colConNumber As DataGridViewTextBoxColumn
     Friend WithEvents colConName As DataGridViewTextBoxColumn
     Friend WithEvents colConContact As DataGridViewTextBoxColumn

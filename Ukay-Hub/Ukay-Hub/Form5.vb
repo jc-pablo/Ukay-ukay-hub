@@ -15,7 +15,7 @@ Public Class Form5
         sql = "SELECT c.consignor_id As '#', " &
               "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
               "c.phone As 'Contact', " &
-              "'10%' As 'Commission', " &
+              "'70%' As 'Commission', " &
               "COUNT(i.item_id) As 'Items Listed', " &
               "IFNULL(SUM(CASE WHEN i.status = 'Sold' THEN i.price ELSE 0 END), 0.00) As 'TotalPriceSold' " &
               "FROM consignors c " &
@@ -97,7 +97,7 @@ Public Class Form5
             dbcomm.Parameters.AddWithValue("@lname", lastName)
             dbcomm.Parameters.AddWithValue("@phone", txtContactNumber.Text.Trim())
             dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
-            dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@id", selectedConsignorId)
 
             Dim i As Integer = dbcomm.ExecuteNonQuery()
             If i > 0 Then
@@ -113,7 +113,7 @@ Public Class Form5
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        If String.IsNullOrEmpty(txtConsignorId.Text) Then
+        If String.IsNullOrEmpty(selectedConsignorId) Then
             MsgBox("Please select a consignor to delete.")
             Return
         End If
@@ -124,7 +124,7 @@ Public Class Form5
             Try
                 conn.Open()
                 dbcomm = New MySqlCommand(sql, conn)
-                dbcomm.Parameters.AddWithValue("@id", txtConsignorId.Text.Trim())
+                dbcomm.Parameters.AddWithValue("@id", selectedConsignorId)
 
                 Dim i As Integer = dbcomm.ExecuteNonQuery()
                 If i > 0 Then
@@ -190,7 +190,7 @@ Public Class Form5
                 Dim dbread As MySqlDataReader = dbcomm.ExecuteReader()
 
                 If dbread.Read() Then
-                    txtConsignorId.Text = dbread("consignor_id").ToString()
+                    selectedConsignorId = dbread("consignor_id").ToString()
                     txtFullName.Text = dbread("first_name").ToString() & " " & dbread("last_name").ToString()
                     txtContactNumber.Text = dbread("phone").ToString()
                     txtEmailAddress.Text = dbread("email").ToString()
@@ -202,13 +202,13 @@ Public Class Form5
             conn.Close()
         End If
     End Sub
-
+    Private selectedConsignorId As String = ""
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         ClearFields()
     End Sub
 
     Private Sub ClearFields()
-        txtConsignorId.Clear()
+        selectedConsignorId = ""
         txtFullName.Clear()
         txtContactNumber.Clear()
         txtEmailAddress.Clear()

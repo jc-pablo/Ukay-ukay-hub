@@ -55,9 +55,7 @@ Partial Class Form7
         Me.txtSellingPrice = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.btnRecordSale = New System.Windows.Forms.Button()
-        Me.txtDateFrom = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
-        Me.txtDateTo = New System.Windows.Forms.TextBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.Label27 = New System.Windows.Forms.Label()
@@ -75,6 +73,8 @@ Partial Class Form7
         Me.btnView = New System.Windows.Forms.Button()
         Me.txtTransactionId = New System.Windows.Forms.TextBox()
         Me.Label33 = New System.Windows.Forms.Label()
+        Me.dtpDateFrom = New System.Windows.Forms.DateTimePicker()
+        Me.dtpDateTo = New System.Windows.Forms.DateTimePicker()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -446,18 +446,6 @@ Partial Class Form7
         Me.btnRecordSale.Text = "Record Sale"
         Me.btnRecordSale.UseVisualStyleBackColor = False
         '
-        'txtDateFrom
-        '
-        Me.txtDateFrom.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDateFrom.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDateFrom.Location = New System.Drawing.Point(879, 426)
-        Me.txtDateFrom.Multiline = True
-        Me.txtDateFrom.Name = "txtDateFrom"
-        Me.txtDateFrom.Size = New System.Drawing.Size(183, 38)
-        Me.txtDateFrom.TabIndex = 70
-        '
         'Label30
         '
         Me.Label30.AutoSize = True
@@ -469,18 +457,6 @@ Partial Class Form7
         Me.Label30.Size = New System.Drawing.Size(95, 16)
         Me.Label30.TabIndex = 69
         Me.Label30.Text = "DATE FROM"
-        '
-        'txtDateTo
-        '
-        Me.txtDateTo.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtDateTo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtDateTo.Location = New System.Drawing.Point(1080, 424)
-        Me.txtDateTo.Multiline = True
-        Me.txtDateTo.Name = "txtDateTo"
-        Me.txtDateTo.Size = New System.Drawing.Size(183, 38)
-        Me.txtDateTo.TabIndex = 72
         '
         'Label24
         '
@@ -691,6 +667,26 @@ Partial Class Form7
         Me.Label33.TabIndex = 89
         Me.Label33.Text = "#"
         '
+        'dtpDateFrom
+        '
+        Me.dtpDateFrom.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateFrom.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpDateFrom.Location = New System.Drawing.Point(881, 425)
+        Me.dtpDateFrom.Name = "dtpDateFrom"
+        Me.dtpDateFrom.Size = New System.Drawing.Size(135, 26)
+        Me.dtpDateFrom.TabIndex = 90
+        '
+        'dtpDateTo
+        '
+        Me.dtpDateTo.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateTo.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpDateTo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpDateTo.Location = New System.Drawing.Point(1064, 425)
+        Me.dtpDateTo.Name = "dtpDateTo"
+        Me.dtpDateTo.Size = New System.Drawing.Size(135, 26)
+        Me.dtpDateTo.TabIndex = 91
+        '
         'Form7
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -698,6 +694,8 @@ Partial Class Form7
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.dtpDateTo)
+        Me.Controls.Add(Me.dtpDateFrom)
         Me.Controls.Add(Me.Label33)
         Me.Controls.Add(Me.txtTransactionId)
         Me.Controls.Add(Me.btnUpdate)
@@ -714,9 +712,7 @@ Partial Class Form7
         Me.Controls.Add(Me.Label28)
         Me.Controls.Add(Me.Label27)
         Me.Controls.Add(Me.Label25)
-        Me.Controls.Add(Me.txtDateTo)
         Me.Controls.Add(Me.Label24)
-        Me.Controls.Add(Me.txtDateFrom)
         Me.Controls.Add(Me.Label30)
         Me.Controls.Add(Me.btnRecordSale)
         Me.Controls.Add(Me.Label23)
@@ -779,9 +775,7 @@ Partial Class Form7
     Friend WithEvents txtSellingPrice As TextBox
     Friend WithEvents Label22 As Label
     Friend WithEvents btnRecordSale As Button
-    Friend WithEvents txtDateFrom As TextBox
     Friend WithEvents Label30 As Label
-    Friend WithEvents txtDateTo As TextBox
     Friend WithEvents Label24 As Label
     Friend WithEvents Label25 As Label
     Friend WithEvents Label27 As Label
@@ -799,4 +793,6 @@ Partial Class Form7
     Friend WithEvents btnView As Button
     Friend WithEvents txtTransactionId As TextBox
     Friend WithEvents Label33 As Label
+    Friend WithEvents dtpDateFrom As DateTimePicker
+    Friend WithEvents dtpDateTo As DateTimePicker
 End Class

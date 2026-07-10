@@ -38,18 +38,25 @@ Public Class Form7
         Try
             If conn.State = ConnectionState.Closed Then conn.Open()
             sql = "SELECT t.transaction_id As 'Transaction ID', i.item_name As 'Item', t.selling_price As 'Sold Price', t.sale_date As 'Date' " &
-                  "FROM transactions t INNER JOIN inventory i ON t.item_id = i.item_id ORDER BY t.sale_date DESC"
+              "FROM transactions t INNER JOIN inventory i ON t.item_id = i.item_id " &
+              "WHERE t.sale_date BETWEEN @dateFrom AND @dateTo " &
+              "ORDER BY t.sale_date DESC"
 
-            DataAdapter1 = New MySqlDataAdapter(sql, conn)
+            dbcomm = New MySqlCommand(sql, conn)
+
+            dbcomm.Parameters.AddWithValue("@dateFrom", dtpDateFrom.Value.ToString("yyyy-MM-dd"))
+            dbcomm.Parameters.AddWithValue("@dateTo", dtpDateTo.Value.ToString("yyyy-MM-dd"))
+
+            DataAdapter1 = New MySqlDataAdapter(dbcomm)
             ds = New DataSet()
             DataAdapter1.Fill(ds, "history")
             DataGridView1.DataSource = ds
             DataGridView1.DataMember = "history"
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Error loading history: " & ex.Message)
+        Finally
             conn.Close()
         End Try
-        conn.Close()
     End Sub
 
     Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick

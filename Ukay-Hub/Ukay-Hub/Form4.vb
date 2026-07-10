@@ -68,7 +68,7 @@ Public Class Form4
             dbcomm.Parameters.AddWithValue("@contact", txtContactNumber.Text.Trim())
             dbcomm.Parameters.AddWithValue("@email", txtEmailAddress.Text.Trim())
             dbcomm.Parameters.AddWithValue("@address", txtAddress.Text.Trim())
-            dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
+            dbcomm.Parameters.AddWithValue("@id", selectedDonorId)
 
             Dim i As Integer = dbcomm.ExecuteNonQuery()
             If i > 0 Then
@@ -84,7 +84,7 @@ Public Class Form4
     End Sub
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-        If String.IsNullOrEmpty(txtDonorId.Text) Then
+        If String.IsNullOrEmpty(selectedDonorId) Then
             MsgBox("Please select a donor to delete.")
             Return
         End If
@@ -95,7 +95,7 @@ Public Class Form4
             Try
                 conn.Open()
                 dbcomm = New MySqlCommand(sql, conn)
-                dbcomm.Parameters.AddWithValue("@id", txtDonorId.Text.Trim())
+                dbcomm.Parameters.AddWithValue("@id", selectedDonorId)
 
                 Dim i As Integer = dbcomm.ExecuteNonQuery()
                 If i > 0 Then
@@ -152,7 +152,7 @@ Public Class Form4
                 Dim dbread As MySqlDataReader = dbcomm.ExecuteReader()
 
                 If dbread.Read() Then
-                    txtDonorId.Text = dbread("donor_id").ToString()
+                    selectedDonorId = dbread("donor_id").ToString()
                     txtFullName.Text = dbread("full_name").ToString()
                     txtContactNumber.Text = dbread("contact_number").ToString()
                     txtEmailAddress.Text = dbread("email_address").ToString()
@@ -165,13 +165,13 @@ Public Class Form4
             conn.Close()
         End If
     End Sub
-
+    Private selectedDonorId As String = ""
     Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
         ClearFields()
     End Sub
 
     Private Sub ClearFields()
-        txtDonorId.Clear()
+        selectedDonorId = ""
         txtFullName.Clear()
         txtContactNumber.Clear()
         txtEmailAddress.Clear()
