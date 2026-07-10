@@ -1,14 +1,33 @@
 CREATE DATABASE ukayukay_db;
 USE ukayukay_db;
 
+drop table users;
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+INSERT INTO users (username, password)
+VALUES ('admin', 'admin123');
+
+drop table if exists transactions;
+drop table if exists inventory;
+drop table if exists categories;
+drop table if exists donors;
+drop table if exists payouts;
+drop table if exists consignors;
+
+
+
 CREATE TABLE categories (
-    category_id VARCHAR(50) PRIMARY KEY,
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL UNIQUE,
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+ALTER TABLE categories AUTO_INCREMENT = 1;
 CREATE TABLE donors (
-    donor_id VARCHAR(50) PRIMARY KEY,
+    donor_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL,
     contact_number VARCHAR(20),
     email_address VARCHAR(100),
@@ -17,25 +36,37 @@ CREATE TABLE donors (
 );
 
 CREATE TABLE consignors (
-    consignor_id VARCHAR(50) NOT NULL PRIMARY KEY,
+    consignor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     phone VARCHAR(20),
     email VARCHAR(100)
 ); 
+
 CREATE TABLE inventory (
-    item_id VARCHAR(50) NOT NULL PRIMARY KEY,
-    description VARCHAR(255) NOT NULL,
-    cost_price DECIMAL(10, 2) NOT NULL,
-    sell_price DECIMAL(10, 2) NOT NULL,
-    consignor_id VARCHAR(50) NOT NULL,
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_name VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NULL,
+    category_id INT NULL,
+    item_condition VARCHAR(50) NULL,
+    source_type VARCHAR(50) NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(50) DEFAULT 'Available',
+    donor_id INT NULL,
+    consignor_id INT NULL,
+    
+    INDEX(category_id),
+    INDEX(donor_id),
     INDEX(consignor_id),
+    
+    CONSTRAINT inventory_category_fk FOREIGN KEY (category_id) REFERENCES categories(category_id),
+    CONSTRAINT inventory_donor_fk FOREIGN KEY (donor_id) REFERENCES donors(donor_id),
     CONSTRAINT inventory_consignor_fk FOREIGN KEY (consignor_id) REFERENCES consignors(consignor_id)
 );
-
+ALTER TABLE inventory AUTO_INCREMENT = 1;
 CREATE TABLE transactions (
-    transaction_id VARCHAR(50) NOT NULL PRIMARY KEY,
-    item_id VARCHAR(50) NOT NULL,
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    item_id INT NULL,
     selling_price DECIMAL(10, 2) NOT NULL,
     sale_date DATE NOT NULL,
     payout_status VARCHAR(20) NOT NULL DEFAULT 'Unpaid', 
@@ -44,10 +75,27 @@ CREATE TABLE transactions (
 );
 
 CREATE TABLE payouts (
-    payout_id VARCHAR(50) NOT NULL PRIMARY KEY,
-    consignor_id VARCHAR(50) NOT NULL,
+    payout_id INT AUTO_INCREMENT PRIMARY KEY,
+    consignor_id INT NULL,
     payout_period VARCHAR(100) NOT NULL,       
     date_saved DATE NOT NULL,
     INDEX(consignor_id),
     CONSTRAINT fk_payouts_consignors FOREIGN KEY (consignor_id) REFERENCES consignors(consignor_id)
+);
+
+ALTER TABLE inventory ADD COLUMN category_id VARCHAR(50) NOT NULL;
+ALTER TABLE inventory ADD INDEX(category_id);
+ALTER TABLE inventory ADD CONSTRAINT inventory_category_fk FOREIGN KEY (category_id) 
+REFERENCES categories(category_id);
+ALTER TABLE categories ADD COLUMN date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+USE ukayukay_db;
+CREATE TABLE customers (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(150) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
+    contact_no VARCHAR(20),
+    address TEXT,
+    password VARCHAR(255) NOT NULL
 );
