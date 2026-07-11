@@ -365,6 +365,10 @@ Public Class Form6
         radConsigned.Checked = False
         selectedSourceType = ""
     End Sub
+    Private Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        ClearForm()
+        LoadInventoryGrid()
+    End Sub
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
         Dim frm1 As New Form1()
         frm1.Show()

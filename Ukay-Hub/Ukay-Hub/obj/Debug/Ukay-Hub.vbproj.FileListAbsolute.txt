@@ -204,3 +204,4 @@ C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\bin\Debug\iTextSharp
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\bin\Debug\SkiaSharp.dll
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\bin\Debug\iTextSharp.LGPLv2.Core.xml
 C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\bin\Debug\SkiaSharp.pdb
+C:\Users\johnc\source\repos\Ukay-ukay-hub\Ukay-Hub\Ukay-Hub\obj\Debug\Ukay_Hub.Resource1.resources

@@ -28,6 +28,8 @@ Partial Class Form14
         Me.lblCart = New System.Windows.Forms.LinkLabel()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.pnlCart = New System.Windows.Forms.Panel()
+        Me.btnClearCart = New System.Windows.Forms.Button()
+        Me.btnPrintReceipt = New System.Windows.Forms.Button()
         Me.btnCheckout = New System.Windows.Forms.Button()
         Me.lblTotalAmount = New System.Windows.Forms.Label()
         Me.lblTotaltext = New System.Windows.Forms.Label()
@@ -88,6 +90,8 @@ Partial Class Form14
         '
         'pnlCart
         '
+        Me.pnlCart.Controls.Add(Me.btnClearCart)
+        Me.pnlCart.Controls.Add(Me.btnPrintReceipt)
         Me.pnlCart.Controls.Add(Me.btnCheckout)
         Me.pnlCart.Controls.Add(Me.lblTotalAmount)
         Me.pnlCart.Controls.Add(Me.lblTotaltext)
@@ -99,6 +103,30 @@ Partial Class Form14
         Me.pnlCart.TabIndex = 57
         Me.pnlCart.Visible = False
         '
+        'btnClearCart
+        '
+        Me.btnClearCart.BackColor = System.Drawing.Color.Linen
+        Me.btnClearCart.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnClearCart.ForeColor = System.Drawing.Color.Black
+        Me.btnClearCart.Location = New System.Drawing.Point(312, 786)
+        Me.btnClearCart.Name = "btnClearCart"
+        Me.btnClearCart.Size = New System.Drawing.Size(79, 50)
+        Me.btnClearCart.TabIndex = 97
+        Me.btnClearCart.Text = "Clear"
+        Me.btnClearCart.UseVisualStyleBackColor = False
+        '
+        'btnPrintReceipt
+        '
+        Me.btnPrintReceipt.BackColor = System.Drawing.Color.Sienna
+        Me.btnPrintReceipt.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintReceipt.ForeColor = System.Drawing.Color.White
+        Me.btnPrintReceipt.Location = New System.Drawing.Point(157, 786)
+        Me.btnPrintReceipt.Name = "btnPrintReceipt"
+        Me.btnPrintReceipt.Size = New System.Drawing.Size(149, 51)
+        Me.btnPrintReceipt.TabIndex = 96
+        Me.btnPrintReceipt.Text = "Print Receipt"
+        Me.btnPrintReceipt.UseVisualStyleBackColor = False
+        '
         'btnCheckout
         '
         Me.btnCheckout.BackColor = System.Drawing.Color.Firebrick
@@ -106,7 +134,7 @@ Partial Class Form14
         Me.btnCheckout.ForeColor = System.Drawing.Color.White
         Me.btnCheckout.Location = New System.Drawing.Point(16, 786)
         Me.btnCheckout.Name = "btnCheckout"
-        Me.btnCheckout.Size = New System.Drawing.Size(215, 50)
+        Me.btnCheckout.Size = New System.Drawing.Size(135, 50)
         Me.btnCheckout.TabIndex = 62
         Me.btnCheckout.Text = "Checkout"
         Me.btnCheckout.UseVisualStyleBackColor = False
@@ -189,4 +217,6 @@ Partial Class Form14
     Friend WithEvents lblTotalAmount As Label
     Friend WithEvents lblTotaltext As Label
     Friend WithEvents btnCheckout As Button
+    Friend WithEvents btnPrintReceipt As Button
+    Friend WithEvents btnClearCart As Button
 End Class

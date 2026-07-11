@@ -1,10 +1,15 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.IO
+Imports iTextSharp.text
+Imports iTextSharp.text.pdf
+Imports MySql.Data.MySqlClient
+Imports Ukay_Hub.My.Resources
 
 Public Class Form14
     Dim conn As New MySqlConnection("server=localhost;user=root;password=root;database=ukayukay_db")
     Dim sql As String
     Dim grandTotal As Integer = 0
     Dim cartItemIDs As New List(Of Integer)()
+    Dim cartItems As New List(Of CartItem)()
 
     Private Sub Form14_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadProductsToShop()
@@ -25,7 +30,7 @@ Public Class Form14
             If dt.Rows.Count = 0 Then
                 Dim lblEmpty As New Label()
                 lblEmpty.Text = "The shop is currently empty. No items found in the database."
-                lblEmpty.Font = New Font("Segoe UI", 14, FontStyle.Italic)
+                lblEmpty.Font = New System.Drawing.Font("Segoe UI", 14, System.Drawing.FontStyle.Italic)
                 lblEmpty.ForeColor = Color.Gray
                 lblEmpty.AutoSize = True
                 flpProducts.Controls.Add(lblEmpty)
@@ -55,10 +60,11 @@ Public Class Form14
         Dim card As ucProductCard = CType(sender, ucProductCard)
         Dim itemId As Integer = Convert.ToInt32(card.Tag)
         cartItemIDs.Add(itemId)
+        cartItems.Add(New CartItem With {.Name = name, .Price = price})
 
         Dim lblItem As New Label()
         lblItem.Text = name & "   ->   ₱" & price
-        lblItem.Font = New Font("Segoe UI", 10, FontStyle.Regular)
+        lblItem.Font = New System.Drawing.Font("Segoe UI", 10, System.Drawing.FontStyle.Regular)
         lblItem.AutoSize = True
 
         flpCartItems.Controls.Add(lblItem)
@@ -137,8 +143,14 @@ Public Class Form14
 
                 transaction.Commit()
 
+                lastOrderItems = New List(Of CartItem)(cartItems)
+                lastOrderTotal = grandTotal
+                lastOrderCustomer = customerName
+                lastOrderDate = DateTime.Now
+                lastOrderCompleted = True
+
                 Dim receiptMessage As String = "==================================" & vbCrLf &
-                                               "            UKAYHUB RECEIPT       " & vbCrLf &
+                                               "  THANKS FOR BUYING FROM UKAYHUB! " & vbCrLf &
                                                "==================================" & vbCrLf &
                                                "Customer: " & customerName & vbCrLf &
                                                "Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") & vbCrLf &
@@ -156,6 +168,7 @@ Public Class Form14
                 lblTotalAmount.Text = "₱0"
                 flpCartItems.Controls.Clear()
                 cartItemIDs.Clear()
+                cartItems.Clear()
 
                 conn.Close()
                 LoadProductsToShop()
@@ -171,5 +184,137 @@ Public Class Form14
                 End If
             End Try
         End If
+    End Sub
+    Private Sub btnClearCart_Click(sender As Object, e As EventArgs) Handles btnClearCart.Click
+        If cartItemIDs.Count = 0 AndAlso flpCartItems.Controls.Count = 0 Then
+            MessageBox.Show("Your shopping cart is currently empty.", "Clear Cart", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
+
+        Dim confirm As DialogResult = MessageBox.Show("Are you sure you want to clear all items from your cart?", "Confirm Clear Cart", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If confirm = DialogResult.Yes Then
+            grandTotal = 0
+            cartItemIDs.Clear()
+            cartItems.Clear()
+
+            flpCartItems.Controls.Clear()
+            lblTotalAmount.Text = "₱0"
+            pnlCart.Visible = False
+
+            MessageBox.Show("Your cart is now clean!", "Cart Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+    End Sub
+    Dim lastOrderItems As New List(Of CartItem)()
+    Dim lastOrderTotal As Integer = 0
+    Dim lastOrderCustomer As String = ""
+    Dim lastOrderDate As DateTime
+    Dim lastOrderCompleted As Boolean = False
+
+    Public Structure CartItem
+        Public Name As String
+        Public Price As Integer
+    End Structure
+    Private Sub btnPrintReceipt_Click(sender As Object, e As EventArgs) Handles btnPrintReceipt.Click
+        If Not lastOrderCompleted OrElse lastOrderItems.Count = 0 Then
+            MessageBox.Show("There are no completed orders to print a receipt.", "Print Receipt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Try
+            Dim downloadsPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads")
+            Dim receiptFolder As String = Path.Combine(downloadsPath, "UkayHub_Reports", "Receipts")
+            If Not Directory.Exists(receiptFolder) Then
+                Directory.CreateDirectory(receiptFolder)
+            End If
+
+            Dim fileName As String = "Receipt_" & lastOrderDate.ToString("yyyyMMdd_HHmmss") & ".pdf"
+            Dim savePath As String = Path.Combine(receiptFolder, fileName)
+
+            'PDF Document
+            Dim doc As New Document(New iTextSharp.text.Rectangle(300, 550), 20, 20, 20, 20)
+            PdfWriter.GetInstance(doc, New FileStream(savePath, FileMode.Create))
+            doc.Open()
+
+            ' Fonts
+            Dim storeFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 16, iTextSharp.text.Font.BOLD, New BaseColor(64, 30, 12))
+            Dim subFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.NORMAL, New BaseColor(100, 100, 100))
+            Dim labelFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.BOLD, New BaseColor(139, 0, 0))
+            Dim itemFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 10, iTextSharp.text.Font.NORMAL)
+            Dim totalFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 13, iTextSharp.text.Font.BOLD, New BaseColor(139, 0, 0))
+            Dim thanksFont As iTextSharp.text.Font = FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.ITALIC, New BaseColor(212, 160, 23))
+
+            ' Logo
+            Try
+                Using ms As New MemoryStream()
+                    Resource1.ukayhub_logo.Save(ms, System.Drawing.Imaging.ImageFormat.Png)
+                    Dim logoImg As iTextSharp.text.Image = iTextSharp.text.Image.GetInstance(ms.ToArray())
+                    logoImg.ScaleToFit(55.0F, 55.0F)
+                    logoImg.Alignment = Element.ALIGN_CENTER
+                    doc.Add(logoImg)
+                End Using
+            Catch
+
+            End Try
+
+            ' Header
+            Dim titlePar As New Paragraph("UKAYHUB", storeFont)
+            titlePar.Alignment = Element.ALIGN_CENTER
+            doc.Add(titlePar)
+
+            Dim subPar As New Paragraph("Store Management System", subFont)
+            subPar.Alignment = Element.ALIGN_CENTER
+            doc.Add(subPar)
+
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(New String("-"c, 64)) With {.Alignment = Element.ALIGN_CENTER})
+
+            ' Customer
+            doc.Add(New Paragraph("Customer: " & lastOrderCustomer, itemFont))
+            doc.Add(New Paragraph("Date: " & lastOrderDate.ToString("yyyy-MM-dd HH:mm:ss"), itemFont))
+            doc.Add(New Paragraph(New String("-"c, 64)) With {.Alignment = Element.ALIGN_CENTER})
+            doc.Add(New Paragraph(" "))
+
+            ' Items 
+            Dim itemsTable As New PdfPTable(2)
+            itemsTable.WidthPercentage = 100
+            itemsTable.SetWidths(New Single() {65, 35})
+
+            itemsTable.AddCell(New PdfPCell(New Phrase("Item", labelFont)) With {.Border = iTextSharp.text.Rectangle.NO_BORDER, .PaddingBottom = 4})
+            itemsTable.AddCell(New PdfPCell(New Phrase("Price", labelFont)) With {.Border = iTextSharp.text.Rectangle.NO_BORDER, .HorizontalAlignment = Element.ALIGN_RIGHT, .PaddingBottom = 4})
+
+            For Each item In lastOrderItems
+                itemsTable.AddCell(New PdfPCell(New Phrase(item.Name, itemFont)) With {.Border = iTextSharp.text.Rectangle.NO_BORDER, .PaddingBottom = 3})
+                itemsTable.AddCell(New PdfPCell(New Phrase("₱" & item.Price.ToString("N2"), itemFont)) With {.Border = iTextSharp.text.Rectangle.NO_BORDER, .HorizontalAlignment = Element.ALIGN_RIGHT, .PaddingBottom = 3})
+            Next
+
+            doc.Add(itemsTable)
+
+            doc.Add(New Paragraph(New String("-"c, 64)) With {.Alignment = Element.ALIGN_CENTER})
+
+            Dim totalPar As New Paragraph("TOTAL: ₱" & lastOrderTotal.ToString("N2"), totalFont)
+            totalPar.Alignment = Element.ALIGN_RIGHT
+            totalPar.SpacingBefore = 6
+            doc.Add(totalPar)
+
+            doc.Add(New Paragraph(" "))
+            doc.Add(New Paragraph(New String("-"c, 64)) With {.Alignment = Element.ALIGN_CENTER})
+
+            ' Footer
+            Dim thanksPar As New Paragraph("Thank you for shopping with us!", thanksFont)
+            thanksPar.Alignment = Element.ALIGN_CENTER
+            thanksPar.SpacingBefore = 10
+            doc.Add(thanksPar)
+
+            doc.Close()
+
+            Dim result As DialogResult = MessageBox.Show("Receipt saved to:" & vbCrLf & savePath & vbCrLf & vbCrLf & "Open now?", "Print Receipt", MessageBoxButtons.YesNo, MessageBoxIcon.Information)
+            If result = DialogResult.Yes Then
+                Process.Start(New ProcessStartInfo(savePath) With {.UseShellExecute = True})
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Receipt Generation Error: " & ex.Message, "Print Receipt", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

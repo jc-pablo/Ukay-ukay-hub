@@ -30,4 +30,5 @@
     Private Sub btnAddToCart_Click(sender As Object, e As EventArgs) Handles btnAddToCart.Click
         RaiseEvent AddToCart(Me, lblTitle.Text, Convert.ToInt32(lblPrice.Text.Replace("₱", "")))
     End Sub
+
 End Class

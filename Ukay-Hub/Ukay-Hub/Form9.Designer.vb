@@ -65,6 +65,7 @@ Partial Class Form9
         Me.Label35 = New System.Windows.Forms.Label()
         Me.dgvDailySalesLog = New System.Windows.Forms.DataGridView()
         Me.Label36 = New System.Windows.Forms.Label()
+        Me.btnPrintReport = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvDailySalesLog, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -564,6 +565,18 @@ Partial Class Form9
         Me.Label36.TabIndex = 94
         Me.Label36.Text = "Analytics && Reports"
         '
+        'btnPrintReport
+        '
+        Me.btnPrintReport.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.btnPrintReport.Font = New System.Drawing.Font("Nirmala Text", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnPrintReport.ForeColor = System.Drawing.Color.White
+        Me.btnPrintReport.Location = New System.Drawing.Point(1710, 938)
+        Me.btnPrintReport.Name = "btnPrintReport"
+        Me.btnPrintReport.Size = New System.Drawing.Size(164, 51)
+        Me.btnPrintReport.TabIndex = 95
+        Me.btnPrintReport.Text = "Print Report"
+        Me.btnPrintReport.UseVisualStyleBackColor = False
+        '
         'Form9
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -571,6 +584,7 @@ Partial Class Form9
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1924, 1061)
+        Me.Controls.Add(Me.btnPrintReport)
         Me.Controls.Add(Me.Label36)
         Me.Controls.Add(Me.dgvDailySalesLog)
         Me.Controls.Add(Me.Label35)
@@ -649,4 +663,5 @@ Partial Class Form9
     Friend WithEvents Label35 As Label
     Friend WithEvents dgvDailySalesLog As DataGridView
     Friend WithEvents Label36 As Label
+    Friend WithEvents btnPrintReport As Button
 End Class
