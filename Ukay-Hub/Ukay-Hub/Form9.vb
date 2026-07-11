@@ -190,21 +190,8 @@ Public Class Form9
 
         Dim dateFrom As String = ""
         Dim dateTo As String = ""
-        Try
-            If dgvDailySalesLog.Rows.Count > 0 Then
-                dateFrom = dgvDailySalesLog.Rows(dgvDailySalesLog.Rows.Count - 1).Cells(0).Value.ToString()
-                dateTo = dgvDailySalesLog.Rows(0).Cells(0).Value.ToString()
-
-                If dateFrom.Contains(" ") Then dateFrom = dateFrom.Split(" "c)(0)
-                If dateTo.Contains(" ") Then dateTo = dateTo.Split(" "c)(0)
-            Else
-                dateFrom = DateTime.Now.ToString("yyyy-MM-dd")
-                dateTo = DateTime.Now.ToString("yyyy-MM-dd")
-            End If
-        Catch
-            dateFrom = DateTime.Now.ToString("yyyy-MM-dd")
-            dateTo = DateTime.Now.ToString("yyyy-MM-dd")
-        End Try
+        Dim reportDate As String = DateTime.Now.ToString("yyyy-MM-dd")
+        Dim reportTime As String = DateTime.Now.ToString("hh:mm tt")
 
         ' header
         Dim headerTable As New PdfPTable(2)
@@ -232,7 +219,8 @@ Public Class Form9
         textCell.VerticalAlignment = Element.ALIGN_MIDDLE
         textCell.AddElement(New Paragraph("UKAYHUB STORE MANAGEMENT SYSTEM", mainTitleFont))
         textCell.AddElement(New Paragraph("FINANCIAL REVENUE REPORT", subHeaderFont))
-        textCell.AddElement(New Paragraph("Report Period: " & dateFrom & " to " & dateTo, FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.ITALIC)))
+        textCell.AddElement(New Paragraph("Report As of: " & reportDate & " at " & reportTime, FontFactory.GetFont("Arial", 9, iTextSharp.text.Font.ITALIC)))
+
         headerTable.AddCell(textCell)
 
         doc.Add(headerTable)
