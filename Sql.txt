@@ -1,7 +1,6 @@
 CREATE DATABASE ukayukay_db;
 USE ukayukay_db;
 
-drop table users;
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -11,21 +10,20 @@ CREATE TABLE users (
 INSERT INTO users (username, password)
 VALUES ('admin', 'admin123');
 
-drop table if exists transactions;
-drop table if exists inventory;
-drop table if exists categories;
-drop table if exists donors;
-drop table if exists payouts;
-drop table if exists consignors;
-
-
 
 CREATE TABLE categories (
     category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(100) NOT NULL UNIQUE,
     date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE categories AUTO_INCREMENT = 1;
+INSERT INTO categories (category_name) VALUES
+('Tops'),
+('Bottoms'),
+('Outerwear'),
+('Dresses'),
+('Bags'),
+('Headwear');	
+
 CREATE TABLE donors (
     donor_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL,
@@ -34,7 +32,10 @@ CREATE TABLE donors (
     address TEXT,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
+INSERT INTO donors (full_name, contact_number, email_address, address) VALUES
+('Eirrich Fave leonardo', '09171234567', 'eridb@email.com', '6 Lower Bicutan, Taguig City'),
+('Mark David Lloren', '09187654321', 'markdb@email.com', '7 Triumph, Taguig City');
+		
 CREATE TABLE consignors (
     consignor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
@@ -42,6 +43,10 @@ CREATE TABLE consignors (
     phone VARCHAR(20),
     email VARCHAR(100)
 ); 
+INSERT INTO consignors (first_name, last_name, phone, email) VALUES
+('Ron Harry', 'Rebanal', '09229876543', 'rondbanal@email.com'),
+('Lois', 'Sanchez', '09331112223', 'loisan@email.com'),
+('Christian', 'Costelo', '09333242223', 'chanotelo@email.com');
 
 CREATE TABLE inventory (
     item_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,6 +68,50 @@ CREATE TABLE inventory (
     CONSTRAINT inventory_donor_fk FOREIGN KEY (donor_id) REFERENCES donors(donor_id),
     CONSTRAINT inventory_consignor_fk FOREIGN KEY (consignor_id) REFERENCES consignors(consignor_id)
 );
+
+INSERT INTO inventory (item_name, description, category_id, item_condition, source_type, price, status, donor_id, consignor_id) VALUES
+-- Tops
+('Vintage Graphic Tee', 'Color: Faded Black, Size: L', 1, 'Good', 'Donation', 180.00, 'Available', 1, NULL),
+('Oversized Shirt', 'Color: Red/Blue Plaid, Size: XL', 1, 'Excellent', 'Consignment', 250.00, 'Available', NULL, 1),
+('Denim Shirt', 'Color: Light Wash Blue, Size: M', 1, 'Good', 'Donation', 220.00, 'Available', 1, NULL),
+('Knit Sweater', 'Color: Beige/White, Size: S', 1, 'Like New', 'Consignment', 350.00, 'Available', NULL, 1),
+('Basic White Crop Top', 'Color: Solid White, Size: S', 1, 'Good', 'Donation', 90.00, 'Available', 1, NULL),
+('Y2K Baby Tee', 'Color: Baby Pink, Size: XS', 1, 'Excellent', 'Consignment', 150.00, 'Available', NULL, 1),
+
+-- Bottoms)
+('High-WaistJeans', 'Color: Dark Wash Blue, Size: 28', 2, 'Excellent', 'Donation', 380.00, 'Available', 1, NULL),
+('Cargo Pants', 'Color: Olive Green, Size: 32', 2, 'Good', 'Consignment', 400.00, 'Available', NULL, 1),
+('Corduroy Trousers', 'Color: Chocolate Brown, Size: 30', 2, 'Excellent', 'Donation', 350.00, 'Available', 1, NULL),
+('Pleated Skirt', 'Color: Gray Tartan, Size: 26', 2, 'Like New', 'Consignment', 200.00, 'Available', NULL, 1),
+('Denim Shorts', 'Color: Medium Wash, Size: 29', 2, 'Good', 'Donation', 120.00, 'Available', 1, NULL),
+('Baggy Sweatpants', 'Color: Heather Gray, Size: L', 2, 'Good', 'Donation', 180.00, 'Available', 1, NULL),
+
+-- shoes
+('Retro Sneakers', 'Color: Off-White, Size: US 8', 3, 'Good', 'Consignment', 550.00, 'Available', NULL, 1),
+('Leather Boots', 'Color: Dark Brown, Size: US 7', 3, 'Excellent', 'Consignment', 950.00, 'Available', NULL, 1),
+('Running Shoes', 'Color: Gray/Neon Green, Size: US 10', 3, 'Good', 'Donation', 600.00, 'Available', 1, NULL),
+
+-- outerwear
+('Bomber Jacket', 'Color: Black, Size: L', 4, 'Good', 'Consignment', 850.00, 'Available', NULL, 1),
+('Vintage Windbreaker', 'Color: Neon Purple/Teal, Size: M', 4, 'Excellent', 'Donation', 450.00, 'Available', 1, NULL),
+('Zip-Up Hoodie', 'Color: Navy Blue, Size: XL', 4, 'Good', 'Donation', 280.00, 'Available', 1, NULL),
+('Denim Jacket', 'Color: Blue, Size: M', 4, 'Like New', 'Consignment', 600.00, 'Available', NULL, 1),
+('Knitted Cardigan', 'Color: Mustard Yellow, Size: Free Size', 4, 'Excellent', 'Donation', 240.00, 'Available', 1, NULL),
+
+-- dress
+('Floral Sundress', 'Color: Yellow Floral, Size: M', 5, 'Excellent', 'Donation', 280.00, 'Available', 1, NULL),
+('Little Black Dress', 'Color: Jet Black, Size: S', 5, 'Like New', 'Consignment', 320.00, 'Available', NULL, 1),
+('Maxi Linen Dress', 'Color: Oatmeal Cream, Size: L', 5, 'Excellent', 'Donation', 420.00, 'Available', 1, NULL),
+
+-- Bags
+('Crossbody Bag', 'Color: Tan Brown, Size: Medium', 6, 'Good', 'Donation', 300.00, 'Available', 1, NULL),
+('Tote Bag', 'Color: Beige with Print, Size: Large', 6, 'Like New', 'Donation', 100.00, 'Available', 1, NULL),
+('Vintage Backpack', 'Color: Forest Green, Size: Standard', 6, 'Good', 'Consignment', 450.00, 'Available', NULL, 1),
+
+-- headwear
+('Beanie Hat', 'Color: Charcoal Gray, Size: One Size', 6, 'Like New', 'Donation', 80.00, 'Available', 1, NULL),
+('Woven Straw Hat', 'Color: Natural Straw, Size: Medium', 6, 'Excellent', 'Donation', 150.00, 'Available', 1, NULL);
+
 ALTER TABLE inventory AUTO_INCREMENT = 1;
 CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -90,7 +139,7 @@ REFERENCES categories(category_id);
 ALTER TABLE categories ADD COLUMN date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 USE ukayukay_db;
-CREATE TABLE customers (
+CREATE TABLE customers (	
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     full_name VARCHAR(150) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -99,3 +148,6 @@ CREATE TABLE customers (
     address TEXT,
     password VARCHAR(255) NOT NULL
 );
+
+INSERT INTO customers (full_name, username, email, contact_no, address, password) 
+VALUES ('JC Pablo & Andrea San Esteban', 'admin', 'admin@ukayhub.com', '09123456789', 'Main Office, Pasig City', 'admin123');
