@@ -148,3 +148,6 @@ CREATE TABLE customers (
     address TEXT,
     password VARCHAR(255) NOT NULL
 );
+
+INSERT INTO customers (full_name, username, email, contact_no, address, password) 
+VALUES ('JC Pablo & Andrea San Esteban', 'admin', 'admin@ukayhub.com', '09123456789', 'Main Office, Pasig City', 'admin123');
