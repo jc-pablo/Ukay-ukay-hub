@@ -23,7 +23,6 @@ Partial Class Form14
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form14))
-        Me.flpProducts = New System.Windows.Forms.FlowLayoutPanel()
         Me.LinkLabel1 = New System.Windows.Forms.LinkLabel()
         Me.lblCart = New System.Windows.Forms.LinkLabel()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
@@ -35,18 +34,11 @@ Partial Class Form14
         Me.lblTotaltext = New System.Windows.Forms.Label()
         Me.flpCartItems = New System.Windows.Forms.FlowLayoutPanel()
         Me.lblCartTitle = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.flpProducts = New System.Windows.Forms.FlowLayoutPanel()
         Me.pnlCart.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'flpProducts
-        '
-        Me.flpProducts.AutoScroll = True
-        Me.flpProducts.BackgroundImage = CType(resources.GetObject("flpProducts.BackgroundImage"), System.Drawing.Image)
-        Me.flpProducts.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.flpProducts.Location = New System.Drawing.Point(3, 182)
-        Me.flpProducts.Name = "flpProducts"
-        Me.flpProducts.Size = New System.Drawing.Size(1919, 877)
-        Me.flpProducts.TabIndex = 0
         '
         'LinkLabel1
         '
@@ -182,6 +174,25 @@ Partial Class Form14
         Me.lblCartTitle.TabIndex = 58
         Me.lblCartTitle.Text = "Your Cart"
         '
+        'Panel1
+        '
+        Me.Panel1.AutoScroll = True
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.flpProducts)
+        Me.Panel1.Location = New System.Drawing.Point(1, 182)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1921, 877)
+        Me.Panel1.TabIndex = 58
+        '
+        'flpProducts
+        '
+        Me.flpProducts.AutoScroll = True
+        Me.flpProducts.BackgroundImage = CType(resources.GetObject("flpProducts.BackgroundImage"), System.Drawing.Image)
+        Me.flpProducts.Location = New System.Drawing.Point(0, 3)
+        Me.flpProducts.Name = "flpProducts"
+        Me.flpProducts.Size = New System.Drawing.Size(1918, 871)
+        Me.flpProducts.TabIndex = 1
+        '
         'Form14
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -193,7 +204,7 @@ Partial Class Form14
         Me.Controls.Add(Me.TextBox5)
         Me.Controls.Add(Me.lblCart)
         Me.Controls.Add(Me.LinkLabel1)
-        Me.Controls.Add(Me.flpProducts)
+        Me.Controls.Add(Me.Panel1)
         Me.DoubleBuffered = True
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MinimizeBox = False
@@ -202,12 +213,11 @@ Partial Class Form14
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pnlCart.ResumeLayout(False)
         Me.pnlCart.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents flpProducts As FlowLayoutPanel
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents lblCart As LinkLabel
     Friend WithEvents TextBox5 As TextBox
@@ -219,4 +229,6 @@ Partial Class Form14
     Friend WithEvents btnCheckout As Button
     Friend WithEvents btnPrintReceipt As Button
     Friend WithEvents btnClearCart As Button
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents flpProducts As FlowLayoutPanel
 End Class

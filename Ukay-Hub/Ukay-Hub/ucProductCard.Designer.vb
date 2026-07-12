@@ -32,11 +32,11 @@ Partial Class ucProductCard
         '
         Me.lblTitle.AutoSize = True
         Me.lblTitle.BackColor = System.Drawing.Color.Transparent
-        Me.lblTitle.Font = New System.Drawing.Font("Georgia", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTitle.Font = New System.Drawing.Font("Georgia", 18.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTitle.ForeColor = System.Drawing.Color.Maroon
         Me.lblTitle.Location = New System.Drawing.Point(24, 24)
         Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(157, 34)
+        Me.lblTitle.Size = New System.Drawing.Size(135, 30)
         Me.lblTitle.TabIndex = 21
         Me.lblTitle.Text = "labelTitle"
         '
@@ -45,7 +45,7 @@ Partial Class ucProductCard
         Me.lblPrice.AutoSize = True
         Me.lblPrice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblPrice.ForeColor = System.Drawing.Color.Black
-        Me.lblPrice.Location = New System.Drawing.Point(324, 32)
+        Me.lblPrice.Location = New System.Drawing.Point(370, 32)
         Me.lblPrice.Name = "lblPrice"
         Me.lblPrice.Size = New System.Drawing.Size(91, 25)
         Me.lblPrice.TabIndex = 22
@@ -58,7 +58,7 @@ Partial Class ucProductCard
         Me.btnAddToCart.ForeColor = System.Drawing.Color.White
         Me.btnAddToCart.Location = New System.Drawing.Point(10, 115)
         Me.btnAddToCart.Name = "btnAddToCart"
-        Me.btnAddToCart.Size = New System.Drawing.Size(405, 50)
+        Me.btnAddToCart.Size = New System.Drawing.Size(451, 50)
         Me.btnAddToCart.TabIndex = 52
         Me.btnAddToCart.Text = "Add To Cart"
         Me.btnAddToCart.UseVisualStyleBackColor = False
@@ -83,7 +83,7 @@ Partial Class ucProductCard
         Me.Controls.Add(Me.lblPrice)
         Me.Controls.Add(Me.lblTitle)
         Me.Name = "ucProductCard"
-        Me.Size = New System.Drawing.Size(430, 176)
+        Me.Size = New System.Drawing.Size(481, 176)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

@@ -35,7 +35,8 @@ Public Class Form16
 
             MessageBox.Show("Registration successful! You can now log in.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            Form13.Show()
+            Dim frm15 As New Form15()
+            frm15.Show()
             Me.Close()
 
         Catch ex As Exception

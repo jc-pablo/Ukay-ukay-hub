@@ -145,7 +145,7 @@ Public Class Form5
         sql = "SELECT c.consignor_id As '#', " &
               "CONCAT(c.first_name, ' ', c.last_name) As 'Name', " &
               "c.phone As 'Contact', " &
-              "'10%' As 'Commission', " &
+              "'70%' As 'Commission', " &
               "COUNT(i.item_id) As 'Items Listed', " &
               "IFNULL(SUM(CASE WHEN i.status = 'Sold' THEN i.price ELSE 0 END), 0.00) As 'TotalPriceSold' " &
               "FROM consignors c " &

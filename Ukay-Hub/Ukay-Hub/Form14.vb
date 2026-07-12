@@ -87,7 +87,7 @@ Public Class Form14
         Me.Hide()
     End Sub
 
-    Private Sub flpProducts_Paint(sender As Object, e As PaintEventArgs) Handles flpProducts.Paint
+    Private Sub flpProducts_Paint(sender As Object, e As PaintEventArgs)
 
     End Sub
 
@@ -150,7 +150,7 @@ Public Class Form14
                 lastOrderCompleted = True
 
                 Dim receiptMessage As String = "==================================" & vbCrLf &
-                                               "  THANKS FOR BUYING FROM UKAYHUB! " & vbCrLf &
+                                               "     THANKS FOR BUYING FROM UKAYHUB! " & vbCrLf &
                                                "==================================" & vbCrLf &
                                                "Customer: " & customerName & vbCrLf &
                                                "Date: " & DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") & vbCrLf &
