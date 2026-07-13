@@ -131,7 +131,7 @@ Public Class Form7
     Private Sub btnUpdate_Click(sender As Object, e As EventArgs) Handles btnUpdate.Click
         Try
             If conn.State = ConnectionState.Closed Then conn.Open()
-            sql = $"UPDATE transactions SET item_id = '{cmbItem.SelectedValue}', selling_price = {Val(txtSellingPrice.Text)}, sale_date = '{dtpSaleDate.Value.ToString("yyyy-MM-dd")}' " &
+            sql = $"UPDATE transactions SET selling_price = {Val(txtSellingPrice.Text)}, sale_date = '{dtpSaleDate.Value.ToString("yyyy-MM-dd")}' " &
                   $"WHERE transaction_id = '{txtTransactionId.Text.Trim()}'"
 
             dbcomm = New MySqlCommand(sql, conn)
